@@ -2,9 +2,34 @@
 
 ## DR Utility Classes
 
-A library with everyday use classes:
-- `Arrays`
-- `Assert`
+A library with everyday use classes and methods:
+
+## Arrays
+  - `first`  
+  - `firstOrNull`  
+  - `last`  
+  - `lastOrNull`  
+  - `find`  
+  - `tryFind`  
+  - `mapAssoc`  
+  - `reindex`  
+  - `remove`  
+  - `search`  
+  - `unique`  
+  - `diff`  
+ 
+## Assert
+Fluent assertion methods:
+  - `notNull`
+  - `isArray`
+  - `isCallable`
+  - `integer`
+  - `float`
+  - `string`
+  - `boolean`
+  - `false`
+  - `notFalse`
+  - `instanceOf`
 
 ## Installation
 ```shell
