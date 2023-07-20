@@ -123,7 +123,7 @@ class Assert
      */
     public static function instanceOf(string $classString, mixed $value): object
     {
-        if ($value === null || $value instanceof $classString === false) {
+        if ($value instanceof $classString === false) {
             throw new RuntimeException('Expecting value to be instance of ' . $classString);
         }
 
