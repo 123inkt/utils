@@ -11,6 +11,8 @@ use RuntimeException;
 class Arrays
 {
     /**
+     * Returns the first item of the array or exception otherwise
+     *
      * @template T
      *
      * @param T[] $items
@@ -28,6 +30,8 @@ class Arrays
     }
 
     /**
+     * Returns the first item of the array or null otherwise
+     *
      * @template T
      *
      * @param T[] $items
@@ -42,6 +46,8 @@ class Arrays
     }
 
     /**
+     * Returns the last item of the array or exception otherwise
+     *
      * @template T
      *
      * @param T[] $items
@@ -59,6 +65,8 @@ class Arrays
     }
 
     /**
+     * Returns the last item of the array or null otherwise
+     *
      * @template T
      *
      * @param T[] $items
@@ -73,6 +81,8 @@ class Arrays
     }
 
     /**
+     * Returns the first item of the array that the callback returns true for. Null otherwise
+     *
      * @template T
      *
      * @param T[]              $items
@@ -92,6 +102,13 @@ class Arrays
     }
 
     /**
+     * Map an array to key-value pair by the given return values of the callback.
+     * <code>
+     *      $data = [1, 2, 3];
+     *      $values = Arrays::mapAssoc($data, fn($val) => [$val, $val % 0 === 0]);
+     *      // output: [1 => false, 2 => true, 3 => false]
+     * </code>
+     *
      * @template T
      * @template K of int|string
      *
@@ -112,6 +129,13 @@ class Arrays
     }
 
     /**
+     * Map an array to new key values
+     * <code>
+     *      $data = [1, 2, 3];
+     *      $values = Arrays::reindex($data, fn($val) => $val * 2);
+     *      // output: [2 => 1, 4 => 2, 6 => 3]
+     * </code>
+     *
      * @template T
      * @template K of int|string
      *
@@ -131,6 +155,9 @@ class Arrays
     }
 
     /**
+     * Remove an item from the given array. This method supports the EquatableInterface to
+     * determine if 2 different objects are equal.
+     *
      * @template T
      *
      * @param T[] $items
@@ -149,6 +176,9 @@ class Arrays
     }
 
     /**
+     * Find the key of the needle in the given array. This method supports the EquatableInterface to
+     * determine if 2 different objects are equal.
+     *
      * @template T of array-key
      *
      * @param array<T, mixed> $items
@@ -167,6 +197,9 @@ class Arrays
     }
 
     /**
+     * Make the array unique. This method supports the EquatableInterface to
+     * determine if 2 different objects are equal.
+     *
      * @template T
      *
      * @param T[] $items
@@ -186,6 +219,10 @@ class Arrays
     }
 
     /**
+     * Computes the difference of arrays. Will return the items in $itemsA that are not
+     * present in $itemsB . This method supports the ComparableInterface to determine if
+     * 2 different objects are equal.
+     *
      * @template T
      * @template K
      *
