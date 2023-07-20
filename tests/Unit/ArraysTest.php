@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Arrays;
+use DR\Utils\Tests\Mock\MockEquatable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -77,41 +78,41 @@ class ArraysTest extends TestCase
 
     public function testRemove(): void
     {
-        $objA  = new stdClass();
-        $objB  = new stdClass();
-        $userA = (new User())->setId(5);
-        $userB = (new User())->setId(6);
-        $array = [$objA, $objB];
+        $objA   = new stdClass();
+        $objB   = new stdClass();
+        $eqObjA = new MockEquatable();
+        $eqObjB = new MockEquatable();
+        $array  = [$objA, $objB];
 
         static::assertSame([1 => $objB], Arrays::remove($array, $objA));
         static::assertSame([0 => $objA], Arrays::remove($array, $objB));
         static::assertSame($array, Arrays::remove($array, 'foobar'));
-        static::assertSame([$userA], Arrays::remove([$userA, $userB], $userB));
-        static::assertSame([$userA, $userB], Arrays::remove([$userA, $userB], 'foobar'));
+        static::assertSame([$eqObjA], Arrays::remove([$eqObjA, $eqObjB], $eqObjB));
+        static::assertSame([$eqObjA, $eqObjB], Arrays::remove([$eqObjA, $eqObjB], 'foobar'));
     }
 
     public function testSearch(): void
     {
-        $objA  = new stdClass();
-        $objB  = new stdClass();
-        $userA = (new User())->setId(5);
-        $userB = (new User())->setId(6);
+        $objA   = new stdClass();
+        $objB   = new stdClass();
+        $eqObjA = new MockEquatable();
+        $eqObjB = new MockEquatable();
 
         static::assertFalse(Arrays::search(['foobar'], 'unknown'));
         static::assertSame(0, Arrays::search(['foobar'], 'foobar'));
         static::assertSame('foo', Arrays::search(['foo' => 'bar'], 'bar'));
         static::assertSame(0, Arrays::search([$objA, $objB], $objA));
         static::assertSame(1, Arrays::search([$objA, $objB], $objB));
-        static::assertSame(0, Arrays::search([$userA, $userB], $userA));
-        static::assertFalse(Arrays::search([$userA, $userB], $objA));
+        static::assertSame(0, Arrays::search([$eqObjA, $eqObjB], $eqObjA));
+        static::assertFalse(Arrays::search([$eqObjA, $eqObjB], $objA));
     }
 
     public function testUnique(): void
     {
-        $objA  = new stdClass();
-        $objB  = new stdClass();
-        $userA = (new User())->setId(5);
-        $userB = (new User())->setId(6);
+        $objA   = new stdClass();
+        $objB   = new stdClass();
+        $eqObjA = new MockEquatable();
+        $eqObjB = new MockEquatable();
 
         static::assertSame(['foobar'], Arrays::unique(['foobar', 'foobar']));
         static::assertSame(['foo', 'bar'], Arrays::unique(['foo', 'bar']));
@@ -119,16 +120,16 @@ class ArraysTest extends TestCase
         static::assertSame([1, '1'], Arrays::unique([1, '1']));
         static::assertSame([$objA, $objB], Arrays::unique([$objA, $objB]));
         static::assertSame([$objA], Arrays::unique([$objA, $objA]));
-        static::assertSame([0 => $userA, 2 => $userB], Arrays::unique([$userA, $userA, $userB]));
+        static::assertSame([0 => $eqObjA, 2 => $eqObjB], Arrays::unique([$eqObjA, $eqObjA, $eqObjB]));
     }
 
     public function testDiff(): void
     {
-        $objA  = new stdClass();
-        $objB  = new stdClass();
-        $userA = (new User())->setId(5);
-        $userB = (new User())->setId(6);
-        $userC = (new User())->setId(7);
+        $objA   = new stdClass();
+        $objB   = new stdClass();
+        $eqObjA = new MockEquatable();
+        $eqObjB = new MockEquatable();
+        $eqObjC = new MockEquatable();
 
         // scalars
         static::assertSame(['foo'], Arrays::diff(['foo'], ['bar']));
@@ -144,9 +145,9 @@ class ArraysTest extends TestCase
         static::assertSame([], Arrays::diff([$objA, $objB], [$objB, $objA]));
 
         // equatable interface
-        static::assertSame([], Arrays::diff([$userA, $userB], [$userA, $userB]));
-        static::assertSame([$userA], array_values(Arrays::diff([$userA, $userB], [$userB])));
-        static::assertSame([$userA], array_values(Arrays::diff([$userA, $userB], [$userB, $userC])));
-        static::assertSame([$userC], array_values(Arrays::diff([$userB, $userC], [$userA, $userB])));
+        static::assertSame([], Arrays::diff([$eqObjA, $eqObjB], [$eqObjA, $eqObjB]));
+        static::assertSame([$eqObjA], array_values(Arrays::diff([$eqObjA, $eqObjB], [$eqObjB])));
+        static::assertSame([$eqObjA], array_values(Arrays::diff([$eqObjA, $eqObjB], [$eqObjB, $eqObjC])));
+        static::assertSame([$eqObjC], array_values(Arrays::diff([$eqObjB, $eqObjC], [$eqObjA, $eqObjB])));
     }
 }
