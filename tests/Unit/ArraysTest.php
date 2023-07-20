@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Arrays;
+use DR\Utils\Tests\Mock\MockComparable;
 use DR\Utils\Tests\Mock\MockEquatable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -125,11 +126,11 @@ class ArraysTest extends TestCase
 
     public function testDiff(): void
     {
-        $objA   = new stdClass();
-        $objB   = new stdClass();
-        $eqObjA = new MockEquatable();
-        $eqObjB = new MockEquatable();
-        $eqObjC = new MockEquatable();
+        $objA    = new stdClass();
+        $objB    = new stdClass();
+        $cmpObjA = new MockComparable();
+        $cmpObjB = new MockComparable();
+        $cmpObjC = new MockComparable();
 
         // scalars
         static::assertSame(['foo'], Arrays::diff(['foo'], ['bar']));
@@ -144,10 +145,10 @@ class ArraysTest extends TestCase
         static::assertSame([], Arrays::diff([$objA, $objB], [$objA, $objB]));
         static::assertSame([], Arrays::diff([$objA, $objB], [$objB, $objA]));
 
-        // equatable interface
-        static::assertSame([], Arrays::diff([$eqObjA, $eqObjB], [$eqObjA, $eqObjB]));
-        static::assertSame([$eqObjA], array_values(Arrays::diff([$eqObjA, $eqObjB], [$eqObjB])));
-        static::assertSame([$eqObjA], array_values(Arrays::diff([$eqObjA, $eqObjB], [$eqObjB, $eqObjC])));
-        static::assertSame([$eqObjC], array_values(Arrays::diff([$eqObjB, $eqObjC], [$eqObjA, $eqObjB])));
+        // comparable interface
+        static::assertSame([], Arrays::diff([$cmpObjA, $cmpObjB], [$cmpObjA, $cmpObjB]));
+        static::assertSame([$cmpObjA], array_values(Arrays::diff([$cmpObjA, $cmpObjB], [$cmpObjB])));
+        static::assertSame([$cmpObjA], array_values(Arrays::diff([$cmpObjA, $cmpObjB], [$cmpObjB, $cmpObjC])));
+        static::assertSame([$cmpObjC], array_values(Arrays::diff([$cmpObjB, $cmpObjC], [$cmpObjA, $cmpObjB])));
     }
 }
