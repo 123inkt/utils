@@ -24,11 +24,13 @@ class ArraysTest extends TestCase
     public function testFirst(): void
     {
         static::assertSame('foo', Arrays::first(['foo', 'bar']));
+        static::assertFalse(Arrays::first([false, false]));
     }
 
     public function testFirstOrNull(): void
     {
         static::assertSame('foo', Arrays::firstOrNull(['foo', 'bar']));
+        static::assertFalse(Arrays::firstOrNull([false, false]));
         static::assertNull(Arrays::firstOrNull([]));
     }
 
@@ -42,11 +44,13 @@ class ArraysTest extends TestCase
     public function testLast(): void
     {
         static::assertSame('bar', Arrays::last(['foo', 'bar']));
+        static::assertFalse(Arrays::last([false, false]));
     }
 
     public function testLastOrNull(): void
     {
         static::assertSame('bar', Arrays::lastOrNull(['foo', 'bar']));
+        static::assertFalse(Arrays::lastOrNull([false, false]));
         static::assertNull(Arrays::lastOrNull([]));
     }
 
@@ -64,6 +68,22 @@ class ArraysTest extends TestCase
 
         static::assertSame([], Arrays::reindex([], $callback));
         static::assertSame([3 => 'foo', 6 => 'foobar'], Arrays::reindex(['foo', 'foobar'], $callback));
+    }
+
+    public function testFind(): void
+    {
+        $objA  = new stdClass();
+        $objB  = new stdClass();
+        $array = [$objA, $objB];
+
+        static::assertSame($objA, Arrays::find($array, static fn($item) => $item === $objA));
+    }
+
+    public function testFindFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unable to find item in items');
+        Arrays::find([], static fn() => true);
     }
 
     public function testTryFind(): void

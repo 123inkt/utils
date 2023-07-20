@@ -8,6 +8,7 @@ A library with everyday use classes and methods:
   - `firstOrNull`  
   - `last`  
   - `lastOrNull`  
+  - `find`  
   - `tryFind`  
   - `mapAssoc`  
   - `reindex`  

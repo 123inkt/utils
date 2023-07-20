@@ -21,12 +21,11 @@ class Arrays
      */
     public static function first(array $items): mixed
     {
-        $result = reset($items);
-        if ($result === false) {
+        if (count($items) === 0) {
             throw new RuntimeException('Unable to obtain first item from array');
         }
 
-        return $result;
+        return reset($items);
     }
 
     /**
@@ -40,9 +39,7 @@ class Arrays
      */
     public static function firstOrNull(array $items): mixed
     {
-        $result = reset($items);
-
-        return $result === false ? null : $result;
+        return count($items) === 0 ? null : reset($items);
     }
 
     /**
@@ -56,12 +53,11 @@ class Arrays
      */
     public static function last(array $items): mixed
     {
-        $result = end($items);
-        if ($result === false) {
+        if (count($items) === 0) {
             throw new RuntimeException('Unable to obtain last item from array');
         }
 
-        return $result;
+        return end($items);
     }
 
     /**
@@ -75,9 +71,22 @@ class Arrays
      */
     public static function lastOrNull(array $items): mixed
     {
-        $result = end($items);
+        return count($items) === 0 ? null : end($items);
+    }
 
-        return $result === false ? null : $result;
+    /**
+     * Returns the first item of the array that the callback returns true for. Exception otherwise
+     *
+     * @template T
+     *
+     * @param T[]              $items
+     * @param callable(T):bool $callback
+     *
+     * @return T|null
+     */
+    public static function find(array $items, callable $callback): mixed
+    {
+        return self::tryFind($items, $callback) ?? throw new RuntimeException('Unable to find item in items');
     }
 
     /**
