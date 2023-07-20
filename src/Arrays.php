@@ -158,7 +158,7 @@ class Arrays
      * Remove an item from the given array. This method supports the EquatableInterface to
      * determine if 2 different objects are equal.
      *
-     * @template T
+     * @template T of mixed|EquatableInterface
      *
      * @param T[] $items
      * @param T   $item
@@ -181,7 +181,7 @@ class Arrays
      *
      * @template T of array-key
      *
-     * @param array<T, mixed> $items
+     * @param array<T, mixed|EquatableInterface> $items
      *
      * @phpstan-return T|false
      */
@@ -200,7 +200,7 @@ class Arrays
      * Make the array unique. This method supports the EquatableInterface to
      * determine if 2 different objects are equal.
      *
-     * @template T
+     * @template T of mixed|EquatableInterface
      *
      * @param T[] $items
      *
@@ -220,11 +220,11 @@ class Arrays
 
     /**
      * Computes the difference of arrays. Will return the items in $itemsA that are not
-     * present in $itemsB . This method supports the ComparableInterface to determine if
+     * present in $itemsB. This method supports the ComparableInterface to determine if
      * 2 different objects are equal.
      *
-     * @template T
-     * @template K
+     * @template T of mixed|ComparableInterface
+     * @template K of mixed|ComparableInterface
      *
      * @param T[] $itemsA
      * @param K[] $itemsB

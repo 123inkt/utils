@@ -9,6 +9,6 @@ class MockComparable implements ComparableInterface
 {
     public function compareTo(mixed $other): int
     {
-        return $this === $other ? 0 : 1;
+        return strcmp(spl_object_hash($this), spl_object_hash($other));
     }
 }
