@@ -21,8 +21,8 @@ class AssertTest extends TestCase
 
     public function testNotNullSuccess(): void
     {
-        $rule = new stdClass();
-        static::assertSame($rule, Assert::notNull($rule));
+        $object = new stdClass();
+        static::assertSame($object, Assert::notNull($object));
     }
 
     public function testIsArrayFailure(): void
@@ -34,8 +34,8 @@ class AssertTest extends TestCase
 
     public function testIsArray(): void
     {
-        $rules = [new stdClass()];
-        static::assertSame($rules, Assert::isArray($rules));
+        $objects = [new stdClass()];
+        static::assertSame($objects, Assert::isArray($objects));
     }
 
     public function testIsCallable(): void
@@ -51,29 +51,68 @@ class AssertTest extends TestCase
         Assert::isCallable('string');
     }
 
-    public function testIsInt(): void
+    public function testInteger(): void
     {
-        static::assertSame(5, Assert::isInt(5));
+        static::assertSame(5, Assert::integer(5));
     }
 
-    public function testIsIntFailure(): void
+    public function testIntegerFailure(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be an int');
-        Assert::isInt('string'); // @phpstan-ignore-line
+        Assert::integer('string'); // @phpstan-ignore-line
     }
 
-    public function testIsStringFailure(): void
+    public function testFloat(): void
+    {
+        static::assertSame(5.5, Assert::float(5.5));
+    }
+
+    public function testFloatFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a float');
+        Assert::float('string'); // @phpstan-ignore-line
+    }
+
+    public function testStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a string');
-        Assert::isString(123); // @phpstan-ignore-line
+        Assert::string(123); // @phpstan-ignore-line
     }
 
-    public function testIsString(): void
+    public function testString(): void
     {
-        static::assertSame('string', Assert::isString('string'));
+        static::assertSame('string', Assert::string('string'));
     }
+
+
+    public function testBoolean(): void
+    {
+        static::assertTrue(Assert::boolean(true));
+        static::assertFalse(Assert::boolean(false));
+    }
+
+    public function testBooleanFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a boolean');
+        Assert::boolean('string'); // @phpstan-ignore-line
+    }
+
+    public function testFalseFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be false');
+        Assert::false(true);
+    }
+
+    public function testFalseSuccess(): void
+    {
+        static::assertFalse(Assert::false(false));
+    }
+
 
     public function testNotFalseFailure(): void
     {
@@ -84,8 +123,8 @@ class AssertTest extends TestCase
 
     public function testNotFalseSuccess(): void
     {
-        $rule = new stdClass();
-        static::assertSame($rule, Assert::notFalse($rule));
+        $object = new stdClass();
+        static::assertSame($object, Assert::notFalse($object));
     }
 
     public function testInstanceOfFailure(): void

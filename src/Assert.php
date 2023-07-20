@@ -69,10 +69,28 @@ class Assert
      *
      * @return T&int
      */
-    public static function isInt(mixed $value): int
+    public static function integer(mixed $value): int
     {
         if (is_int($value) === false) {
             throw new RuntimeException('Expecting value to be an int');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is float
+     * @template       T
+     * @phpstan-assert float $value
+     *
+     * @param T              $value
+     *
+     * @return T&float
+     */
+    public static function float(mixed $value): float
+    {
+        if (is_float($value) === false) {
+            throw new RuntimeException('Expecting value to be a float');
         }
 
         return $value;
@@ -87,13 +105,48 @@ class Assert
      *
      * @return T&string
      */
-    public static function isString(mixed $value): string
+    public static function string(mixed $value): string
     {
         if (is_string($value) === false) {
             throw new RuntimeException('Expecting value to be a string');
         }
 
         return $value;
+    }
+
+    /**
+     * Assert value is boolean
+     * @template T
+     * @phpstan-assert bool $value
+     *
+     * @param T               $value
+     *
+     * @return T&bool
+     */
+    public static function boolean(mixed $value): bool
+    {
+        if (is_bool($value) === false) {
+            throw new RuntimeException('Expecting value to be a boolean');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is false
+     * @template T
+     *
+     * @param T|false $value
+     *
+     * @return false
+     */
+    public static function false(mixed $value): bool
+    {
+        if ($value !== false) {
+            throw new RuntimeException('Expecting value to be false');
+        }
+
+        return false;
     }
 
     /**

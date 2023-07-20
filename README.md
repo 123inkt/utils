@@ -3,7 +3,8 @@
 ## DR Utility Classes
 
 A library with everyday use classes and methods:
-* `Arrays`
+
+## Arrays
   - `first`  
   - `firstOrNull`  
   - `last`  
@@ -16,12 +17,17 @@ A library with everyday use classes and methods:
   - `search`  
   - `unique`  
   - `diff`  
-* `Assert`
+ 
+## Assert
+Fluent assertion methods:
   - `notNull`
   - `isArray`
   - `isCallable`
-  - `isInt`
-  - `isString`
+  - `integer`
+  - `float`
+  - `string`
+  - `boolean`
+  - `false`
   - `notFalse`
   - `instanceOf`
 
