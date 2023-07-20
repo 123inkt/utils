@@ -4,18 +4,14 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Arrays;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
 
-/**
- * @coversDefaultClass \DR\Utils\Arrays
- */
+#[CoversClass(Arrays::class)]
 class ArraysTest extends TestCase
 {
-    /**
-     * @covers ::first
-     */
     public function testFirstThrowsExceptionOnEmptyArray(): void
     {
         $this->expectException(RuntimeException::class);
@@ -23,26 +19,17 @@ class ArraysTest extends TestCase
         Arrays::first([]);
     }
 
-    /**
-     * @covers ::first
-     */
     public function testFirst(): void
     {
         static::assertSame('foo', Arrays::first(['foo', 'bar']));
     }
 
-    /**
-     * @covers ::firstOrNull
-     */
     public function testFirstOrNull(): void
     {
         static::assertSame('foo', Arrays::firstOrNull(['foo', 'bar']));
         static::assertNull(Arrays::firstOrNull([]));
     }
 
-    /**
-     * @covers ::last
-     */
     public function testLastThrowsExceptionOnEmptyArray(): void
     {
         $this->expectException(RuntimeException::class);
@@ -50,26 +37,17 @@ class ArraysTest extends TestCase
         Arrays::last([]);
     }
 
-    /**
-     * @covers ::last
-     */
     public function testLast(): void
     {
         static::assertSame('bar', Arrays::last(['foo', 'bar']));
     }
 
-    /**
-     * @covers ::lastOrNull
-     */
     public function testLastOrNull(): void
     {
         static::assertSame('bar', Arrays::lastOrNull(['foo', 'bar']));
         static::assertNull(Arrays::lastOrNull([]));
     }
 
-    /**
-     * @covers ::mapAssoc
-     */
     public function testMapAssoc(): void
     {
         $callback = static fn($value) => [(string)$value[0], $value[1]];
@@ -78,9 +56,6 @@ class ArraysTest extends TestCase
         static::assertSame(['foo' => 'bar'], Arrays::mapAssoc([['foo', 'bar']], $callback));
     }
 
-    /**
-     * @covers ::reindex
-     */
     public function testReindex(): void
     {
         $callback = static fn($value) => strlen($value);
@@ -89,9 +64,6 @@ class ArraysTest extends TestCase
         static::assertSame([3 => 'foo', 6 => 'foobar'], Arrays::reindex(['foo', 'foobar'], $callback));
     }
 
-    /**
-     * @covers ::tryFind
-     */
     public function testTryFind(): void
     {
         $objA  = new stdClass();
@@ -103,9 +75,6 @@ class ArraysTest extends TestCase
         static::assertNull(Arrays::tryFind($array, static fn($item) => false));
     }
 
-    /**
-     * @covers ::remove
-     */
     public function testRemove(): void
     {
         $objA  = new stdClass();
@@ -121,9 +90,6 @@ class ArraysTest extends TestCase
         static::assertSame([$userA, $userB], Arrays::remove([$userA, $userB], 'foobar'));
     }
 
-    /**
-     * @covers ::search
-     */
     public function testSearch(): void
     {
         $objA  = new stdClass();
@@ -140,9 +106,6 @@ class ArraysTest extends TestCase
         static::assertFalse(Arrays::search([$userA, $userB], $objA));
     }
 
-    /**
-     * @covers ::unique
-     */
     public function testUnique(): void
     {
         $objA  = new stdClass();
@@ -159,9 +122,6 @@ class ArraysTest extends TestCase
         static::assertSame([0 => $userA, 2 => $userB], Arrays::unique([$userA, $userA, $userB]));
     }
 
-    /**
-     * @covers ::diff
-     */
     public function testDiff(): void
     {
         $objA  = new stdClass();

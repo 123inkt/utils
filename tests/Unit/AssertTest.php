@@ -4,19 +4,14 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
-use Test;
 
-/**
- * @coversDefaultClass \DR\Utils\Assert
- */
+#[CoversClass(Assert::class)]
 class AssertTest extends TestCase
 {
-    /**
-     * @covers ::notNull
-     */
     public function testNotNullFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -24,18 +19,12 @@ class AssertTest extends TestCase
         Assert::notNull(null);
     }
 
-    /**
-     * @covers ::notNull
-     */
     public function testNotNullSuccess(): void
     {
         $rule = new stdClass();
         static::assertSame($rule, Assert::notNull($rule));
     }
 
-    /**
-     * @covers ::isArray
-     */
     public function testIsArrayFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -43,27 +32,18 @@ class AssertTest extends TestCase
         Assert::isArray('foobar'); // @phpstan-ignore-line
     }
 
-    /**
-     * @covers ::isArray
-     */
     public function testIsArray(): void
     {
         $rules = [new stdClass()];
         static::assertSame($rules, Assert::isArray($rules));
     }
 
-    /**
-     * @covers ::isCallable
-     */
     public function testIsCallable(): void
     {
         $callable = [$this, 'testIsCallable'];
         static::assertSame($callable, Assert::isCallable($callable));
     }
 
-    /**
-     * @covers ::isCallable
-     */
     public function testIsCallableFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -71,17 +51,11 @@ class AssertTest extends TestCase
         Assert::isCallable('string');
     }
 
-    /**
-     * @covers ::isInt
-     */
     public function testIsInt(): void
     {
         static::assertSame(5, Assert::isInt(5));
     }
 
-    /**
-     * @covers ::isInt
-     */
     public function testIsIntFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -89,9 +63,6 @@ class AssertTest extends TestCase
         Assert::isInt('string'); // @phpstan-ignore-line
     }
 
-    /**
-     * @covers ::isString
-     */
     public function testIsStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -99,17 +70,11 @@ class AssertTest extends TestCase
         Assert::isString(123); // @phpstan-ignore-line
     }
 
-    /**
-     * @covers ::isString
-     */
     public function testIsString(): void
     {
         static::assertSame('string', Assert::isString('string'));
     }
 
-    /**
-     * @covers ::notFalse
-     */
     public function testNotFalseFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -117,18 +82,12 @@ class AssertTest extends TestCase
         Assert::notFalse(false);
     }
 
-    /**
-     * @covers ::notFalse
-     */
     public function testNotFalseSuccess(): void
     {
         $rule = new stdClass();
         static::assertSame($rule, Assert::notFalse($rule));
     }
 
-    /**
-     * @covers ::instanceOf
-     */
     public function testInstanceOfFailure(): void
     {
         $object = new stdClass();
@@ -137,9 +96,6 @@ class AssertTest extends TestCase
         Assert::instanceOf(RuntimeException::class, $object); // @phpstan-ignore-line
     }
 
-    /**
-     * @covers ::instanceOf
-     */
     public function testInstanceOfSuccess(): void
     {
         static::assertSame($this, Assert::instanceOf(self::class, $this));
