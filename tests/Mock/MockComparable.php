@@ -9,6 +9,7 @@ class MockComparable implements ComparableInterface
 {
     public function compareTo(mixed $other): int
     {
+        assert(is_object($other));
         return strcmp(spl_object_hash($this), spl_object_hash($other));
     }
 }
