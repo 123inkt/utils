@@ -171,14 +171,14 @@ class Assert
 
     /**
      * Assert value is object and of type class-string
-     * @template T of object
      * @template V of mixed
+     * @template T of object
      * @phpstan-assert T              $value
-     * @phpstan-param class-string<T> $classString
      * @phpstan-param V|null          $value
+     * @phpstan-param class-string<T> $classString
      * @phpstan-return T&V
      */
-    public static function isInstanceOf(string $classString, mixed $value): object
+    public static function isInstanceOf(mixed $value, string $classString): object
     {
         if ($value instanceof $classString === false) {
             throw new RuntimeException('Expecting value to be instance of ' . $classString);

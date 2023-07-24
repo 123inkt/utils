@@ -87,7 +87,6 @@ class AssertTest extends TestCase
         static::assertSame('string', Assert::string('string'));
     }
 
-
     public function testBoolean(): void
     {
         static::assertTrue(Assert::boolean(true));
@@ -113,7 +112,6 @@ class AssertTest extends TestCase
         static::assertFalse(Assert::false(false));
     }
 
-
     public function testNotFalseFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -127,17 +125,17 @@ class AssertTest extends TestCase
         static::assertSame($object, Assert::notFalse($object));
     }
 
-    public function testInstanceOfFailure(): void
+    public function testIsInstanceOfFailure(): void
     {
         $object = new stdClass();
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be instance of RuntimeException');
-        Assert::isInstanceOf(RuntimeException::class, $object); // @phpstan-ignore-line
+        Assert::isInstanceOf($object, RuntimeException::class); // @phpstan-ignore-line
     }
 
-    public function testInstanceOfSuccess(): void
+    public function testIsInstanceOfSuccess(): void
     {
-        static::assertSame($this, Assert::isInstanceOf(self::class, $this));
-        static::assertSame($this, Assert::isInstanceOf(TestCase::class, $this));
+        static::assertSame($this, Assert::isInstanceOf($this, self::class));
+        static::assertSame($this, Assert::isInstanceOf($this, TestCase::class));
     }
 }
