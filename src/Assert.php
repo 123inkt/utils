@@ -9,7 +9,8 @@ class Assert
 {
     /**
      * Assert value is not null
-     * @template T
+     * @template       T
+     * @phpstan-assert !null $value
      *
      * @param T|null $value
      *
@@ -119,7 +120,7 @@ class Assert
      * @template T
      * @phpstan-assert bool $value
      *
-     * @param T               $value
+     * @param T             $value
      *
      * @return T&bool
      */
@@ -135,8 +136,9 @@ class Assert
     /**
      * Assert value is false
      * @template T
+     * @phpstan-assert false $value
      *
-     * @param T|false $value
+     * @param T|false        $value
      *
      * @return false
      */
@@ -151,7 +153,8 @@ class Assert
 
     /**
      * Assert value is not false
-     * @template T
+     * @template       T
+     * @phpstan-assert !false $value
      *
      * @param T|false $value
      *
@@ -170,6 +173,7 @@ class Assert
      * Assert value is object and of type class-string
      * @template T of object
      * @template V of mixed
+     * @phpstan-assert T              $value
      * @phpstan-param class-string<T> $classString
      * @phpstan-param V|null          $value
      * @phpstan-return T&V
