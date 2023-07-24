@@ -132,12 +132,12 @@ class AssertTest extends TestCase
         $object = new stdClass();
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be instance of RuntimeException');
-        Assert::instanceOf(RuntimeException::class, $object); // @phpstan-ignore-line
+        Assert::isInstanceOf(RuntimeException::class, $object); // @phpstan-ignore-line
     }
 
     public function testInstanceOfSuccess(): void
     {
-        static::assertSame($this, Assert::instanceOf(self::class, $this));
-        static::assertSame($this, Assert::instanceOf(TestCase::class, $this));
+        static::assertSame($this, Assert::isInstanceOf(self::class, $this));
+        static::assertSame($this, Assert::isInstanceOf(TestCase::class, $this));
     }
 }

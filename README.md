@@ -29,7 +29,7 @@ Fluent assertion methods:
   - `boolean`
   - `false`
   - `notFalse`
-  - `instanceOf`
+  - `isInstanceOf`
 
 ## Installation
 ```shell

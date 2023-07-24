@@ -174,7 +174,7 @@ class Assert
      * @phpstan-param V|null          $value
      * @phpstan-return T&V
      */
-    public static function instanceOf(string $classString, mixed $value): object
+    public static function isInstanceOf(string $classString, mixed $value): object
     {
         if ($value instanceof $classString === false) {
             throw new RuntimeException('Expecting value to be instance of ' . $classString);
