@@ -18,6 +18,8 @@ A library with everyday use classes and methods:
 - `search` - Find the key of an element in an array based on the callback. Supports `EquatableInterface`.
 - `unique` - Remove duplicate values from an array. Supports `EquatableInterface`.
 - `diff` - Get the difference between two arrays. Supports `ComparableInterface`.
+- `explode` - Explode a string or null into an array, with exploding empty string to empty array.
+- `wrap` - Wrap a value in an array, unless it is already an array.
 
 ## Assert
 
