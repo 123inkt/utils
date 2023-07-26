@@ -5,7 +5,6 @@ namespace DR\Utils;
 
 use InvalidArgumentException;
 use RuntimeException;
-
 use function array_udiff;
 use function count;
 use function end;
@@ -87,7 +86,7 @@ class Arrays
      */
     public static function find(array $items, callable $callback): mixed
     {
-        return self::tryFind($items, $callback) ?? throw new RuntimeException('Unable to find item in items');
+        return self::findOrNull($items, $callback) ?? throw new RuntimeException('Unable to find item in items');
     }
 
     /**
@@ -99,7 +98,7 @@ class Arrays
      *
      * @return T|null
      */
-    public static function tryFind(array $items, callable $callback): mixed
+    public static function findOrNull(array $items, callable $callback): mixed
     {
         foreach ($items as $item) {
             if ($callback($item)) {
@@ -179,6 +178,15 @@ class Arrays
         }
 
         return $items;
+    }
+
+    /**
+     * Strict test if `value` is contained within `items`. Method supports `EquatableInterface`.
+     * @param array<mixed|EquatableInterface> $items
+     */
+    public static function contains(array $items, mixed $value): bool
+    {
+        return self::search($items, $value) !== false;
     }
 
     /**
