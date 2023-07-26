@@ -87,15 +87,15 @@ class ArraysTest extends TestCase
         Arrays::find([], static fn() => true);
     }
 
-    public function testTryFind(): void
+    public function testFindOrNull(): void
     {
         $objA  = new stdClass();
         $objB  = new stdClass();
         $array = [$objA, $objB];
 
-        static::assertSame($objA, Arrays::tryFind($array, static fn($item) => $item === $objA));
-        static::assertSame($objB, Arrays::tryFind($array, static fn($item) => $item === $objB));
-        static::assertNull(Arrays::tryFind($array, static fn($item) => false));
+        static::assertSame($objA, Arrays::findOrNull($array, static fn($item) => $item === $objA));
+        static::assertSame($objB, Arrays::findOrNull($array, static fn($item) => $item === $objB));
+        static::assertNull(Arrays::findOrNull($array, static fn($item) => false));
     }
 
     public function testRemove(): void
@@ -111,6 +111,12 @@ class ArraysTest extends TestCase
         static::assertSame($array, Arrays::remove($array, 'foobar'));
         static::assertSame([$eqObjA], Arrays::remove([$eqObjA, $eqObjB], $eqObjB));
         static::assertSame([$eqObjA, $eqObjB], Arrays::remove([$eqObjA, $eqObjB], 'foobar'));
+    }
+
+    public function testContains(): void
+    {
+        static::assertFalse(Arrays::contains(['foobar'], 'unknown'));
+        static::assertTrue(Arrays::contains(['foobar'], 'foobar'));
     }
 
     public function testSearch(): void
