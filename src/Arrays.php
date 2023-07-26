@@ -3,16 +3,21 @@ declare(strict_types=1);
 
 namespace DR\Utils;
 
+use InvalidArgumentException;
 use RuntimeException;
 
-/**
- * @suppressWarnings(PHPMD.TooManyPublicMethods)
- */
+use function array_udiff;
+use function count;
+use function end;
+use function explode;
+use function is_object;
+use function reset;
+use function spl_object_hash;
+
 class Arrays
 {
     /**
      * Returns the first item of the array or exception otherwise
-     *
      * @template T
      *
      * @param T[] $items
@@ -30,7 +35,6 @@ class Arrays
 
     /**
      * Returns the first item of the array or null otherwise
-     *
      * @template T
      *
      * @param T[] $items
@@ -44,7 +48,6 @@ class Arrays
 
     /**
      * Returns the last item of the array or exception otherwise
-     *
      * @template T
      *
      * @param T[] $items
@@ -62,7 +65,6 @@ class Arrays
 
     /**
      * Returns the last item of the array or null otherwise
-     *
      * @template T
      *
      * @param T[] $items
@@ -76,7 +78,6 @@ class Arrays
 
     /**
      * Returns the first item of the array that the callback returns true for. Exception otherwise
-     *
      * @template T
      *
      * @param T[]              $items
@@ -91,7 +92,6 @@ class Arrays
 
     /**
      * Returns the first item of the array that the callback returns true for. Null otherwise
-     *
      * @template T
      *
      * @param T[]              $items
@@ -117,7 +117,6 @@ class Arrays
      *      $values = Arrays::mapAssoc($data, fn($val) => [$val, $val % 0 === 0]);
      *      // output: [1 => false, 2 => true, 3 => false]
      * </code>
-     *
      * @template T
      * @template K of int|string
      *
@@ -144,7 +143,6 @@ class Arrays
      *      $values = Arrays::reindex($data, fn($val) => $val * 2);
      *      // output: [2 => 1, 4 => 2, 6 => 3]
      * </code>
-     *
      * @template T
      * @template K of int|string
      *
@@ -166,7 +164,6 @@ class Arrays
     /**
      * Remove an item from the given array. This method supports the EquatableInterface to
      * determine if 2 different objects are equal.
-     *
      * @template T of mixed|EquatableInterface
      *
      * @param T[] $items
@@ -187,7 +184,6 @@ class Arrays
     /**
      * Find the key of the needle in the given array. This method supports the EquatableInterface to
      * determine if 2 different objects are equal.
-     *
      * @template T of array-key
      *
      * @param array<T, mixed|EquatableInterface> $items
@@ -208,7 +204,6 @@ class Arrays
     /**
      * Make the array unique. This method supports the EquatableInterface to
      * determine if 2 different objects are equal.
-     *
      * @template T of mixed|EquatableInterface
      *
      * @param T[] $items
@@ -231,7 +226,6 @@ class Arrays
      * Computes the difference of arrays. Will return the items in $itemsA that are not
      * present in $itemsB. This method supports the ComparableInterface to determine if
      * 2 different objects are equal.
-     *
      * @template T of mixed|ComparableInterface
      * @template K of mixed|ComparableInterface
      *
@@ -256,5 +250,44 @@ class Arrays
                 return strcmp($keyA, $keyB);
             }
         );
+    }
+
+    /**
+     * Split a string by given separator, in case `value` is empty string or null, will return empty array.
+     * @return ($value is ''|null ? array{} : string[])
+     */
+    public static function explode(string $separator, ?string $value): array
+    {
+        if ($separator === '') {
+            throw new InvalidArgumentException('Separator cannot be empty');
+        }
+
+        if ($value === '' || $value === null) {
+            return [];
+        }
+
+        return explode($separator, $value);
+    }
+
+    /**
+     * If the given value is not an array, wrap it in an array.
+     * Optionally you can skip wrapping if the value is null, if $wrapNull is false an empty array will be returned.
+     * @template T
+     *
+     * @param T|T[] $value
+     *
+     * @return ($value is null ? ($wrapNull is true ? array{null} : array{}) : T[])
+     */
+    public static function wrap(mixed $value, bool $wrapNull = true): array
+    {
+        if (is_array($value)) {
+            return $value;
+        }
+
+        if ($wrapNull === false && $value === null) {
+            return [];
+        }
+
+        return [$value];
     }
 }

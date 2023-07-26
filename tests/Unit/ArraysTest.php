@@ -6,6 +6,7 @@ namespace DR\Utils\Tests\Unit;
 use DR\Utils\Arrays;
 use DR\Utils\Tests\Mock\MockComparable;
 use DR\Utils\Tests\Mock\MockEquatable;
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -170,5 +171,27 @@ class ArraysTest extends TestCase
         static::assertSame([$cmpObjA], array_values(Arrays::diff([$cmpObjA, $cmpObjB], [$cmpObjB])));
         static::assertSame([$cmpObjA], array_values(Arrays::diff([$cmpObjA, $cmpObjB], [$cmpObjB, $cmpObjC])));
         static::assertSame([$cmpObjC], array_values(Arrays::diff([$cmpObjB, $cmpObjC], [$cmpObjA, $cmpObjB])));
+    }
+
+    public function testExplode(): void
+    {
+        static::assertSame([], Arrays::explode(',', null));
+        static::assertSame([], Arrays::explode(',', ''));
+        static::assertSame(['foo'], Arrays::explode(',', 'foo'));
+        static::assertSame(['foo', 'bar'], Arrays::explode(',', 'foo,bar'));
+    }
+
+    public function testExplodeFailure(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        Arrays::explode('', null);
+    }
+
+    public function testWrap(): void
+    {
+        static::assertSame([null], Arrays::wrap(null));
+        static::assertSame([], Arrays::wrap(null, false));
+        static::assertSame(['foobar'], Arrays::wrap('foobar'));
+        static::assertSame(['foobar'], Arrays::wrap(['foobar']));
     }
 }
