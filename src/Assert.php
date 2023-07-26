@@ -5,8 +5,35 @@ namespace DR\Utils;
 
 use RuntimeException;
 
+use function is_bool;
+use function is_callable;
+use function is_float;
+use function is_int;
+use function is_object;
+use function is_resource;
+use function is_scalar;
+use function is_string;
+
 class Assert
 {
+    /**
+     * Assert value is null
+     * @template       T
+     * @phpstan-assert null $value
+     *
+     * @param T|null        $value
+     *
+     * @return null
+     */
+    public static function null(mixed $value): mixed
+    {
+        if ($value !== null) {
+            throw new RuntimeException('Expecting value to be null');
+        }
+
+        return null;
+    }
+
     /**
      * Assert value is not null
      * @template       T
@@ -56,6 +83,60 @@ class Assert
     {
         if (is_callable($value) === false) {
             throw new RuntimeException('Expecting value to be `callable`');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is a resource
+     * @template       T
+     * @phpstan-assert resource $value
+     *
+     * @param T                 $value
+     *
+     * @return T&resource
+     */
+    public static function resource(mixed $value): mixed
+    {
+        if (is_resource($value) === false) {
+            throw new RuntimeException('Expecting value to be a `resource`');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is a scalar
+     * @template       T
+     * @phpstan-assert scalar $value
+     *
+     * @param T               $value
+     *
+     * @return T&scalar
+     */
+    public static function scalar(mixed $value): mixed
+    {
+        if (is_scalar($value) === false) {
+            throw new RuntimeException('Expecting value to be a `scalar`');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is an object
+     * @template       T
+     * @phpstan-assert object $value
+     *
+     * @param T               $value
+     *
+     * @return T&object
+     */
+    public static function object(mixed $value): mixed
+    {
+        if (is_object($value) === false) {
+            throw new RuntimeException('Expecting value to be a `object`');
         }
 
         return $value;
@@ -131,6 +212,24 @@ class Assert
         }
 
         return $value;
+    }
+
+    /**
+     * Assert value is true
+     * @template T
+     * @phpstan-assert true $value
+     *
+     * @param T|true        $value
+     *
+     * @return true
+     */
+    public static function true(mixed $value): bool
+    {
+        if ($value !== true) {
+            throw new RuntimeException('Expecting value to be true');
+        }
+
+        return true;
     }
 
     /**

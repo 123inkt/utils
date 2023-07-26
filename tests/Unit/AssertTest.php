@@ -12,6 +12,18 @@ use stdClass;
 #[CoversClass(Assert::class)]
 class AssertTest extends TestCase
 {
+    public function testNullFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be null');
+        Assert::null('foobar');
+    }
+
+    public function testNullSuccess(): void
+    {
+        static::assertNull(Assert::null(null));
+    }
+
     public function testNotNullFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -47,8 +59,45 @@ class AssertTest extends TestCase
     public function testIsCallableFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be `callable');
+        $this->expectExceptionMessage('Expecting value to be `callable`');
         Assert::isCallable('string');
+    }
+
+    public function testScalarSuccess(): void
+    {
+        static::assertSame(123, Assert::scalar(123));
+    }
+
+    public function testScalarFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a `scalar`');
+        Assert::scalar(new stdClass()); // @phpstan-ignore-line
+    }
+
+    public function testResourceSuccess(): void
+    {
+        static::assertSame(STDIN, Assert::resource(STDIN));
+    }
+
+    public function testResourceFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a `resource`');
+        Assert::resource('string'); // @phpstan-ignore-line
+    }
+
+    public function testObjectSuccess(): void
+    {
+        $obj = new stdClass();
+        static::assertSame($obj, Assert::object($obj));
+    }
+
+    public function testObjectFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a `object`');
+        Assert::object('string'); // @phpstan-ignore-line
     }
 
     public function testInteger(): void
@@ -98,6 +147,18 @@ class AssertTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a boolean');
         Assert::boolean('string'); // @phpstan-ignore-line
+    }
+
+    public function testTrueFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be true');
+        Assert::true(false);
+    }
+
+    public function testTrueSuccess(): void
+    {
+        static::assertTrue(Assert::true(true));
     }
 
     public function testFalseFailure(): void

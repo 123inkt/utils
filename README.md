@@ -23,13 +23,18 @@ A library with everyday use classes and methods:
 
 Fluent assertion methods, inspired by `webmozart/assert`:
 
+- `null`
 - `notNull`
 - `isArray`
 - `isCallable`
+- `resource`
+- `object`
+- `scalar`
 - `integer`
 - `float`
 - `string`
 - `boolean`
+- `true`
 - `false`
 - `notFalse`
 - `isInstanceOf`
