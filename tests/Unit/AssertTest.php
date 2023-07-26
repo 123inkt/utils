@@ -63,6 +63,18 @@ class AssertTest extends TestCase
         Assert::isCallable('string');
     }
 
+    public function testScalarSuccess(): void
+    {
+        static::assertSame(123, Assert::scalar(123));
+    }
+
+    public function testScalarFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a `scalar`');
+        Assert::scalar(new stdClass()); // @phpstan-ignore-line
+    }
+
     public function testResourceSuccess(): void
     {
         static::assertSame(STDIN, Assert::resource(STDIN));
@@ -72,7 +84,20 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a `resource`');
-        Assert::resource('string');
+        Assert::resource('string'); // @phpstan-ignore-line
+    }
+
+    public function testObjectSuccess(): void
+    {
+        $obj = new stdClass();
+        static::assertSame($obj, Assert::object($obj));
+    }
+
+    public function testObjectFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a `object`');
+        Assert::object('string'); // @phpstan-ignore-line
     }
 
     public function testInteger(): void
