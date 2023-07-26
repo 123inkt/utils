@@ -12,6 +12,18 @@ use stdClass;
 #[CoversClass(Assert::class)]
 class AssertTest extends TestCase
 {
+    public function testNullFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be null');
+        Assert::null('foobar');
+    }
+
+    public function testNullSuccess(): void
+    {
+        static::assertNull(Assert::null(null));
+    }
+
     public function testNotNullFailure(): void
     {
         $this->expectException(RuntimeException::class);
@@ -98,6 +110,18 @@ class AssertTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a boolean');
         Assert::boolean('string'); // @phpstan-ignore-line
+    }
+
+    public function testTrueFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be true');
+        Assert::true(false);
+    }
+
+    public function testTrueSuccess(): void
+    {
+        static::assertTrue(Assert::true(true));
     }
 
     public function testFalseFailure(): void
