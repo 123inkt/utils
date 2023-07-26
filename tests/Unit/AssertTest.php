@@ -59,8 +59,20 @@ class AssertTest extends TestCase
     public function testIsCallableFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be `callable');
+        $this->expectExceptionMessage('Expecting value to be `callable`');
         Assert::isCallable('string');
+    }
+
+    public function testResourceSuccess(): void
+    {
+        static::assertSame(STDIN, Assert::resource(STDIN));
+    }
+
+    public function testResourceFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a `resource`');
+        Assert::resource('string');
     }
 
     public function testInteger(): void
