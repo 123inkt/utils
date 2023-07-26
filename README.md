@@ -18,7 +18,7 @@ A library with everyday use classes and methods:
 - `mapAssoc` - Map an array to a new array using a callback, preserving keys. Supports [`EquatableInterface`](.
 - `reindex` - Reindex an array with new keys based on the result of the callback. Supports `EquatableInterface`.
 - `remove` - Remove an element from an array based on the callback. Supports `EquatableInterface`.
-- `search` - Find the key of an element in an array based on the callback. Supports `EquatableInterface`.
+- `search` - Find the key of an element in an array or false otherwise. Supports `EquatableInterface`.
 - `unique` - Remove duplicate values from an array. Supports `EquatableInterface`.
 - `wrap` - Wrap a value in an array, unless it is already an array.
 
