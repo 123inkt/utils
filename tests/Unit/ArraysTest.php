@@ -113,6 +113,36 @@ class ArraysTest extends TestCase
         static::assertSame([$eqObjA, $eqObjB], Arrays::remove([$eqObjA, $eqObjB], 'foobar'));
     }
 
+    public function testRemoveKey(): void
+    {
+        static::assertSame(['foo' => 'bar'], Arrays::removeKey(['foo' => 'bar'], 'bar'));
+        static::assertSame([], Arrays::removeKey(['foo' => 'bar'], 'foo'));
+        static::assertSame(['foo' => 'bar'], Arrays::removeKey(['foo' => 'bar'], 'Foo'));
+        static::assertSame([], Arrays::removeKey(['foo' => 'bar'], 'Foo', false));
+
+        static::assertSame(['foo'], Arrays::removeKey(['foo', 'bar'], 1));
+        static::assertSame(['foo'], Arrays::removeKey(['foo', 'bar'], 1, false));
+    }
+
+    public function testRemoveKeysAssociativeArray(): void
+    {
+        static::assertSame(['foo' => 'bar'], Arrays::removeKeys(['foo' => 'bar'], ['bar']));
+        static::assertSame([], Arrays::removeKeys(['foo' => 'bar'], ['foo']));
+        static::assertSame(['foo' => 'bar'], Arrays::removeKeys(['foo' => 'bar'], ['Foo']));
+        static::assertSame(['FOO' => 'BAR'], Arrays::removeKeys(['foo' => 'bar', 'FOO' => 'BAR'], ['foo']));
+        static::assertSame([], Arrays::removeKeys(['foo' => 'bar', 'FOO' => 'BAR'], ['foo'], false));
+        static::assertSame([], Arrays::removeKeys(['foo' => 'bar'], ['Foo'], false));
+    }
+
+    public function testRemoveKeysIndexedArray(): void
+    {
+        static::assertSame(['foo'], Arrays::removeKeys(['foo', 'bar'], [1]));
+        static::assertSame(['foo'], Arrays::removeKeys(['foo', 'bar'], ['1'], false));
+        static::assertSame([1 => 'bar'], Arrays::removeKeys(['foo', 'bar'], [0], false));
+        static::assertSame(['foo'], Arrays::removeKeys(['foo', 'bar'], [1], false));
+        static::assertSame([], Arrays::removeKeys(['foo', 'bar'], [0, 1, 2], false));
+    }
+
     public function testContains(): void
     {
         static::assertFalse(Arrays::contains(['foobar'], 'unknown'));

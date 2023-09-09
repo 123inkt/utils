@@ -5,6 +5,7 @@ namespace DR\Utils;
 
 use InvalidArgumentException;
 use RuntimeException;
+
 use function array_udiff;
 use function count;
 use function end;
@@ -181,7 +182,48 @@ class Arrays
     }
 
     /**
+     * Remove an item from the given array by the given key.
+     *
+     * @template T of mixed
+     * @param T[] $items
+     *
+     * @return T[]
+     */
+    public static function removeKey(array $items, int|string $key, bool $caseSensitive = true): array
+    {
+        if ($caseSensitive) {
+            unset($items[$key]);
+
+            return $items;
+        }
+
+        return self::removeKeys($items, [$key], false);
+    }
+
+    /**
+     * Remove all items from the given array by the given keys.
+     *
+     * @template T of mixed
+     * @param T[]               $items
+     * @param array<int|string> $keys
+     *
+     * @return T[]
+     */
+    public static function removeKeys(array $items, array $keys, bool $caseSensitive = true): array
+    {
+        if ($caseSensitive) {
+            return array_diff_key($items, array_flip($keys));
+        }
+
+        // force all keys to be lowercase string
+        $keys = array_map(static fn($key) => strtolower((string)$key), $keys);
+
+        return array_filter($items, static fn($itemKey) => in_array(strtolower((string)$itemKey), $keys, true) === false, ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
      * Strict test if `value` is contained within `items`. Method supports `EquatableInterface`.
+     *
      * @param array<mixed|EquatableInterface> $items
      */
     public static function contains(array $items, mixed $value): bool
