@@ -183,11 +183,11 @@ class Arrays
 
     /**
      * Remove an item from the given array by the given key.
+     * @template T of array<int|string, mixed>
      *
-     * @template T of mixed
-     * @param T[] $items
+     * @param T $items
      *
-     * @return T[]
+     * @return T
      */
     public static function removeKey(array $items, int|string $key, bool $caseSensitive = true): array
     {
@@ -202,12 +202,12 @@ class Arrays
 
     /**
      * Remove all items from the given array by the given keys.
+     * @template T of array<int|string, mixed>
      *
-     * @template T of mixed
-     * @param T[]               $items
+     * @param T                 $items
      * @param array<int|string> $keys
      *
-     * @return T[]
+     * @return T
      */
     public static function removeKeys(array $items, array $keys, bool $caseSensitive = true): array
     {
