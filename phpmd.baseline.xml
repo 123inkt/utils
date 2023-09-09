@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <phpmd-baseline>
   <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="src/Arrays.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="src/Arrays.php"/>
   <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="src/Assert.php"/>
 </phpmd-baseline>
