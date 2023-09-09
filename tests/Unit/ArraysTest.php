@@ -124,7 +124,7 @@ class ArraysTest extends TestCase
         static::assertSame(['foo'], Arrays::removeKey(['foo', 'bar'], 1, false));
     }
 
-    public function testRemoveKeys(): void
+    public function testRemoveKeysAssociativeArray(): void
     {
         static::assertSame(['foo' => 'bar'], Arrays::removeKeys(['foo' => 'bar'], ['bar']));
         static::assertSame([], Arrays::removeKeys(['foo' => 'bar'], ['foo']));
@@ -132,7 +132,10 @@ class ArraysTest extends TestCase
         static::assertSame(['FOO' => 'BAR'], Arrays::removeKeys(['foo' => 'bar', 'FOO' => 'BAR'], ['foo']));
         static::assertSame([], Arrays::removeKeys(['foo' => 'bar', 'FOO' => 'BAR'], ['foo'], false));
         static::assertSame([], Arrays::removeKeys(['foo' => 'bar'], ['Foo'], false));
+    }
 
+    public function testRemoveKeysIndexedArray(): void
+    {
         static::assertSame(['foo'], Arrays::removeKeys(['foo', 'bar'], [1]));
         static::assertSame(['foo'], Arrays::removeKeys(['foo', 'bar'], ['1'], false));
         static::assertSame([1 => 'bar'], Arrays::removeKeys(['foo', 'bar'], [0], false));
