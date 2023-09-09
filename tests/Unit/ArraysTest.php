@@ -129,9 +129,12 @@ class ArraysTest extends TestCase
         static::assertSame(['foo' => 'bar'], Arrays::removeKeys(['foo' => 'bar'], ['bar']));
         static::assertSame([], Arrays::removeKeys(['foo' => 'bar'], ['foo']));
         static::assertSame(['foo' => 'bar'], Arrays::removeKeys(['foo' => 'bar'], ['Foo']));
+        static::assertSame(['FOO' => 'BAR'], Arrays::removeKeys(['foo' => 'bar', 'FOO' => 'BAR'], ['foo']));
+        static::assertSame([], Arrays::removeKeys(['foo' => 'bar', 'FOO' => 'BAR'], ['foo'], false));
         static::assertSame([], Arrays::removeKeys(['foo' => 'bar'], ['Foo'], false));
 
         static::assertSame(['foo'], Arrays::removeKeys(['foo', 'bar'], [1]));
+        static::assertSame(['foo'], Arrays::removeKeys(['foo', 'bar'], ['1'], false));
         static::assertSame([1 => 'bar'], Arrays::removeKeys(['foo', 'bar'], [0], false));
         static::assertSame(['foo'], Arrays::removeKeys(['foo', 'bar'], [1], false));
         static::assertSame([], Arrays::removeKeys(['foo', 'bar'], [0, 1, 2], false));

@@ -215,21 +215,10 @@ class Arrays
             return array_diff_key($items, array_flip($keys));
         }
 
-        foreach ($items as $itemKey => $item) {
-            if (count($keys) === 0) {
-                break;
-            }
+        // force all keys to be lowercase string
+        $keys = array_map(static fn($key) => strtolower((string)$key), $keys);
 
-            foreach ($keys as $key) {
-                if (strcasecmp((string)$itemKey, (string)$key) === 0) {
-                    unset($keys[$key]);
-                    unset($items[$itemKey]);
-                    continue 2;
-                }
-            }
-        }
-
-        return $items;
+        return array_filter($items, static fn($itemKey) => in_array(strtolower((string)$itemKey), $keys, true) === false, ARRAY_FILTER_USE_KEY);
     }
 
     /**
