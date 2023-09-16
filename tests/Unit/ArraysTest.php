@@ -61,7 +61,7 @@ class ArraysTest extends TestCase
 
         static::assertSame([], Arrays::mapAssoc([], $callback));
         static::assertSame(['foo' => 'bar'], Arrays::mapAssoc([['foo', 'bar']], $callback));
-        static::assertSame([2 => false, 4 => true, 6 => false], Arrays::mapAssoc([1, 2, 3], static fn(int $val) => [$val, $val % 2 === 0]));
+        static::assertSame([2 => false, 4 => true, 6 => false], Arrays::mapAssoc([1, 2, 3], static fn(int $val) => [$val * 2, $val % 2 === 0]));
     }
 
     public function testReindex(): void
