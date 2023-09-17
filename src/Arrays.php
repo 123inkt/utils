@@ -118,12 +118,13 @@ class Arrays
      *      // output: [1 => false, 2 => true, 3 => false]
      * </code>
      * @template T
+     * @template V
      * @template K of int|string
      *
      * @param T[]                              $items
-     * @param (callable(T): array{0: K, 1: T}) $callback
+     * @param (callable(T): array{0: K, 1: V}) $callback
      *
-     * @return array<K, T>
+     * @return array<K, V>
      */
     public static function mapAssoc(array $items, callable $callback): array
     {
