@@ -308,6 +308,8 @@ class Assert
 
     private static function createException(string $expectedType, mixed $value): RuntimeException
     {
-        return new RuntimeException(sprintf('Expecting value to be %s, `%s` was given', $expectedType, get_debug_type($value)));
+        $type = is_bool($value) ? ($value ? 'true' : 'false') : get_debug_type($value);
+
+        return new RuntimeException(sprintf('Expecting value to be %s, `%s` was given', $expectedType, $type));
     }
 }

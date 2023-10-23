@@ -15,7 +15,7 @@ class AssertTest extends TestCase
     public function testNullFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be null');
+        $this->expectExceptionMessage('Expecting value to be null, `string` was given');
         Assert::null('foobar');
     }
 
@@ -27,7 +27,7 @@ class AssertTest extends TestCase
     public function testNotNullFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be not null');
+        $this->expectExceptionMessage('Expecting value to be not null, `null` was given');
         Assert::notNull(null);
     }
 
@@ -40,7 +40,7 @@ class AssertTest extends TestCase
     public function testIsArrayFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be an array');
+        $this->expectExceptionMessage('Expecting value to be an array, `string` was given');
         Assert::isArray('foobar'); // @phpstan-ignore-line
     }
 
@@ -59,7 +59,7 @@ class AssertTest extends TestCase
     public function testIsCallableFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a callable');
+        $this->expectExceptionMessage('Expecting value to be a callable, `string` was given');
         Assert::isCallable('string');
     }
 
@@ -71,7 +71,7 @@ class AssertTest extends TestCase
     public function testScalarFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a scalar');
+        $this->expectExceptionMessage('Expecting value to be a scalar, `stdClass` was given');
         Assert::scalar(new stdClass()); // @phpstan-ignore-line
     }
 
@@ -83,7 +83,7 @@ class AssertTest extends TestCase
     public function testResourceFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a resource');
+        $this->expectExceptionMessage('Expecting value to be a resource, `string` was given');
         Assert::resource('string'); // @phpstan-ignore-line
     }
 
@@ -96,7 +96,7 @@ class AssertTest extends TestCase
     public function testObjectFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be an object');
+        $this->expectExceptionMessage('Expecting value to be an object, `string` was given');
         Assert::object('string'); // @phpstan-ignore-line
     }
 
@@ -108,7 +108,7 @@ class AssertTest extends TestCase
     public function testIntegerFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be an int');
+        $this->expectExceptionMessage('Expecting value to be an int, `string` was given');
         Assert::integer('string'); // @phpstan-ignore-line
     }
 
@@ -120,14 +120,14 @@ class AssertTest extends TestCase
     public function testFloatFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a float');
+        $this->expectExceptionMessage('Expecting value to be a float, `string` was given');
         Assert::float('string'); // @phpstan-ignore-line
     }
 
     public function testStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a string');
+        $this->expectExceptionMessage('Expecting value to be a string, `int` was given');
         Assert::string(123); // @phpstan-ignore-line
     }
 
@@ -139,14 +139,14 @@ class AssertTest extends TestCase
     public function testNonEmptyStringNoStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a string');
+        $this->expectExceptionMessage('Expecting value to be a string, `int` was given');
         Assert::nonEmptyString(123); // @phpstan-ignore-line
     }
 
     public function testNonEmptyStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a non empty string');
+        $this->expectExceptionMessage('Expecting value to be a non empty string, `string` was given');
         Assert::nonEmptyString('');
     }
 
@@ -164,14 +164,14 @@ class AssertTest extends TestCase
     public function testBooleanFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a boolean');
+        $this->expectExceptionMessage('Expecting value to be a boolean, `string` was given');
         Assert::boolean('string'); // @phpstan-ignore-line
     }
 
     public function testTrueFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be true');
+        $this->expectExceptionMessage('Expecting value to be true, `false` was given');
         Assert::true(false);
     }
 
@@ -183,7 +183,7 @@ class AssertTest extends TestCase
     public function testFalseFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be false');
+        $this->expectExceptionMessage('Expecting value to be false, `true` was given');
         Assert::false(true);
     }
 
@@ -195,7 +195,7 @@ class AssertTest extends TestCase
     public function testNotFalseFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be not false');
+        $this->expectExceptionMessage('Expecting value to be not false, `false` was given');
         Assert::notFalse(false);
     }
 
@@ -209,7 +209,7 @@ class AssertTest extends TestCase
     {
         $object = new stdClass();
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be instance of RuntimeException');
+        $this->expectExceptionMessage('Expecting value to be instance of RuntimeException, `stdClass` was given');
         Assert::isInstanceOf($object, RuntimeException::class); // @phpstan-ignore-line
     }
 
