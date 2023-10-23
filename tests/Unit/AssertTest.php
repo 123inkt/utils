@@ -152,7 +152,7 @@ class AssertTest extends TestCase
 
     public function testNonEmptyString(): void
     {
-        static::assertTrue(Assert::nonEmptyString('string'));
+        static::assertSame('string', Assert::nonEmptyString('string'));
     }
 
     public function testBoolean(): void
