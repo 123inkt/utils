@@ -59,7 +59,7 @@ class AssertTest extends TestCase
     public function testIsCallableFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be `callable`');
+        $this->expectExceptionMessage('Expecting value to be a callable');
         Assert::isCallable('string');
     }
 
@@ -71,7 +71,7 @@ class AssertTest extends TestCase
     public function testScalarFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a `scalar`');
+        $this->expectExceptionMessage('Expecting value to be a scalar');
         Assert::scalar(new stdClass()); // @phpstan-ignore-line
     }
 
@@ -83,7 +83,7 @@ class AssertTest extends TestCase
     public function testResourceFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a `resource`');
+        $this->expectExceptionMessage('Expecting value to be a resource');
         Assert::resource('string'); // @phpstan-ignore-line
     }
 
@@ -96,7 +96,7 @@ class AssertTest extends TestCase
     public function testObjectFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a `object`');
+        $this->expectExceptionMessage('Expecting value to be an object');
         Assert::object('string'); // @phpstan-ignore-line
     }
 
