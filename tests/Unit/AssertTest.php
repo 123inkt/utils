@@ -140,7 +140,7 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a string');
-        Assert::nonEmptyString(123);
+        Assert::nonEmptyString(123); // @phpstan-ignore-line
     }
 
     public function testNonEmptyStringFailure(): void

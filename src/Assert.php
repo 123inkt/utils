@@ -202,7 +202,7 @@ class Assert
      * @phpstan-assert non-empty-string $value
      *
      * @param T                         $value
-     * @return T&string
+     * @return T&non-empty-string
      */
     public static function nonEmptyString(mixed $value): string
     {
