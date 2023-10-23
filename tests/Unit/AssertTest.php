@@ -136,6 +136,18 @@ class AssertTest extends TestCase
         static::assertSame('string', Assert::string('string'));
     }
 
+    public function testNonEmptyStringFailure (): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a non empty string');
+        Assert::nonEmptyString('');
+    }
+
+    public function testNonEmptyString(): void
+    {
+        static::assertTrue(Assert::nonEmptyString('string'));
+    }
+
     public function testBoolean(): void
     {
         static::assertTrue(Assert::boolean(true));
