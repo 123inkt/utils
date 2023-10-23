@@ -201,12 +201,14 @@ class Assert
      * @template       T
      * @phpstan-assert string $value
      *
-     * @param string $string
+     * @param T               $value
      * @return bool
      */
-    public static function nonEmptyString(string $string): bool
+    public static function nonEmptyString(mixed $value): bool
     {
-        if (strlen($string) === 0) {
+        Assert::string($value);
+
+        if (strlen($value) === 0) {
             throw new RuntimeException('Expecting value to be a non empty string');
         }
 
