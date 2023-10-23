@@ -42,6 +42,7 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `true`
 - `false`
 - `notFalse`
+- `nonEmptyString`
 - `isInstanceOf`
 
 ### Example
