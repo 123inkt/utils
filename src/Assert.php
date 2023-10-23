@@ -197,6 +197,25 @@ class Assert
     }
 
     /**
+     * Assert value is a nonempty string
+     * @template       T
+     * @phpstan-assert non-empty-string $value
+     *
+     * @param T                         $value
+     * @return T&non-empty-string
+     */
+    public static function nonEmptyString(mixed $value): string
+    {
+        Assert::string($value);
+
+        if (strlen($value) === 0) {
+            throw new RuntimeException('Expecting value to be a non empty string');
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert value is boolean
      * @template T
      * @phpstan-assert bool $value
