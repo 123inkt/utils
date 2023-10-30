@@ -31,6 +31,7 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `null`
 - `notNull`
 - `isArray`
+- `inArray`
 - `isCallable`
 - `resource`
 - `object`
@@ -44,7 +45,6 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `notFalse`
 - `nonEmptyString`
 - `isInstanceOf`
-- `inArray`
 
 ### Example
 ```php
