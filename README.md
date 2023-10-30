@@ -44,6 +44,7 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `notFalse`
 - `nonEmptyString`
 - `isInstanceOf`
+- `inArray`
 
 ### Example
 ```php

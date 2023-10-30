@@ -306,6 +306,25 @@ class Assert
         return $value;
     }
 
+    /**
+     * Assert value is contained within the haystack. Strict comparison is used.
+     * @template T
+     * @template R
+     *
+     * @param T                    $value
+     * @param array<int|string, R> $haystack
+     *
+     * @return T&R
+     */
+    public static function inArray(mixed $value, array $haystack): mixed
+    {
+        if (in_array($value, $haystack, true) === false) {
+            throw self::createException('in array $values', $value);
+        }
+
+        return $value;
+    }
+
     private static function createException(string $expectedType, mixed $value): RuntimeException
     {
         $type = is_bool($value) ? ($value ? 'true' : 'false') : get_debug_type($value);
