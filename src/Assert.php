@@ -28,7 +28,7 @@ class Assert
     public static function null(mixed $value): mixed
     {
         if ($value !== null) {
-            throw new RuntimeException('Expecting value to be null');
+            throw self::createException('null', $value);
         }
 
         return null;
@@ -39,14 +39,14 @@ class Assert
      * @template       T
      * @phpstan-assert !null $value
      *
-     * @param T|null $value
+     * @param T|null         $value
      *
      * @return T
      */
     public static function notNull(mixed $value): mixed
     {
         if ($value === null) {
-            throw new RuntimeException('Expecting value to be not null');
+            throw self::createException('not null', $value);
         }
 
         return $value;
@@ -64,7 +64,7 @@ class Assert
     public static function isArray(mixed $value): array
     {
         if (is_array($value) === false) {
-            throw new RuntimeException('Expecting value to be an array');
+            throw self::createException('an array', $value);
         }
 
         return $value;
@@ -82,7 +82,7 @@ class Assert
     public static function isCallable(mixed $value): callable
     {
         if (is_callable($value) === false) {
-            throw new RuntimeException('Expecting value to be `callable`');
+            throw self::createException('a callable', $value);
         }
 
         return $value;
@@ -100,7 +100,7 @@ class Assert
     public static function resource(mixed $value): mixed
     {
         if (is_resource($value) === false) {
-            throw new RuntimeException('Expecting value to be a `resource`');
+            throw self::createException('a resource', $value);
         }
 
         return $value;
@@ -118,7 +118,7 @@ class Assert
     public static function scalar(mixed $value): mixed
     {
         if (is_scalar($value) === false) {
-            throw new RuntimeException('Expecting value to be a `scalar`');
+            throw self::createException('a scalar', $value);
         }
 
         return $value;
@@ -136,7 +136,7 @@ class Assert
     public static function object(mixed $value): mixed
     {
         if (is_object($value) === false) {
-            throw new RuntimeException('Expecting value to be a `object`');
+            throw self::createException('an object', $value);
         }
 
         return $value;
@@ -154,7 +154,7 @@ class Assert
     public static function integer(mixed $value): int
     {
         if (is_int($value) === false) {
-            throw new RuntimeException('Expecting value to be an int');
+            throw self::createException('an int', $value);
         }
 
         return $value;
@@ -172,7 +172,7 @@ class Assert
     public static function float(mixed $value): float
     {
         if (is_float($value) === false) {
-            throw new RuntimeException('Expecting value to be a float');
+            throw self::createException('a float', $value);
         }
 
         return $value;
@@ -190,7 +190,7 @@ class Assert
     public static function string(mixed $value): string
     {
         if (is_string($value) === false) {
-            throw new RuntimeException('Expecting value to be a string');
+            throw self::createException('a string', $value);
         }
 
         return $value;
@@ -202,6 +202,7 @@ class Assert
      * @phpstan-assert non-empty-string $value
      *
      * @param T                         $value
+     *
      * @return T&non-empty-string
      */
     public static function nonEmptyString(mixed $value): string
@@ -209,7 +210,7 @@ class Assert
         Assert::string($value);
 
         if (strlen($value) === 0) {
-            throw new RuntimeException('Expecting value to be a non empty string');
+            throw self::createException('a non empty string', $value);
         }
 
         return $value;
@@ -227,7 +228,7 @@ class Assert
     public static function boolean(mixed $value): bool
     {
         if (is_bool($value) === false) {
-            throw new RuntimeException('Expecting value to be a boolean');
+            throw self::createException('a boolean', $value);
         }
 
         return $value;
@@ -245,7 +246,7 @@ class Assert
     public static function true(mixed $value): bool
     {
         if ($value !== true) {
-            throw new RuntimeException('Expecting value to be true');
+            throw self::createException('true', $value);
         }
 
         return true;
@@ -263,7 +264,7 @@ class Assert
     public static function false(mixed $value): bool
     {
         if ($value !== false) {
-            throw new RuntimeException('Expecting value to be false');
+            throw self::createException('false', $value);
         }
 
         return false;
@@ -274,14 +275,14 @@ class Assert
      * @template       T
      * @phpstan-assert !false $value
      *
-     * @param T|false $value
+     * @param T|false         $value
      *
      * @return T
      */
     public static function notFalse(mixed $value): mixed
     {
         if ($value === false) {
-            throw new RuntimeException('Expecting value to be not false');
+            throw self::createException('not false', $value);
         }
 
         return $value;
@@ -299,9 +300,16 @@ class Assert
     public static function isInstanceOf(mixed $value, string $classString): object
     {
         if ($value instanceof $classString === false) {
-            throw new RuntimeException('Expecting value to be instance of ' . $classString);
+            throw self::createException('instance of ' . $classString, $value);
         }
 
         return $value;
+    }
+
+    private static function createException(string $expectedType, mixed $value): RuntimeException
+    {
+        $type = is_bool($value) ? ($value ? 'true' : 'false') : get_debug_type($value);
+
+        return new RuntimeException(sprintf('Expecting value to be %s, `%s` was given', $expectedType, $type));
     }
 }
