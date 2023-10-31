@@ -309,12 +309,13 @@ class Assert
     /**
      * Assert value is contained within the haystack. Strict comparison is used.
      * @template T
-     * @template R
+     * @template R of array
+     * @phpstan-assert T&value-of<R> $value
      *
      * @param T                    $value
-     * @param array<int|string, R> $haystack
+     * @param R                    $haystack
      *
-     * @return T&R
+     * @return T&value-of<R>
      */
     public static function inArray(mixed $value, array $haystack): mixed
     {
