@@ -218,4 +218,24 @@ class AssertTest extends TestCase
         static::assertSame($this, Assert::isInstanceOf($this, self::class));
         static::assertSame($this, Assert::isInstanceOf($this, TestCase::class));
     }
+
+    public function testInArrayFailure(): void
+    {
+        $value    = 5;
+        $haystack = [1, '5', false];
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be in array $values, `int` was given');
+        Assert::inArray($value, $haystack);
+    }
+
+    public function testInArraySuccess(): void
+    {
+        $values = [5, 'foobar', true, 2.3];
+
+        static::assertSame(5, Assert::inArray(5, $values));
+        static::assertSame('foobar', Assert::inArray('foobar', $values));
+        static::assertTrue(Assert::inArray(true, $values));
+        static::assertSame(2.3, Assert::inArray(2.3, $values));
+    }
 }
