@@ -23,6 +23,8 @@ A library with everyday use classes and methods:
 - `search` - Find the key of an element in an array or false otherwise. Supports `EquatableInterface`.
 - `unique` - Remove duplicate values from an array. Supports `EquatableInterface`.
 - `wrap` - Wrap a value in an array, unless it is already an array.
+- `removeTypes` - Filters an array by removing all values that match the provided types.
+- `removeNull` - Filters an array by removing all null values.
 
 ## Assert
 
