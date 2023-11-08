@@ -355,7 +355,7 @@ class Arrays
      */
     public static function removeTypes(array $items, array $disallowedTypes): array
     {
-        return array_filter($items, fn($element) => in_array(get_debug_type($element), $disallowedTypes, true) === false);
+        return array_filter($items, static fn($element) => in_array(get_debug_type($element), $disallowedTypes, true) === false);
     }
 
     /**
