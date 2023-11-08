@@ -223,6 +223,36 @@ class Arrays
     }
 
     /**
+     * Filter out elements of specified types from an array.
+     * @template T
+     * @template K
+     *
+     * @param array<K, T> $items
+     * @param string[]    $disallowedTypes
+     *
+     * @return array<K, T> The filtered array containing only elements not matching the specified types.
+     */
+    public static function removeTypes(array $items, array $disallowedTypes): array
+    {
+        return array_filter($items, static fn($element) => in_array(get_debug_type($element), $disallowedTypes, true) === false);
+    }
+
+    /**
+     * @template T
+     * @template K
+     * @param array<K, T|null> $items
+     *
+     * @return array<K, T>
+     */
+    public static function removeNull($items): array
+    {
+        /** @var array<K, T> $result */
+        $result = self::removeTypes($items, ['null']);
+
+        return $result;
+    }
+
+    /**
      * Strict test if `value` is contained within `items`. Method supports `EquatableInterface`.
      *
      * @param array<mixed|EquatableInterface> $items
@@ -340,36 +370,5 @@ class Arrays
         }
 
         return [$value];
-    }
-
-
-    /**
-     * Filter out elements of specified types from an array.
-     * @template T
-     * @template K
-     *
-     * @param array<K, T> $items
-     * @param string[]    $disallowedTypes
-     *
-     * @return array<K, T> The filtered array containing only elements not matching the specified types.
-     */
-    public static function removeTypes(array $items, array $disallowedTypes): array
-    {
-        return array_filter($items, static fn($element) => in_array(get_debug_type($element), $disallowedTypes, true) === false);
-    }
-
-    /**
-     * @template T
-     * @template K
-     * @param array<K, T|null> $items
-     *
-     * @return array<K, T>
-     */
-    public static function removeNull($items): array
-    {
-        /** @var array<K, T> $result */
-        $result = self::removeTypes($items, ['null']);
-
-        return $result;
     }
 }
