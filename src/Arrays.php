@@ -341,4 +341,30 @@ class Arrays
 
         return [$value];
     }
+
+
+    /**
+     * Filter out elements of specified types from an array.
+     * @template T
+     *
+     * @param T[]      $items
+     * @param string[] $disallowedTypes
+     *
+     * @return T[] The filtered array containing only elements not matching the specified types.
+     */
+    public static function removeTypes(array $items, array $disallowedTypes): array
+    {
+        return array_filter($items, fn($element) => in_array(get_debug_type($element), $disallowedTypes) === false);
+    }
+
+    /**
+     * @template T
+     * @param array<T|null> $items
+     * @phpstan-assert array<T>
+     * @return array<T>
+     */
+    public static function removeNull($items): array
+    {
+        return self::removeTypes($items, ['null']);
+    }
 }
