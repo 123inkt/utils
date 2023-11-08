@@ -359,12 +359,14 @@ class Arrays
 
     /**
      * @template T
-     * @param array<T|null> $items
-     * @return array<T>
+     * @template K
+     * @param array<K, T|null> $items
+     *
+     * @return array<K, T>
      */
     public static function removeNull($items): array
     {
-        /** @var array<T> $result */
+        /** @var array<K, T> $result */
         $result = self::removeTypes($items, ['null']);
 
         return $result;
