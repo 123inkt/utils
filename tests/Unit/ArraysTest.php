@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Arrays;
+use DR\Utils\Assert;
 use DR\Utils\Tests\Mock\MockComparable;
 use DR\Utils\Tests\Mock\MockEquatable;
 use InvalidArgumentException;
@@ -230,5 +231,23 @@ class ArraysTest extends TestCase
         static::assertSame([], Arrays::wrap(null, false));
         static::assertSame(['foobar'], Arrays::wrap('foobar'));
         static::assertSame(['foobar'], Arrays::wrap(['foobar']));
+    }
+
+    public function testRemoveTypes(): void
+    {
+        $input = [false, 0, '0', 'false', true, 1, '1', 'true'];
+        static::assertEqualsCanonicalizing([0, '0', 'false', 1, '1', 'true'], Arrays::removeTypes($input, ['bool']));
+        static::assertSame(['null'], Arrays::removeTypes(['null', null], ['null']));
+        static::assertSame(['1', 2.00], Arrays::removeTypes(['1', 2.00, 3], ['int']));
+        static::assertSame([1, '2.00'], Arrays::removeTypes([1, '2.00', 3.00], ['float']));
+        static::assertSame([], Arrays::removeTypes(['UT string'], ['string']));
+        static::assertSame([], Arrays::removeTypes([[1, 2, 3]], ['array']));
+        static::assertSame([], Arrays::removeTypes([new stdClass()], ['stdClass']));
+        static::assertSame([], Arrays::removeTypes([new Arrays()], [Arrays::class]));
+    }
+
+    public function testRemoveNull(): void
+    {
+        static::assertSame(['null'], Arrays::removeNull(['null', null]));
     }
 }
