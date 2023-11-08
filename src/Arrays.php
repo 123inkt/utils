@@ -346,11 +346,12 @@ class Arrays
     /**
      * Filter out elements of specified types from an array.
      * @template T
+     * @template K
      *
-     * @param T[]      $items
-     * @param string[] $disallowedTypes
+     * @param array<K, T> $items
+     * @param string[]    $disallowedTypes
      *
-     * @return T[] The filtered array containing only elements not matching the specified types.
+     * @return array<K, T> The filtered array containing only elements not matching the specified types.
      */
     public static function removeTypes(array $items, array $disallowedTypes): array
     {
