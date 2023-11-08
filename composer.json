@@ -48,5 +48,12 @@
         "fix:phpcbf": "phpcbf src tests",
         "test": "phpunit",
         "test:unit": "phpunit --testsuite unit"
+    },
+    "extra": {
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
+        }
     }
 }
