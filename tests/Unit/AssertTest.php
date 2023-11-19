@@ -5,6 +5,7 @@ namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Assert;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
@@ -134,6 +135,38 @@ class AssertTest extends TestCase
     public function testString(): void
     {
         static::assertSame('string', Assert::string('string'));
+    }
+
+    public function testStartsWith(): void
+    {
+        static::assertSame('string', Assert::startsWith('string', 'str'));
+        static::assertSame('string', Assert::startsWith('string', 'STR', false));
+    }
+
+    #[TestWith(['string', 'STR', true])]
+    #[TestWith(['string', 'foo', true])]
+    #[TestWith(['string', 'foo', false])]
+    public function testStartsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting `string` to end with');
+        Assert::endsWith($value, $suffix, $caseSensitive);
+    }
+
+    public function testEndsWith(): void
+    {
+        static::assertSame('string', Assert::endsWith('string', 'ing'));
+        static::assertSame('string', Assert::endsWith('string', 'ING', false));
+    }
+
+    #[TestWith(['string', 'ING', true])]
+    #[TestWith(['string', 'foo', true])]
+    #[TestWith(['string', 'foo', false])]
+    public function testEndsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting `string` to end with');
+        Assert::endsWith($value, $suffix, $caseSensitive);
     }
 
     public function testNonEmptyStringNoStringFailure(): void
