@@ -13,7 +13,6 @@ use stdClass;
 #[CoversClass(ExceptionFactory::class)]
 class ExceptionFactoryTest extends TestCase
 {
-
     #[DataProvider('dataProvider')]
     public function testCreateException(mixed $value, string $expectedMessage): void
     {
