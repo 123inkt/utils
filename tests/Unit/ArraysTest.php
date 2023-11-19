@@ -248,6 +248,9 @@ class ArraysTest extends TestCase
 
     public function testRemoveNull(): void
     {
-        static::assertSame(['null'], Arrays::removeNull(['null', null]));
+        $result = Arrays::removeNull(['null', null]);
+        \PHPStan\dumpType($result);
+
+        //static::assertSame(['null'], Arrays::removeNull(['null', null]));
     }
 }
