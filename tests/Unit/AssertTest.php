@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Assert;
+use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
@@ -237,5 +239,100 @@ class AssertTest extends TestCase
         static::assertSame('foobar', Assert::inArray('foobar', $values));
         static::assertTrue(Assert::inArray(true, $values));
         static::assertSame(2.3, Assert::inArray(2.3, $values));
+    }
+
+    #[TestWith(['/directory'])]
+    #[TestWith(['/directory/file.txt'])]
+    public function testFileExistsSuccess(string $path): void
+    {
+        $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . $path;
+        static::assertSame($path, Assert::fileExists($path));
+    }
+
+    public function testFileExistsFailure(): void
+    {
+        $baseDir = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a file or directory that exists');
+        Assert::fileExists($baseDir . '/foobar');
+    }
+
+    public function testFileSuccess(): void
+    {
+        $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . '/directory/file.txt';
+        static::assertSame($path, Assert::file($path));
+    }
+
+    #[TestWith(['/directory', 'Expecting value to be a file'])]
+    #[TestWith(['/foobar', 'Expecting value to be a file or directory that exists'])]
+    public function testFileFailure(string $path, string $expectedMessage): void
+    {
+        $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . $path;
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage($expectedMessage);
+        Assert::file($path);
+    }
+
+    public function testDirectorySuccess(): void
+    {
+        $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . '/directory';
+        static::assertSame($path, Assert::directory($path));
+    }
+
+    #[TestWith(['/directory/file.txt', 'Expecting value to be a directory'])]
+    #[TestWith(['/foobar', 'Expecting value to be a file or directory that exists'])]
+    public function testDirectoryFailure(string $path, string $expectedMessage): void
+    {
+        $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . $path;
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage($expectedMessage);
+        Assert::directory($path);
+    }
+
+    #[TestWith(['/directory'])]
+    #[TestWith(['/directory/file.txt'])]
+    public function testReadableSuccess(string $path): void
+    {
+        $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . $path;
+        static::assertSame($path, Assert::readable($path));
+    }
+
+    #[TestWith(['/directory'])]
+    #[TestWith(['/directory/file.txt'])]
+    #[TestWith(['/foobar'])]
+    public function testReadableFailure(string $path): void
+    {
+        $baseDir = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url();
+        chmod($baseDir . '/directory/file.txt', 0000);
+        chmod($baseDir . '/directory', 0000);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be readable');
+        Assert::readable($baseDir . $path);
+    }
+
+    #[TestWith(['/directory'])]
+    #[TestWith(['/directory/file.txt'])]
+    public function testWritableSuccess(string $path): void
+    {
+        $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . $path;
+        static::assertSame($path, Assert::writable($path));
+    }
+
+    #[TestWith(['/directory'])]
+    #[TestWith(['/directory/file.txt'])]
+    #[TestWith(['/foobar'])]
+    public function testWritableFailure(string $path): void
+    {
+        $baseDir = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url();
+        chmod($baseDir . '/directory/file.txt', 0000);
+        chmod($baseDir . '/directory', 0000);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be writable');
+        Assert::writable($baseDir . $path);
     }
 }

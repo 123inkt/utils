@@ -5,14 +5,18 @@ namespace DR\Utils;
 
 use DR\Utils\Exception\ExceptionFactory;
 
+use function file_exists;
 use function is_bool;
 use function is_callable;
+use function is_file;
 use function is_float;
 use function is_int;
 use function is_object;
+use function is_readable;
 use function is_resource;
 use function is_scalar;
 use function is_string;
+use function is_writable;
 
 class Assert
 {
@@ -312,8 +316,8 @@ class Assert
      * @template R of array
      * @phpstan-assert T&value-of<R> $value
      *
-     * @param T                    $value
-     * @param R                    $haystack
+     * @param T                      $value
+     * @param R                      $haystack
      *
      * @return T&value-of<R>
      */
@@ -321,6 +325,76 @@ class Assert
     {
         if (in_array($value, $haystack, true) === false) {
             throw ExceptionFactory::createException('in array $values', $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert if $value is an existing file or directory. Use Assert::file() instead if you need to be sure it is a file.
+     * @phpstan-assert string $value
+     */
+    public static function fileExists(mixed $value): string
+    {
+        static::string($value);
+        if (file_exists($value) === false) {
+            throw ExceptionFactory::createException('a file or directory that exists', $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert if $value is an existing file
+     * @phpstan-assert string $value
+     */
+    public static function file(mixed $value): string
+    {
+        static::fileExists($value);
+        if (is_file($value) === false) {
+            throw ExceptionFactory::createException('a file', $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert if $value is an existing directory
+     * @phpstan-assert string $value
+     */
+    public static function directory(mixed $value): string
+    {
+        static::fileExists($value);
+        if (is_dir($value) === false) {
+            throw ExceptionFactory::createException('a directory', $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert if $value or directory exists and is readable
+     * @phpstan-assert string $value
+     */
+    public static function readable(mixed $value): string
+    {
+        static::string($value);
+        if (is_readable($value) === false) {
+            throw ExceptionFactory::createException('readable', $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert if $value file or directory exists and is writable
+     * @phpstan-assert string $value
+     */
+    public static function writable(mixed $value): string
+    {
+        static::string($value);
+        if (is_writable($value) === false) {
+            throw ExceptionFactory::createException('writable', $value);
         }
 
         return $value;
