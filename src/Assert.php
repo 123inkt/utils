@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DR\Utils;
 
-use RuntimeException;
+use DR\Utils\Exception\ExceptionFactory;
 
 use function is_bool;
 use function is_callable;
@@ -28,7 +28,7 @@ class Assert
     public static function null(mixed $value): mixed
     {
         if ($value !== null) {
-            throw self::createException('null', $value);
+            throw ExceptionFactory::createException('null', $value);
         }
 
         return null;
@@ -46,7 +46,7 @@ class Assert
     public static function notNull(mixed $value): mixed
     {
         if ($value === null) {
-            throw self::createException('not null', $value);
+            throw ExceptionFactory::createException('not null', $value);
         }
 
         return $value;
@@ -64,7 +64,7 @@ class Assert
     public static function isArray(mixed $value): array
     {
         if (is_array($value) === false) {
-            throw self::createException('an array', $value);
+            throw ExceptionFactory::createException('an array', $value);
         }
 
         return $value;
@@ -82,7 +82,7 @@ class Assert
     public static function isCallable(mixed $value): callable
     {
         if (is_callable($value) === false) {
-            throw self::createException('a callable', $value);
+            throw ExceptionFactory::createException('a callable', $value);
         }
 
         return $value;
@@ -100,7 +100,7 @@ class Assert
     public static function resource(mixed $value): mixed
     {
         if (is_resource($value) === false) {
-            throw self::createException('a resource', $value);
+            throw ExceptionFactory::createException('a resource', $value);
         }
 
         return $value;
@@ -118,7 +118,7 @@ class Assert
     public static function scalar(mixed $value): mixed
     {
         if (is_scalar($value) === false) {
-            throw self::createException('a scalar', $value);
+            throw ExceptionFactory::createException('a scalar', $value);
         }
 
         return $value;
@@ -136,7 +136,7 @@ class Assert
     public static function object(mixed $value): mixed
     {
         if (is_object($value) === false) {
-            throw self::createException('an object', $value);
+            throw ExceptionFactory::createException('an object', $value);
         }
 
         return $value;
@@ -154,7 +154,7 @@ class Assert
     public static function integer(mixed $value): int
     {
         if (is_int($value) === false) {
-            throw self::createException('an int', $value);
+            throw ExceptionFactory::createException('an int', $value);
         }
 
         return $value;
@@ -172,7 +172,7 @@ class Assert
     public static function float(mixed $value): float
     {
         if (is_float($value) === false) {
-            throw self::createException('a float', $value);
+            throw ExceptionFactory::createException('a float', $value);
         }
 
         return $value;
@@ -190,7 +190,7 @@ class Assert
     public static function string(mixed $value): string
     {
         if (is_string($value) === false) {
-            throw self::createException('a string', $value);
+            throw ExceptionFactory::createException('a string', $value);
         }
 
         return $value;
@@ -210,7 +210,7 @@ class Assert
         Assert::string($value);
 
         if (strlen($value) === 0) {
-            throw self::createException('a non empty string', $value);
+            throw ExceptionFactory::createException('a non empty string', $value);
         }
 
         return $value;
@@ -228,7 +228,7 @@ class Assert
     public static function boolean(mixed $value): bool
     {
         if (is_bool($value) === false) {
-            throw self::createException('a boolean', $value);
+            throw ExceptionFactory::createException('a boolean', $value);
         }
 
         return $value;
@@ -246,7 +246,7 @@ class Assert
     public static function true(mixed $value): bool
     {
         if ($value !== true) {
-            throw self::createException('true', $value);
+            throw ExceptionFactory::createException('true', $value);
         }
 
         return true;
@@ -264,7 +264,7 @@ class Assert
     public static function false(mixed $value): bool
     {
         if ($value !== false) {
-            throw self::createException('false', $value);
+            throw ExceptionFactory::createException('false', $value);
         }
 
         return false;
@@ -282,7 +282,7 @@ class Assert
     public static function notFalse(mixed $value): mixed
     {
         if ($value === false) {
-            throw self::createException('not false', $value);
+            throw ExceptionFactory::createException('not false', $value);
         }
 
         return $value;
@@ -300,7 +300,7 @@ class Assert
     public static function isInstanceOf(mixed $value, string $classString): object
     {
         if ($value instanceof $classString === false) {
-            throw self::createException('instance of ' . $classString, $value);
+            throw ExceptionFactory::createException('instance of ' . $classString, $value);
         }
 
         return $value;
@@ -320,16 +320,9 @@ class Assert
     public static function inArray(mixed $value, array $haystack): mixed
     {
         if (in_array($value, $haystack, true) === false) {
-            throw self::createException('in array $values', $value);
+            throw ExceptionFactory::createException('in array $values', $value);
         }
 
         return $value;
-    }
-
-    private static function createException(string $expectedType, mixed $value): RuntimeException
-    {
-        $type = is_bool($value) ? ($value ? 'true' : 'false') : get_debug_type($value);
-
-        return new RuntimeException(sprintf('Expecting value to be %s, `%s` was given', $expectedType, $type));
     }
 }
