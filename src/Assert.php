@@ -8,6 +8,7 @@ use DR\Utils\Exception\ExceptionFactory;
 use function file_exists;
 use function is_bool;
 use function is_callable;
+use function is_dir;
 use function is_file;
 use function is_float;
 use function is_int;
