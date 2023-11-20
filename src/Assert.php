@@ -197,6 +197,90 @@ class Assert
     }
 
     /**
+     * Assert string starts with the given prefix
+     * @template T of string
+     *
+     * @param T $value
+     *
+     * @return T
+     */
+    public static function startsWith(string $value, string $prefix, bool $caseSensitive = true): string
+    {
+        if ($caseSensitive && str_starts_with($value, $prefix) === false) {
+            throw new RuntimeException(sprintf('Expecting `%s` to start with `%s`. CaseSensitive', $value, $prefix));
+        }
+
+        if ($caseSensitive === false && stripos($value, $prefix) !== 0) {
+            throw new RuntimeException(sprintf('Expecting `%s` to start with `%s` CaseInsensitive', $value, $prefix));
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert string does not start with the given prefix
+     * @template T of string
+     *
+     * @param T $value
+     *
+     * @return T
+     */
+    public static function notStartsWith(string $value, string $prefix, bool $caseSensitive = true): string
+    {
+        if ($caseSensitive && str_starts_with($value, $prefix)) {
+            throw new RuntimeException(sprintf('Expecting `%s` to not start with `%s`. CaseSensitive', $value, $prefix));
+        }
+
+        if ($caseSensitive === false && stripos($value, $prefix) === 0) {
+            throw new RuntimeException(sprintf('Expecting `%s` to not start with `%s` CaseInsensitive', $value, $prefix));
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert string ends with the given suffix
+     * @template T of string
+     *
+     * @param T $value
+     *
+     * @return T
+     */
+    public static function endsWith(string $value, string $suffix, bool $caseSensitive = true): string
+    {
+        if ($caseSensitive && str_ends_with($value, $suffix) === false) {
+            throw new RuntimeException(sprintf('Expecting `%s` to end with `%s`. CaseSensitive', $value, $suffix));
+        }
+
+        if ($caseSensitive === false && strripos($value, $suffix) !== strlen($value) - strlen($suffix)) {
+            throw new RuntimeException(sprintf('Expecting `%s` to end with `%s`. CaseSensitive', $value, $suffix));
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert string does not start with the given suffix
+     * @template T of string
+     *
+     * @param T $value
+     *
+     * @return T
+     */
+    public static function notEndsWith(string $value, string $suffix, bool $caseSensitive = true): string
+    {
+        if ($caseSensitive && str_ends_with($value, $suffix)) {
+            throw new RuntimeException(sprintf('Expecting `%s` to not end with `%s`. CaseSensitive', $value, $suffix));
+        }
+
+        if ($caseSensitive === false && strripos($value, $suffix) === strlen($value) - strlen($suffix)) {
+            throw new RuntimeException(sprintf('Expecting `%s` to not end with `%s`. CaseSensitive', $value, $suffix));
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert value is a nonempty string
      * @template       T
      * @phpstan-assert non-empty-string $value
@@ -312,8 +396,8 @@ class Assert
      * @template R of array
      * @phpstan-assert T&value-of<R> $value
      *
-     * @param T                    $value
-     * @param R                    $haystack
+     * @param T                      $value
+     * @param R                      $haystack
      *
      * @return T&value-of<R>
      */

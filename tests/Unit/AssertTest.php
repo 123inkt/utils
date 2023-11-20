@@ -5,6 +5,7 @@ namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Assert;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
@@ -134,6 +135,77 @@ class AssertTest extends TestCase
     public function testString(): void
     {
         static::assertSame('string', Assert::string('string'));
+    }
+
+    #[TestWith(['string', 'str', true])]
+    #[TestWith(['string', 'str', false])]
+    #[TestWith(['string', 'STR', false])]
+    public function testStartsWith(string $value, string $suffix, bool $caseSensitive): void
+    {
+        static::assertSame($value, Assert::startsWith($value, $suffix, $caseSensitive));
+    }
+
+    #[TestWith(['string', 'STR', true])]
+    #[TestWith(['string', 'foo', true])]
+    #[TestWith(['string', 'foo', false])]
+    public function testStartsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting `string` to start with');
+        Assert::startsWith($value, $suffix, $caseSensitive);
+    }
+
+    #[TestWith(['string', 'STR', true])]
+    #[TestWith(['string', 'foo', true])]
+    #[TestWith(['string', 'foo', false])]
+    public function testNotStartsWith(string $value, string $suffix, bool $caseSensitive): void
+    {
+        static::assertSame($value, Assert::notStartsWith($value, $suffix, $caseSensitive));
+    }
+
+    #[TestWith(['string', 'str', true])]
+    #[TestWith(['string', 'STR', false])]
+    public function testNotStartsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting `string` to not start with');
+        Assert::notStartsWith($value, $suffix, $caseSensitive);
+    }
+
+    #[TestWith(['string', 'ing', true])]
+    #[TestWith(['string', 'ing', false])]
+    #[TestWith(['string', 'ING', false])]
+    public function testEndsWith(string $value, string $suffix, bool $caseSensitive): void
+    {
+        static::assertSame($value, Assert::endsWith($value, $suffix, $caseSensitive));
+    }
+
+    #[TestWith(['string', 'ING', true])]
+    #[TestWith(['string', 'foo', true])]
+    #[TestWith(['string', 'foo', false])]
+    public function testEndsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting `string` to end with');
+        Assert::endsWith($value, $suffix, $caseSensitive);
+    }
+
+    #[TestWith(['string', 'ING', true])]
+    #[TestWith(['string', 'foo', true])]
+    #[TestWith(['string', 'foo', false])]
+    public function testNotEndsWith(string $value, string $suffix, bool $caseSensitive): void
+    {
+        static::assertSame($value, Assert::notEndsWith($value, $suffix, $caseSensitive));
+    }
+
+    #[TestWith(['string', 'ing', true])]
+    #[TestWith(['string', 'ing', false])]
+    #[TestWith(['string', 'ING', false])]
+    public function testNotEndsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting `string` to not end with');
+        Assert::notEndsWith($value, $suffix, $caseSensitive);
     }
 
     public function testNonEmptyStringNoStringFailure(): void
