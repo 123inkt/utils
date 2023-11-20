@@ -51,6 +51,11 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `notFalse`
 - `nonEmptyString`
 - `isInstanceOf`
+- `fileExists`
+- `file`
+- `directory`
+- `readable`
+- `writable`
 
 ### Example
 ```php

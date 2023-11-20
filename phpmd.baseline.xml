@@ -2,5 +2,8 @@
 <phpmd-baseline>
   <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="src/Arrays.php"/>
   <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="src/Assert.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyMethods" file="src/Assert.php"/>
   <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="src/Assert.php"/>
+  <violation rule="PHPMD\Rule\ExcessivePublicCount" file="tests/Unit/AssertTest.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="tests/Unit/AssertTest.php"/>
 </phpmd-baseline>
