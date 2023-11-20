@@ -41,6 +41,10 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `integer`
 - `float`
 - `string`
+- `startsWith`
+- `notStartsWith`
+- `endsWith`
+- `notEndsWith`
 - `boolean`
 - `true`
 - `false`
