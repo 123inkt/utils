@@ -45,8 +45,9 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
 
         /** @var ArrayType $arrayType */
         $arrayType = $scope->getType($items->value);
+        $keysType  = $arrayType instanceof ConstantArrayType ? $arrayType->getKeyTypes() : [];
         $itemsType = $arrayType->getItemType();
-        $types     = $itemsType instanceof UnionType ? $itemsType->getTypes() : [$itemsType];
+        $types     = $arrayType->getItemType() instanceof UnionType ? $itemsType->getTypes() : [$itemsType];
 
         /** @var Array_ $disallowedTypesValue */
         $disallowedTypesValue = $disallowedTypes->value;
@@ -54,9 +55,10 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         $disallowedStanTypes = $this->getDisallowedTypes($disallowedTypesValue);
 
         $allowedStanTypes = [];
-        foreach ($types as $type) {
+        foreach ($types as $index => $type) {
             foreach ($disallowedStanTypes as $disallowedStanType) {
                 if ($disallowedStanType->isSuperTypeOf($type)->yes()) {
+                    unset($keysType[$index]);
                     continue 2;
                 }
             }
@@ -66,6 +68,10 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         // all types are disallowed, will result in empty array
         if (count($allowedStanTypes) === 0) {
             return new ConstantArrayType([], []);
+        }
+
+        if ($arrayType instanceof ConstantArrayType) {
+            return new ConstantArrayType($keysType, $allowedStanTypes);
         }
 
         return new ArrayType(
