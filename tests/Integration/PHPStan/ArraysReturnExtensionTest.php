@@ -33,6 +33,6 @@ class ArraysReturnExtensionTest extends TypeInferenceTestCase
      */
     public static function getAdditionalConfigFiles(): array
     {
-        return [dirname(__DIR__, 2) . '/extension.neon'];
+        return [dirname(__DIR__, 3) . '/extension.neon'];
     }
 }
