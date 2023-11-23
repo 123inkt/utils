@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace DR\Utils\PHPStan;
 
 use DR\Utils\Arrays;
+use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Name;
+use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\PhpDoc\TypeStringResolver;
 use PHPStan\Reflection\MethodReflection;
@@ -47,7 +50,13 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         // convert the disallowed types as string to phpstan types
         $disallowedStanTypes = [];
         foreach ($disallowedTypes->value->items as $item) {
-            $disallowedStanTypes[] = $this->typeStringResolver->resolve($item->value->value);
+            if ($item->value instanceof String_) {
+                // type definition is string, convert to type object
+                $disallowedStanTypes[] = $this->typeStringResolver->resolve($item->value->value);
+            } elseif ($item->value instanceof ClassConstFetch && $item->value->class instanceof Name) {
+                // type definition is class-string, convert to type object
+                $disallowedStanTypes[] = $this->typeStringResolver->resolve($item->value->class->toString());
+            }
         }
 
         $allowedStanTypes = [];
