@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace DR\Utils\Tests\Integration\PHPStan;
 
+use DR\Utils\Assert;
 use DR\Utils\PHPStan\ArraysReturnExtension;
 use PHPStan\Testing\TypeInferenceTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -14,7 +15,9 @@ class ArraysReturnExtensionTest extends TypeInferenceTestCase
     {
         $results = self::gatherAssertTypes(__DIR__ . '/data/ArraysReturnAssertions.php');
         foreach ($results as $result) {
-            $this->assertFileAsserts(...$result);
+            $assertType = Assert::string(array_shift($result));
+            $file       = Assert::string(array_shift($result));
+            $this->assertFileAsserts($assertType, $file, ...$result);
         }
     }
 
