@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils\PHPStan;
 
 use DR\Utils\Arrays;
+use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\StaticCall;
@@ -46,18 +47,10 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         /** @var ArrayType $arrayType */
         $arrayType = $scope->getType($items->value);
         $keysType  = $arrayType instanceof ConstantArrayType ? $arrayType->getKeyTypes() : [];
+        $types     = $this->getItemTypes($arrayType);
 
-        if ($arrayType instanceof ConstantArrayType) {
-            $types = $arrayType->getValueTypes();
-        } else {
-            $itemsType = $arrayType->getItemType();
-            $types     = $arrayType->getItemType() instanceof UnionType ? $itemsType->getTypes() : [$itemsType];
-        }
-
-        /** @var Array_ $disallowedTypesValue */
-        $disallowedTypesValue = $disallowedTypes->value;
         // convert the disallowed types as string to phpstan types
-        $disallowedStanTypes = $this->getDisallowedTypes($disallowedTypesValue);
+        $disallowedStanTypes = $this->getDisallowedTypes($disallowedTypes);
 
         $allowedStanTypes = [];
         foreach ($types as $index => $type) {
@@ -88,14 +81,16 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
     /**
      * @return Type[]
      */
-    private function getDisallowedTypes(Array_ $disallowedTypes): array
+    private function getDisallowedTypes(Arg $arrayArgument): array
     {
-        if ($disallowedTypes->items === null) {
+        /** @var Array_ $disallowedTypesValue */
+        $disallowedTypesValue = $arrayArgument->value;
+        if ($disallowedTypesValue->items === null) {
             return [];
         }
 
         $disallowedStanTypes = [];
-        foreach ($disallowedTypes->items as $item) {
+        foreach ($disallowedTypesValue->items as $item) {
             if ($item?->value instanceof String_) {
                 // type definition is string, convert to type object
                 $disallowedStanTypes[] = $this->typeStringResolver->resolve($item->value->value);
@@ -106,5 +101,18 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         }
 
         return $disallowedStanTypes;
+    }
+
+    /**
+     * @return Type[]
+     */
+    private function getItemTypes(ArrayType $arrayType): array
+    {
+        if ($arrayType instanceof ConstantArrayType) {
+            return $arrayType->getValueTypes();
+        }
+        $itemsType = $arrayType->getItemType();
+
+        return $itemsType instanceof UnionType ? $itemsType->getTypes() : [$itemsType];
     }
 }
