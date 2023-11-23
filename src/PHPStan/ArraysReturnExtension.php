@@ -20,9 +20,6 @@ use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 
-/**
- * @codeCoverageIgnore - covered by integration test
- */
 class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
 {
     public function __construct(private readonly TypeStringResolver $typeStringResolver)
@@ -88,12 +85,8 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
     {
         /** @var Array_ $disallowedTypesValue */
         $disallowedTypesValue = $arrayArgument->value;
-        if ($disallowedTypesValue->items === null) {
-            return [];
-        }
-
-        $disallowedStanTypes = [];
-        foreach ($disallowedTypesValue->items as $item) {
+        $disallowedStanTypes  = [];
+        foreach ($disallowedTypesValue->items ?? [] as $item) {
             if ($item?->value instanceof String_) {
                 // type definition is string, convert to type object
                 $disallowedStanTypes[] = $this->typeStringResolver->resolve($item->value->value);
