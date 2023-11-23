@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Assert;
+use DR\Utils\Tests\Mock\MockStringable;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
+use Stringable;
 
 #[CoversClass(Assert::class)]
 class AssertTest extends TestCase
@@ -141,7 +143,8 @@ class AssertTest extends TestCase
     #[TestWith(['string', 'str', true])]
     #[TestWith(['string', 'str', false])]
     #[TestWith(['string', 'STR', false])]
-    public function testStartsWith(string $value, string $suffix, bool $caseSensitive): void
+    #[TestWith([new MockStringable('string'), 'str', true])]
+    public function testStartsWith(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         static::assertSame($value, Assert::startsWith($value, $suffix, $caseSensitive));
     }
@@ -149,7 +152,8 @@ class AssertTest extends TestCase
     #[TestWith(['string', 'STR', true])]
     #[TestWith(['string', 'foo', true])]
     #[TestWith(['string', 'foo', false])]
-    public function testStartsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    #[TestWith([new MockStringable('string'), 'STR', true])]
+    public function testStartsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting `string` to start with');
@@ -159,14 +163,16 @@ class AssertTest extends TestCase
     #[TestWith(['string', 'STR', true])]
     #[TestWith(['string', 'foo', true])]
     #[TestWith(['string', 'foo', false])]
-    public function testNotStartsWith(string $value, string $suffix, bool $caseSensitive): void
+    #[TestWith([new MockStringable('string'), 'STR', true])]
+    public function testNotStartsWith(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         static::assertSame($value, Assert::notStartsWith($value, $suffix, $caseSensitive));
     }
 
     #[TestWith(['string', 'str', true])]
     #[TestWith(['string', 'STR', false])]
-    public function testNotStartsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    #[TestWith([new MockStringable('string'), 'str', true])]
+    public function testNotStartsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting `string` to not start with');
@@ -176,7 +182,8 @@ class AssertTest extends TestCase
     #[TestWith(['string', 'ing', true])]
     #[TestWith(['string', 'ing', false])]
     #[TestWith(['string', 'ING', false])]
-    public function testEndsWith(string $value, string $suffix, bool $caseSensitive): void
+    #[TestWith([new MockStringable('string'), 'ing', true])]
+    public function testEndsWith(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         static::assertSame($value, Assert::endsWith($value, $suffix, $caseSensitive));
     }
@@ -184,7 +191,8 @@ class AssertTest extends TestCase
     #[TestWith(['string', 'ING', true])]
     #[TestWith(['string', 'foo', true])]
     #[TestWith(['string', 'foo', false])]
-    public function testEndsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    #[TestWith([new MockStringable('string'), 'ING', true])]
+    public function testEndsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting `string` to end with');
@@ -194,7 +202,8 @@ class AssertTest extends TestCase
     #[TestWith(['string', 'ING', true])]
     #[TestWith(['string', 'foo', true])]
     #[TestWith(['string', 'foo', false])]
-    public function testNotEndsWith(string $value, string $suffix, bool $caseSensitive): void
+    #[TestWith([new MockStringable('string'), 'ING', true])]
+    public function testNotEndsWith(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         static::assertSame($value, Assert::notEndsWith($value, $suffix, $caseSensitive));
     }
@@ -202,7 +211,8 @@ class AssertTest extends TestCase
     #[TestWith(['string', 'ing', true])]
     #[TestWith(['string', 'ing', false])]
     #[TestWith(['string', 'ING', false])]
-    public function testNotEndsWithFailure(string $value, string $suffix, bool $caseSensitive): void
+    #[TestWith([new MockStringable('string'), 'ing', true])]
+    public function testNotEndsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting `string` to not end with');
