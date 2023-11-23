@@ -209,6 +209,8 @@ class Assert
      * @phpstan-assert string|Stringable $value
      *
      * @param T                          $value
+     *
+     * @return T&(string|Stringable)
      */
     public static function stringable(mixed $value): string|Stringable
     {
@@ -439,7 +441,7 @@ class Assert
      * Assert if $value is an existing file or directory. Use Assert::file() instead if you need to be sure it is a file.
      * @phpstan-assert string|Stringable $value
      */
-    public static function fileExists(mixed $value): string|Stringable
+    public static function fileExists(mixed $value): string
     {
         static::stringable($value);
         if (file_exists((string)$value) === false) {
