@@ -46,8 +46,13 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         /** @var ArrayType $arrayType */
         $arrayType = $scope->getType($items->value);
         $keysType  = $arrayType instanceof ConstantArrayType ? $arrayType->getKeyTypes() : [];
-        $itemsType = $arrayType->getItemType();
-        $types     = $arrayType->getItemType() instanceof UnionType ? $itemsType->getTypes() : [$itemsType];
+
+        if ($arrayType instanceof ConstantArrayType) {
+            $types = $arrayType->getValueTypes();
+        } else {
+            $itemsType = $arrayType->getItemType();
+            $types     = $arrayType->getItemType() instanceof UnionType ? $itemsType->getTypes() : [$itemsType];
+        }
 
         /** @var Array_ $disallowedTypesValue */
         $disallowedTypesValue = $disallowedTypes->value;

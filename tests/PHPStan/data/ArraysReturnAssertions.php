@@ -39,5 +39,10 @@ class ArraysReturnAssertions
         /** @var array<int|string|true|null> $data */
         $data = [123, 'string', true, null];
         assertType("array<string|true|null>", Arrays::removeTypes($data, ['int']));
+
+        /** @var array<int|stdClass> $data */
+        $data = [123, new stdClass()];
+        assertType("array<int>", Arrays::removeTypes($data, [stdClass::class]));
+        assertType("array<stdClass>", Arrays::removeTypes($data, ['int']));
     }
 }
