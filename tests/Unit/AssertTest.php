@@ -140,6 +140,21 @@ class AssertTest extends TestCase
         static::assertSame('string', Assert::string('string'));
     }
 
+    public function testStringableFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a string or Stringable, `123 (int)` was given');
+        Assert::stringable(123); // @phpstan-ignore-line
+    }
+
+    public function testStringable(): void
+    {
+        static::assertSame('string', Assert::stringable('string'));
+
+        $stringable = new MockStringable('string');
+        static::assertSame($stringable, Assert::stringable($stringable));
+    }
+
     #[TestWith(['string', 'str', true])]
     #[TestWith(['string', 'str', false])]
     #[TestWith(['string', 'STR', false])]
