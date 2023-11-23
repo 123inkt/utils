@@ -86,7 +86,7 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         /** @var Array_ $disallowedTypesValue */
         $disallowedTypesValue = $arrayArgument->value;
         $disallowedStanTypes  = [];
-        foreach ($disallowedTypesValue->items ?? [] as $item) {
+        foreach ($disallowedTypesValue->items as $item) {
             if ($item?->value instanceof String_) {
                 // type definition is string, convert to type object
                 $disallowedStanTypes[] = $this->typeStringResolver->resolve($item->value->value);
