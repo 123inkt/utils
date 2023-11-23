@@ -71,7 +71,7 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         }
 
         if ($arrayType instanceof ConstantArrayType) {
-            return new ConstantArrayType($keysType, $allowedStanTypes);
+            return new ConstantArrayType(array_values($keysType), $allowedStanTypes);
         }
 
         return new ArrayType(
