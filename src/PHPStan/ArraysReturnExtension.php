@@ -20,6 +20,9 @@ use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 
+/**
+ * @codeCoverageIgnore - covered by integration test
+ */
 class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
 {
     public function __construct(private readonly TypeStringResolver $typeStringResolver)

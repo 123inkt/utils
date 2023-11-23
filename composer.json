@@ -18,7 +18,8 @@
     "autoload-dev": {
         "psr-4": {
             "DR\\Utils\\Tests\\": "tests/",
-            "DR\\Utils\\Tests\\Unit\\": "tests/Unit/"
+            "DR\\Utils\\Tests\\Unit\\": "tests/Unit/",
+            "DR\\Utils\\Tests\\Integration\\": "tests/Integration/"
         }
     },
     "require": {

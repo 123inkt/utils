@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DR\Utils\Tests\PHPStan;
+namespace DR\Utils\Tests\Integration\PHPStan;
 
 use DR\Utils\PHPStan\ArraysReturnExtension;
 use PHPStan\Testing\TypeInferenceTestCase;
