@@ -244,12 +244,9 @@ class Arrays
      *
      * @return array<K, T>
      */
-    public static function removeNull($items): array
+    public static function removeNull(array $items): array
     {
-        /** @var array<K, T> $result */
-        $result = self::removeTypes($items, ['null']);
-
-        return $result;
+        return self::removeTypes($items, ['null']);
     }
 
     /**
