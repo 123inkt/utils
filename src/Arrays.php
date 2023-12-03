@@ -6,15 +6,21 @@ namespace DR\Utils;
 use InvalidArgumentException;
 use RuntimeException;
 
+use function array_diff_key;
+use function array_filter;
+use function array_flip;
+use function array_map;
 use function array_udiff;
 use function count;
 use function end;
 use function explode;
+use function get_debug_type;
 use function is_array;
 use function is_object;
 use function iterator_to_array;
 use function reset;
 use function spl_object_hash;
+use function strtolower;
 
 class Arrays
 {
