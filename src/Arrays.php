@@ -10,7 +10,9 @@ use function array_udiff;
 use function count;
 use function end;
 use function explode;
+use function is_array;
 use function is_object;
+use function iterator_to_array;
 use function reset;
 use function spl_object_hash;
 
@@ -20,12 +22,13 @@ class Arrays
      * Returns the first item of the array or exception otherwise
      * @template T
      *
-     * @param T[] $items
+     * @param iterable<T> $items
      *
      * @return T
      */
-    public static function first(array $items): mixed
+    public static function first(iterable $items): mixed
     {
+        $items = is_array($items) ? $items : iterator_to_array($items);
         if (count($items) === 0) {
             throw new RuntimeException('Unable to obtain first item from array');
         }
@@ -37,12 +40,14 @@ class Arrays
      * Returns the first item of the array or null otherwise
      * @template T
      *
-     * @param T[] $items
+     * @param iterable<T> $items
      *
      * @return T|null
      */
-    public static function firstOrNull(array $items): mixed
+    public static function firstOrNull(iterable $items): mixed
     {
+        $items = is_array($items) ? $items : iterator_to_array($items);
+
         return count($items) === 0 ? null : reset($items);
     }
 
@@ -50,12 +55,13 @@ class Arrays
      * Returns the last item of the array or exception otherwise
      * @template T
      *
-     * @param T[] $items
+     * @param iterable<T> $items
      *
      * @return T
      */
-    public static function last(array $items): mixed
+    public static function last(iterable $items): mixed
     {
+        $items = is_array($items) ? $items : iterator_to_array($items);
         if (count($items) === 0) {
             throw new RuntimeException('Unable to obtain last item from array');
         }
@@ -67,12 +73,14 @@ class Arrays
      * Returns the last item of the array or null otherwise
      * @template T
      *
-     * @param T[] $items
+     * @param iterable<T> $items
      *
      * @return T|null
      */
-    public static function lastOrNull(array $items): mixed
+    public static function lastOrNull(iterable $items): mixed
     {
+        $items = is_array($items) ? $items : iterator_to_array($items);
+
         return count($items) === 0 ? null : end($items);
     }
 
@@ -80,12 +88,12 @@ class Arrays
      * Returns the first item of the array that the callback returns true for. Exception otherwise
      * @template T
      *
-     * @param T[]              $items
+     * @param iterable<T>      $items
      * @param callable(T):bool $callback
      *
      * @return T|null
      */
-    public static function find(array $items, callable $callback): mixed
+    public static function find(iterable $items, callable $callback): mixed
     {
         return self::findOrNull($items, $callback) ?? throw new RuntimeException('Unable to find item in items');
     }
@@ -94,12 +102,12 @@ class Arrays
      * Returns the first item of the array that the callback returns true for. Null otherwise
      * @template T
      *
-     * @param T[]              $items
+     * @param iterable<T>      $items
      * @param callable(T):bool $callback
      *
      * @return T|null
      */
-    public static function findOrNull(array $items, callable $callback): mixed
+    public static function findOrNull(iterable $items, callable $callback): mixed
     {
         foreach ($items as $item) {
             if ($callback($item)) {
@@ -121,12 +129,12 @@ class Arrays
      * @template V
      * @template K of int|string
      *
-     * @param T[]                              $items
+     * @param iterable<T>                      $items
      * @param (callable(T): array{0: K, 1: V}) $callback
      *
      * @return array<K, V>
      */
-    public static function mapAssoc(array $items, callable $callback): array
+    public static function mapAssoc(iterable $items, callable $callback): array
     {
         $result = [];
         foreach ($items as $item) {
@@ -147,12 +155,12 @@ class Arrays
      * @template T
      * @template K of int|string
      *
-     * @param T[]              $items
+     * @param iterable<T>      $items
      * @param (callable(T): K) $callback
      *
      * @return array<K, T>
      */
-    public static function reindex(array $items, callable $callback): array
+    public static function reindex(iterable $items, callable $callback): array
     {
         $result = [];
         foreach ($items as $item) {
@@ -252,9 +260,9 @@ class Arrays
     /**
      * Strict test if `value` is contained within `items`. Method supports `EquatableInterface`.
      *
-     * @param array<mixed|EquatableInterface> $items
+     * @param iterable<int|string, mixed|EquatableInterface> $items
      */
-    public static function contains(array $items, mixed $value): bool
+    public static function contains(iterable $items, mixed $value): bool
     {
         return self::search($items, $value) !== false;
     }
@@ -264,11 +272,11 @@ class Arrays
      * determine if 2 different objects are equal.
      * @template T of array-key
      *
-     * @param array<T, mixed|EquatableInterface> $items
+     * @param iterable<T, mixed|EquatableInterface> $items
      *
      * @phpstan-return T|false
      */
-    public static function search(array $items, mixed $needle): int|string|false
+    public static function search(iterable $items, mixed $needle): int|string|false
     {
         foreach ($items as $key => $value) {
             if ($value === $needle || ($needle instanceof EquatableInterface && $needle->equalsTo($value))) {
