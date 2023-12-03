@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace DR\Utils\Tests\Unit;
 
+use ArrayIterator;
 use DR\Utils\Arrays;
-use DR\Utils\Assert;
 use DR\Utils\Tests\Mock\MockComparable;
 use DR\Utils\Tests\Mock\MockEquatable;
 use InvalidArgumentException;
@@ -26,12 +26,14 @@ class ArraysTest extends TestCase
     public function testFirst(): void
     {
         static::assertSame('foo', Arrays::first(['foo', 'bar']));
+        static::assertSame('foo', Arrays::first(new ArrayIterator(['foo', 'bar'])));
         static::assertFalse(Arrays::first([false, false]));
     }
 
     public function testFirstOrNull(): void
     {
         static::assertSame('foo', Arrays::firstOrNull(['foo', 'bar']));
+        static::assertSame('foo', Arrays::firstOrNull(new ArrayIterator(['foo', 'bar'])));
         static::assertFalse(Arrays::firstOrNull([false, false]));
         static::assertNull(Arrays::firstOrNull([]));
     }
@@ -46,12 +48,14 @@ class ArraysTest extends TestCase
     public function testLast(): void
     {
         static::assertSame('bar', Arrays::last(['foo', 'bar']));
+        static::assertSame('bar', Arrays::last(new ArrayIterator(['foo', 'bar'])));
         static::assertFalse(Arrays::last([false, false]));
     }
 
     public function testLastOrNull(): void
     {
         static::assertSame('bar', Arrays::lastOrNull(['foo', 'bar']));
+        static::assertSame('bar', Arrays::lastOrNull(new ArrayIterator(['foo', 'bar'])));
         static::assertFalse(Arrays::lastOrNull([false, false]));
         static::assertNull(Arrays::lastOrNull([]));
     }
@@ -62,6 +66,7 @@ class ArraysTest extends TestCase
 
         static::assertSame([], Arrays::mapAssoc([], $callback));
         static::assertSame(['foo' => 'bar'], Arrays::mapAssoc([['foo', 'bar']], $callback));
+        static::assertSame(['foo' => 'bar'], Arrays::mapAssoc(new ArrayIterator([['foo', 'bar']]), $callback));
         static::assertSame([2 => false, 4 => true, 6 => false], Arrays::mapAssoc([1, 2, 3], static fn(int $val) => [$val * 2, $val % 2 === 0]));
     }
 
@@ -71,6 +76,7 @@ class ArraysTest extends TestCase
 
         static::assertSame([], Arrays::reindex([], $callback));
         static::assertSame([3 => 'foo', 6 => 'foobar'], Arrays::reindex(['foo', 'foobar'], $callback));
+        static::assertSame([3 => 'foo', 6 => 'foobar'], Arrays::reindex(new ArrayIterator(['foo', 'foobar']), $callback));
     }
 
     public function testFind(): void
@@ -80,6 +86,7 @@ class ArraysTest extends TestCase
         $array = [$objA, $objB];
 
         static::assertSame($objA, Arrays::find($array, static fn($item) => $item === $objA));
+        static::assertSame($objA, Arrays::find(new ArrayIterator($array), static fn($item) => $item === $objA));
     }
 
     public function testFindFailure(): void
@@ -96,7 +103,7 @@ class ArraysTest extends TestCase
         $array = [$objA, $objB];
 
         static::assertSame($objA, Arrays::findOrNull($array, static fn($item) => $item === $objA));
-        static::assertSame($objB, Arrays::findOrNull($array, static fn($item) => $item === $objB));
+        static::assertSame($objB, Arrays::findOrNull(new ArrayIterator($array), static fn($item) => $item === $objB));
         static::assertNull(Arrays::findOrNull($array, static fn($item) => false));
     }
 
@@ -149,6 +156,7 @@ class ArraysTest extends TestCase
     {
         static::assertFalse(Arrays::contains(['foobar'], 'unknown'));
         static::assertTrue(Arrays::contains(['foobar'], 'foobar'));
+        static::assertTrue(Arrays::contains(new ArrayIterator(['foobar']), 'foobar'));
     }
 
     public function testSearch(): void
@@ -161,6 +169,7 @@ class ArraysTest extends TestCase
         static::assertFalse(Arrays::search(['foobar'], 'unknown'));
         static::assertSame(0, Arrays::search(['foobar'], 'foobar'));
         static::assertSame('foo', Arrays::search(['foo' => 'bar'], 'bar'));
+        static::assertSame('foo', Arrays::search(new ArrayIterator(['foo' => 'bar']), 'bar'));
         static::assertSame(0, Arrays::search([$objA, $objB], $objA));
         static::assertSame(1, Arrays::search([$objA, $objB], $objB));
         static::assertSame(0, Arrays::search([$eqObjA, $eqObjB], $eqObjA));
