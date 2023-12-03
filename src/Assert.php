@@ -441,7 +441,7 @@ class Assert
      * Assert if $value is an existing file or directory. Use Assert::file() instead if you need to be sure it is a file.
      * @phpstan-assert string|Stringable $value
      */
-    public static function fileExists(mixed $value): string
+    public static function fileExists(mixed $value): string|Stringable
     {
         static::stringable($value);
         if (file_exists((string)$value) === false) {
