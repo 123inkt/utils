@@ -3,10 +3,3 @@ services:
 		class: DR\Utils\PHPStan\ArraysReturnExtension
 		tags:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
-
-parameters:
-  level: max
-  treatPhpDocTypesAsCertain: false
-  paths:
-    - src
-    - tests
