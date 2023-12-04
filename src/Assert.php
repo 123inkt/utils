@@ -5,6 +5,7 @@ namespace DR\Utils;
 
 use DR\Utils\Exception\ExceptionFactory;
 use RuntimeException;
+use Stringable;
 
 use function file_exists;
 use function is_bool;
@@ -203,20 +204,38 @@ class Assert
     }
 
     /**
+     * Assert value is a string or implements __toString
+     * @template       T
+     * @phpstan-assert string|Stringable $value
+     *
+     * @param T                          $value
+     *
+     * @return T&(string|Stringable)
+     */
+    public static function stringable(mixed $value): string|Stringable
+    {
+        if (is_string($value) === false && $value instanceof Stringable === false) {
+            throw ExceptionFactory::createException('a string or Stringable', $value);
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert string starts with the given prefix
-     * @template T of string
+     * @template T of string|Stringable
      *
      * @param T $value
      *
      * @return T
      */
-    public static function startsWith(string $value, string $prefix, bool $caseSensitive = true): string
+    public static function startsWith(string|Stringable $value, string $prefix, bool $caseSensitive = true): string|Stringable
     {
-        if ($caseSensitive && str_starts_with($value, $prefix) === false) {
+        if ($caseSensitive && str_starts_with((string)$value, $prefix) === false) {
             throw new RuntimeException(sprintf('Expecting `%s` to start with `%s`. CaseSensitive', $value, $prefix));
         }
 
-        if ($caseSensitive === false && stripos($value, $prefix) !== 0) {
+        if ($caseSensitive === false && stripos((string)$value, $prefix) !== 0) {
             throw new RuntimeException(sprintf('Expecting `%s` to start with `%s` CaseInsensitive', $value, $prefix));
         }
 
@@ -225,19 +244,19 @@ class Assert
 
     /**
      * Assert string does not start with the given prefix
-     * @template T of string
+     * @template T of string|Stringable
      *
      * @param T $value
      *
      * @return T
      */
-    public static function notStartsWith(string $value, string $prefix, bool $caseSensitive = true): string
+    public static function notStartsWith(string|Stringable $value, string $prefix, bool $caseSensitive = true): string|Stringable
     {
-        if ($caseSensitive && str_starts_with($value, $prefix)) {
+        if ($caseSensitive && str_starts_with((string)$value, $prefix)) {
             throw new RuntimeException(sprintf('Expecting `%s` to not start with `%s`. CaseSensitive', $value, $prefix));
         }
 
-        if ($caseSensitive === false && stripos($value, $prefix) === 0) {
+        if ($caseSensitive === false && stripos((string)$value, $prefix) === 0) {
             throw new RuntimeException(sprintf('Expecting `%s` to not start with `%s` CaseInsensitive', $value, $prefix));
         }
 
@@ -246,20 +265,21 @@ class Assert
 
     /**
      * Assert string ends with the given suffix
-     * @template T of string
+     * @template T of string|Stringable
      *
      * @param T $value
      *
      * @return T
      */
-    public static function endsWith(string $value, string $suffix, bool $caseSensitive = true): string
+    public static function endsWith(string|Stringable $value, string $suffix, bool $caseSensitive = true): string|Stringable
     {
-        if ($caseSensitive && str_ends_with($value, $suffix) === false) {
-            throw new RuntimeException(sprintf('Expecting `%s` to end with `%s`. CaseSensitive', $value, $suffix));
+        $stringValue = (string)$value;
+        if ($caseSensitive && str_ends_with($stringValue, $suffix) === false) {
+            throw new RuntimeException(sprintf('Expecting `%s` to end with `%s`. CaseSensitive', $stringValue, $suffix));
         }
 
-        if ($caseSensitive === false && strripos($value, $suffix) !== strlen($value) - strlen($suffix)) {
-            throw new RuntimeException(sprintf('Expecting `%s` to end with `%s`. CaseSensitive', $value, $suffix));
+        if ($caseSensitive === false && strripos($stringValue, $suffix) !== strlen($stringValue) - strlen($suffix)) {
+            throw new RuntimeException(sprintf('Expecting `%s` to end with `%s`. CaseSensitive', $stringValue, $suffix));
         }
 
         return $value;
@@ -267,20 +287,21 @@ class Assert
 
     /**
      * Assert string does not start with the given suffix
-     * @template T of string
+     * @template T of string|Stringable
      *
      * @param T $value
      *
      * @return T
      */
-    public static function notEndsWith(string $value, string $suffix, bool $caseSensitive = true): string
+    public static function notEndsWith(string|Stringable $value, string $suffix, bool $caseSensitive = true): string|Stringable
     {
-        if ($caseSensitive && str_ends_with($value, $suffix)) {
-            throw new RuntimeException(sprintf('Expecting `%s` to not end with `%s`. CaseSensitive', $value, $suffix));
+        $stringValue = (string)$value;
+        if ($caseSensitive && str_ends_with($stringValue, $suffix)) {
+            throw new RuntimeException(sprintf('Expecting `%s` to not end with `%s`. CaseSensitive', $stringValue, $suffix));
         }
 
-        if ($caseSensitive === false && strripos($value, $suffix) === strlen($value) - strlen($suffix)) {
-            throw new RuntimeException(sprintf('Expecting `%s` to not end with `%s`. CaseSensitive', $value, $suffix));
+        if ($caseSensitive === false && strripos($stringValue, $suffix) === strlen($stringValue) - strlen($suffix)) {
+            throw new RuntimeException(sprintf('Expecting `%s` to not end with `%s`. CaseSensitive', $stringValue, $suffix));
         }
 
         return $value;
@@ -418,12 +439,12 @@ class Assert
 
     /**
      * Assert if $value is an existing file or directory. Use Assert::file() instead if you need to be sure it is a file.
-     * @phpstan-assert string $value
+     * @phpstan-assert string|Stringable $value
      */
-    public static function fileExists(mixed $value): string
+    public static function fileExists(mixed $value): string|Stringable
     {
-        static::string($value);
-        if (file_exists($value) === false) {
+        static::stringable($value);
+        if (file_exists((string)$value) === false) {
             throw ExceptionFactory::createException('a file or directory that exists', $value);
         }
 
@@ -432,12 +453,12 @@ class Assert
 
     /**
      * Assert if $value is an existing file
-     * @phpstan-assert string $value
+     * @phpstan-assert string|Stringable $value
      */
-    public static function file(mixed $value): string
+    public static function file(mixed $value): string|Stringable
     {
         static::fileExists($value);
-        if (is_file($value) === false) {
+        if (is_file((string)$value) === false) {
             throw ExceptionFactory::createException('a file', $value);
         }
 
@@ -446,12 +467,12 @@ class Assert
 
     /**
      * Assert if $value is an existing directory
-     * @phpstan-assert string $value
+     * @phpstan-assert string|Stringable $value
      */
-    public static function directory(mixed $value): string
+    public static function directory(mixed $value): string|Stringable
     {
         static::fileExists($value);
-        if (is_dir($value) === false) {
+        if (is_dir((string)$value) === false) {
             throw ExceptionFactory::createException('a directory', $value);
         }
 
@@ -462,10 +483,10 @@ class Assert
      * Assert if $value or directory exists and is readable
      * @phpstan-assert string $value
      */
-    public static function readable(mixed $value): string
+    public static function readable(mixed $value): string|Stringable
     {
-        static::string($value);
-        if (is_readable($value) === false) {
+        static::stringable($value);
+        if (is_readable((string)$value) === false) {
             throw ExceptionFactory::createException('readable', $value);
         }
 
@@ -474,12 +495,12 @@ class Assert
 
     /**
      * Assert if $value file or directory exists and is writable
-     * @phpstan-assert string $value
+     * @phpstan-assert string|Stringable $value
      */
-    public static function writable(mixed $value): string
+    public static function writable(mixed $value): string|Stringable
     {
-        static::string($value);
-        if (is_writable($value) === false) {
+        static::stringable($value);
+        if (is_writable((string)$value) === false) {
             throw ExceptionFactory::createException('writable', $value);
         }
 

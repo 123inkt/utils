@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils\Exception;
 
 use RuntimeException;
+use Stringable;
 
 /**
  * @internal
@@ -20,6 +21,9 @@ class ExceptionFactory
             $type = round($value, 2) . ' (float)';
         } elseif (is_string($value)) {
             $type = strlen($value) === 0 ? 'empty-string' : $value . ' (string)';
+        } elseif ($value instanceof Stringable) {
+            $stringValue = (string)$value;
+            $type        = (strlen($stringValue) === 0 ? 'empty-string' : $stringValue) . ' (' . get_debug_type($value) . ')';
         } elseif (is_array($value) && count($value) === 0) {
             $type = 'empty-array';
         } else {
