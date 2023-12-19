@@ -11,7 +11,7 @@ use Stringable;
  */
 class ExceptionFactory
 {
-    public static function createException(string $expectedType, mixed $value): RuntimeException
+    public static function createException(string $expectedType, mixed $value, ?string $message = null): RuntimeException
     {
         if (is_bool($value)) {
             $type = ($value ? 'true' : 'false') . ' (bool)';
@@ -30,6 +30,8 @@ class ExceptionFactory
             $type = get_debug_type($value);
         }
 
-        return new RuntimeException(sprintf('Expecting value to be %s, `%s` was given', $expectedType, $type));
+        return new RuntimeException(
+            sprintf('Expecting value to be %s, `%s` was given%s', $expectedType, $type, $message === null ? '' : '. ' . $message)
+        );
     }
 }
