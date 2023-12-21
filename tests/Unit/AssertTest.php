@@ -19,8 +19,8 @@ class AssertTest extends TestCase
     public function testNullFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be null, `foobar (string)` was given');
-        Assert::null('foobar');
+        $this->expectExceptionMessage('Expecting value to be null, `foobar (string)` was given. More context about error.');
+        Assert::null('foobar', 'More context about error.');
     }
 
     public function testNullSuccess(): void
@@ -172,7 +172,8 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting `string` to start with');
-        Assert::startsWith($value, $suffix, $caseSensitive);
+        $this->expectExceptionMessage('More context about failure.');
+        Assert::startsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
     #[TestWith(['string', 'STR', true])]
@@ -191,7 +192,8 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting `string` to not start with');
-        Assert::notStartsWith($value, $suffix, $caseSensitive);
+        $this->expectExceptionMessage('More context about failure.');
+        Assert::notStartsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
     #[TestWith(['string', 'ing', true])]
@@ -211,7 +213,8 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting `string` to end with');
-        Assert::endsWith($value, $suffix, $caseSensitive);
+        $this->expectExceptionMessage('More context about failure.');
+        Assert::endsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
     #[TestWith(['string', 'ING', true])]
@@ -231,7 +234,8 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting `string` to not end with');
-        Assert::notEndsWith($value, $suffix, $caseSensitive);
+        $this->expectExceptionMessage('More context about failure.');
+        Assert::notEndsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
     public function testNonEmptyStringNoStringFailure(): void

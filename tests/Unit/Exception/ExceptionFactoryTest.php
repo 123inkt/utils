@@ -21,6 +21,12 @@ class ExceptionFactoryTest extends TestCase
         static::assertSame($expectedMessage, $exception->getMessage());
     }
 
+    public function testCreateExceptionWithMessage(): void
+    {
+        $exception = ExceptionFactory::createException('int', true, 'More context about error');
+        static::assertSame('Expecting value to be int, `true (bool)` was given. More context about error', $exception->getMessage());
+    }
+
     /**
      * @return Generator<string, array<int, mixed>>
      */
