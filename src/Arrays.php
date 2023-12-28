@@ -177,6 +177,32 @@ class Arrays
     }
 
     /**
+     * Group items by the given return value of the callback.
+     * <code>
+     *     $data   = [1, 2, 3, 4];
+     *     $values = Arrays::groupBy($data, fn($val) => $val % 2);
+     *     // output: [0 => [2, 4], 1 => [1, 3]]
+     * </code>
+     * @template TKey of int|string
+     * @template TValue
+     * @template K of int|string
+     *
+     * @param iterable<TKey, TValue>      $items
+     * @param (callable(TValue, TKey): K) $callback
+     *
+     * @return array<K, array<TKey, TValue>>
+     */
+    public static function groupBy(iterable $items, callable $callback): array
+    {
+        $result = [];
+        foreach ($items as $key => $value) {
+            $result[$callback($value, $key)][$key] = $value;
+        }
+
+        return $result;
+    }
+
+    /**
      * Remove an item from the given array. This method supports the EquatableInterface to
      * determine if 2 different objects are equal.
      * @template T of mixed|EquatableInterface
