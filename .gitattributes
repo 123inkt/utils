@@ -60,4 +60,5 @@
 /php*.json export-ignore
 /php*.xml export-ignore
 /php*.neon export-ignore
+/php*.dist export-ignore
 /renovate.json export-ignore

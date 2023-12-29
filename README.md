@@ -17,6 +17,7 @@ A library with everyday use classes and methods:
 - `explode` - Explode a string or null into an array, with exploding empty string to empty array.
 - `mapAssoc` - Map an array to a new array using a callback, preserving keys. 
 - `reindex` - Reindex an array with new keys based on the result of the callback.
+- `groupBy` - Group items by the given return value of the callback.
 - `remove` - Remove an element from an array based on the callback. Supports `EquatableInterface`.
 - `removeKey` - Remove an element from an array based on the key.
 - `removeKeys` - Remove multiple elements from an array based on the keys.

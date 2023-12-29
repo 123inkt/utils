@@ -79,6 +79,23 @@ class ArraysTest extends TestCase
         static::assertSame([3 => 'foo', 6 => 'foobar'], Arrays::reindex(new ArrayIterator(['foo', 'foobar']), $callback));
     }
 
+    public function testGroupBy(): void
+    {
+        $data     = ['aaa' => 1, 'bbb' => 2, 'ccc' => 3, 'ddd' => 4];
+        $callback = static fn($value) => $value % 2 === 0 ? 'even' : 'odd';
+        $expected = [
+            'odd'  => [
+                'aaa' => 1,
+                'ccc' => 3,
+            ],
+            'even' => [
+                'bbb' => 2,
+                'ddd' => 4,
+            ],
+        ];
+        static::assertSame($expected, Arrays::groupBy($data, $callback));
+    }
+
     public function testFind(): void
     {
         $objA  = new stdClass();
