@@ -116,9 +116,11 @@ class AssertTest extends TestCase
         Assert::integer('string'); // @phpstan-ignore-line
     }
 
+    #[TestWith([5])]
     #[TestWith(['5'])]
     #[TestWith(['-5'])]
     #[TestWith(['-5.5'])]
+    #[TestWith([-5.5])]
     #[TestWith(['-5.5e10'])]
     public function testNumeric(mixed $value): void
     {
