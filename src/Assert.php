@@ -168,6 +168,26 @@ class Assert
     }
 
     /**
+     * Assert the value is a numeric value. See is_numeric
+     *
+     * @template       T
+     * @phpstan-assert numeric-string $value
+     *
+     * @param T                       $value
+     *
+     * @return T&numeric-string
+     */
+    public static function numeric(mixed $value, ?string $message = null): mixed
+    {
+        if (is_numeric($value) === false) {
+            throw ExceptionFactory::createException('numeric', $value, $message);
+        }
+
+        /** @phpstan-var T&numeric-string */
+        return $value;
+    }
+
+    /**
      * Assert value is float
      * @template       T
      * @phpstan-assert float $value
