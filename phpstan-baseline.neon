@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Using nullsafe property access on non\\-nullable type PhpParser\\\\Node\\\\ArrayItem\\. Use \\-\\> instead\\.$#"
+			count: 2
+			path: src/PHPStan/ArraysReturnExtension.php
