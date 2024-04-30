@@ -371,6 +371,20 @@ class Arrays
     }
 
     /**
+     * Tests if the given arrays are equal. This method supports the ComparableInterface to determine if
+     * 2 different objects are equal.
+     * @template T of mixed|ComparableInterface
+     * @template K of mixed|ComparableInterface
+     *
+     * @param T[] $itemsA
+     * @param K[] $itemsB
+     */
+    public static function equals(array $itemsA, array $itemsB): bool
+    {
+        return count(self::diff($itemsA, $itemsB)) + count(self::diff($itemsB, $itemsA)) === 0;
+    }
+
+    /**
      * Split a string by given separator, in case `value` is empty string or null, will return empty array.
      * @return ($value is ''|null ? array{} : string[])
      */
