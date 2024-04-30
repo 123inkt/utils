@@ -237,6 +237,34 @@ class ArraysTest extends TestCase
         static::assertSame([$cmpObjC], array_values(Arrays::diff([$cmpObjB, $cmpObjC], [$cmpObjA, $cmpObjB])));
     }
 
+    public function testEquals(): void
+    {
+        $objA    = new stdClass();
+        $objB    = new stdClass();
+        $cmpObjA = new MockComparable();
+        $cmpObjB = new MockComparable();
+        $cmpObjC = new MockComparable();
+
+        // scalars
+        static::assertFalse(Arrays::equals(['foo'], ['bar']));
+        static::assertTrue(Arrays::equals(['foo', 'bar'], ['bar', 'foo']));
+        static::assertFalse(Arrays::equals(['foo', 'bar'], ['bar']));
+        static::assertFalse(Arrays::equals(['bar'], ['foo', 'bar']));
+
+        // objects
+        static::assertFalse(Arrays::equals([$objA], [$objB]));
+        static::assertTrue(Arrays::equals([$objA], [$objA]));
+        static::assertFalse(Arrays::equals([$objA, $objB], [$objA]));
+        static::assertTrue(Arrays::equals([$objA, $objB], [$objA, $objB]));
+        static::assertTrue(Arrays::equals([$objA, $objB], [$objB, $objA]));
+
+        // comparable interface
+        static::assertTrue(Arrays::equals([$cmpObjA, $cmpObjB], [$cmpObjA, $cmpObjB]));
+        static::assertFalse(Arrays::equals([$cmpObjA, $cmpObjB], [$cmpObjB]));
+        static::assertFalse(Arrays::equals([$cmpObjA, $cmpObjB], [$cmpObjB, $cmpObjC]));
+        static::assertFalse(Arrays::equals([$cmpObjB, $cmpObjC], [$cmpObjA, $cmpObjB]));
+    }
+
     public function testExplode(): void
     {
         static::assertSame([], Arrays::explode(',', null));

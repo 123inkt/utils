@@ -14,6 +14,7 @@ A library with everyday use classes and methods:
 - `findOrNull` - Find the first element in an array that matches a predicate, null otherwise.
 - `contains` - Test if the given value is contained within items. Supports `EquatableInterface`.
 - `diff` - Get the difference between two arrays. Supports `ComparableInterface`.
+- `equals` - Tests if two arrays have equal contents, ignoring order. Supports `ComparableInterface`.
 - `explode` - Explode a string or null into an array, with exploding empty string to empty array.
 - `mapAssoc` - Map an array to a new array using a callback, preserving keys. 
 - `reindex` - Reindex an array with new keys based on the result of the callback.
