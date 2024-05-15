@@ -19,8 +19,8 @@ class ArraysTest extends TestCase
     public function testFirstThrowsExceptionOnEmptyArray(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unable to obtain first item from array');
-        Arrays::first([]);
+        $this->expectExceptionMessage('Unable to obtain first item from array. More context for when it fails.');
+        Arrays::first([], 'More context for when it fails.');
     }
 
     public function testFirst(): void
@@ -41,8 +41,8 @@ class ArraysTest extends TestCase
     public function testLastThrowsExceptionOnEmptyArray(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unable to obtain last item from array');
-        Arrays::last([]);
+        $this->expectExceptionMessage('Unable to obtain last item from array. More context for when it fails.');
+        Arrays::last([], 'More context for when it fails.');
     }
 
     public function testLast(): void
@@ -109,8 +109,8 @@ class ArraysTest extends TestCase
     public function testFindFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unable to find item in items');
-        Arrays::find([], static fn() => true);
+        $this->expectExceptionMessage('Unable to find item in items. More context for when it fails.');
+        Arrays::find([], static fn() => true, 'More context for when it fails.');
     }
 
     public function testFindOrNull(): void
