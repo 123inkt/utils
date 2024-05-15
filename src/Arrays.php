@@ -32,11 +32,11 @@ class Arrays
      *
      * @return T
      */
-    public static function first(iterable $items): mixed
+    public static function first(iterable $items, ?string $failureMessage = null): mixed
     {
         $items = is_array($items) ? $items : iterator_to_array($items);
         if (count($items) === 0) {
-            throw new RuntimeException('Unable to obtain first item from array');
+            throw new RuntimeException('Unable to obtain first item from array' . ($failureMessage === null ? '' : '. ' . $failureMessage));
         }
 
         return reset($items);
@@ -65,11 +65,11 @@ class Arrays
      *
      * @return T
      */
-    public static function last(iterable $items): mixed
+    public static function last(iterable $items, ?string $failureMessage = null): mixed
     {
         $items = is_array($items) ? $items : iterator_to_array($items);
         if (count($items) === 0) {
-            throw new RuntimeException('Unable to obtain last item from array');
+            throw new RuntimeException('Unable to obtain last item from array' . ($failureMessage === null ? '' : '. ' . $failureMessage));
         }
 
         return end($items);
@@ -99,9 +99,10 @@ class Arrays
      *
      * @return T|null
      */
-    public static function find(iterable $items, callable $callback): mixed
+    public static function find(iterable $items, callable $callback, ?string $failureMessage = null): mixed
     {
-        return self::findOrNull($items, $callback) ?? throw new RuntimeException('Unable to find item in items');
+        return self::findOrNull($items, $callback)
+            ?? throw new RuntimeException('Unable to find item in items' . ($failureMessage === null ? '' : '. ' . $failureMessage));
     }
 
     /**
