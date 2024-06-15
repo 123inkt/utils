@@ -35,7 +35,7 @@ class StringifyTest extends TestCase
         yield 'empty-stringable' => [new MockStringable(''), 'empty-string ' . MockStringable::class];
         yield 'empty-array' => [[], 'empty-array'];
         yield 'array-list' => [[1, 2, 3], 'array-list(3)'];
-        yield 'array' => [['foo' => 'bar'], 'array(1)'];
+        yield 'keyed-array' => [['foo' => 'bar'], 'keyed-array(1)'];
         yield 'object' => [new stdClass(), 'stdClass'];
         yield 'null' => [null, 'null'];
 

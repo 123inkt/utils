@@ -45,7 +45,7 @@ class Stringify
                 return 'array-list(' . count($value) . ')';
             }
 
-            return 'array(' . count($value) . ')';
+            return 'keyed-array(' . count($value) . ')';
         }
 
         return get_debug_type($value);
