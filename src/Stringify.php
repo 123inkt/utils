@@ -42,10 +42,11 @@ class Stringify
             return (strlen($stringValue) === 0 ? 'empty-string' : $stringValue) . ' (' . get_debug_type($value) . ')';
         }
         if (is_array($value)) {
+            $size = count($value);
             match (true) {
-                count($value) === 0   => 'empty-array',
-                array_is_list($value) => 'array-list(' . count($value) . ')',
-                default               => 'keyed-array(' . count($value) . ')',
+                $size === 0           => 'empty-array',
+                array_is_list($value) => 'array-list(' . $size . ')',
+                default               => 'keyed-array(' . $size . ')',
             };
         }
 
