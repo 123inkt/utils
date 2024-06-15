@@ -35,7 +35,7 @@ class Stringify
         if ($value instanceof Stringable) {
             $stringValue = (string)$value;
 
-            return (strlen($stringValue) === 0 ? 'empty-string' : $stringValue) . ' ' . get_debug_type($value);
+            return (strlen($stringValue) === 0 ? 'empty-string' : $stringValue) . ' (' . get_debug_type($value) . ')';
         }
         if (is_array($value)) {
             if (count($value) === 0) {

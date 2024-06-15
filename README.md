@@ -79,8 +79,8 @@ null > 'null'
 '' > 'empty-string',
 [] > 'empty-array'
 [1, 2, 3] > 'array-list(3)'
-['foo' => 'bar'] => 'array(1)'
-StringableObject => 'value (class)'
+['foo' => 'bar'] => 'keyed-array(1)'
+StringableObject => 'value (StringableObject)'
 stdClass => 'stdClass'
 resource => 'resource (stream)'
 ``` 

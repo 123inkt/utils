@@ -31,8 +31,8 @@ class StringifyTest extends TestCase
         yield 'float' => [1.1234, '1.12'];
         yield 'string' => ['foo', 'foo'];
         yield 'empty-string' => ['', 'empty-string'];
-        yield 'stringable' => [new MockStringable('foo'), 'foo ' . MockStringable::class];
-        yield 'empty-stringable' => [new MockStringable(''), 'empty-string ' . MockStringable::class];
+        yield 'stringable' => [new MockStringable('foo'), 'foo (' . MockStringable::class . ')'];
+        yield 'empty-stringable' => [new MockStringable(''), 'empty-string (' . MockStringable::class . ')'];
         yield 'empty-array' => [[], 'empty-array'];
         yield 'array-list' => [[1, 2, 3], 'array-list(3)'];
         yield 'keyed-array' => [['foo' => 'bar'], 'keyed-array(1)'];
