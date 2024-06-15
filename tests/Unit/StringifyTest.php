@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Stringify;
+use DR\Utils\Tests\Helper\TestEnum;
 use DR\Utils\Tests\Mock\MockStringable;
 use Generator;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -30,6 +31,7 @@ class StringifyTest extends TestCase
         yield 'int' => [1, '1'];
         yield 'float' => [1.1234, '1.12'];
         yield 'string' => ['foo', 'foo'];
+        yield 'enum' => [TestEnum::Foo, 'foo'];
         yield 'empty-string' => ['', 'empty-string'];
         yield 'stringable' => [new MockStringable('foo'), 'foo (' . MockStringable::class . ')'];
         yield 'empty-stringable' => [new MockStringable(''), 'empty-string (' . MockStringable::class . ')'];

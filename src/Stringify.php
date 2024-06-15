@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DR\Utils;
 
+use BackedEnum;
 use Stringable;
 
 class Stringify
@@ -28,6 +29,9 @@ class Stringify
         }
         if (is_float($value)) {
             return (string)round($value, 2);
+        }
+        if ($value instanceof BackedEnum) {
+            return $value->value;
         }
         if (is_string($value)) {
             return strlen($value) === 0 ? 'empty-string' : $value;
