@@ -43,7 +43,7 @@ class Stringify
         }
         if (is_array($value)) {
             $size = count($value);
-            match (true) {
+            return match (true) {
                 $size === 0           => 'empty-array',
                 array_is_list($value) => 'array-list(' . $size . ')',
                 default               => 'keyed-array(' . $size . ')',
