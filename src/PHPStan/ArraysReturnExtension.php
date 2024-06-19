@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace DR\Utils\PHPStan;
 
 use DR\Utils\Arrays;
-use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\PhpDoc\TypeStringResolver;
@@ -38,7 +37,6 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
      */
     public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): Type
     {
-        /** @var Array_ $disallowedTypes */
         [$items, $disallowedTypes] = $methodCall->getArgs();
 
         /** @var ArrayType $arrayType */

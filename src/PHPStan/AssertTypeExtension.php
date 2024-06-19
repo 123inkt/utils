@@ -5,7 +5,6 @@ namespace DR\Utils\PHPStan;
 
 use DR\Utils\Assert;
 use PhpParser\Node\Arg;
-use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\PhpDoc\TypeStringResolver;
@@ -38,9 +37,7 @@ class AssertTypeExtension implements DynamicStaticMethodReturnTypeExtension
      */
     public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): Type
     {
-        /** @var Array_ $allowedTypes */
         [$item, $allowedTypes] = $methodCall->getArgs();
-
         $types = $this->getTypesForArg($item, $scope);
 
         // convert the disallowed types as string to phpstan types
