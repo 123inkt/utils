@@ -345,7 +345,7 @@ class AssertTest extends TestCase
 
     public function testInArrayFailure(): void
     {
-        $value = 5;
+        $value    = 5;
         $haystack = [1, '5', false];
 
         $this->expectException(RuntimeException::class);
