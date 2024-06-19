@@ -54,19 +54,6 @@ class AssertTest extends TestCase
         static::assertSame($objects, Assert::isArray($objects));
     }
 
-    public function testIsNonEmptyArrayFailure(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting array to be non-empty. More context about failure.');
-        Assert::isNonEmptyArray([], 'More context about failure.'); // @phpstan-ignore-line
-    }
-
-    public function testIsNonEmptyArray(): void
-    {
-        $objects = [new stdClass()];
-        static::assertSame($objects, Assert::isNonEmptyArray($objects));
-    }
-
     public function testIsCallable(): void
     {
         $callable = [$this, 'testIsCallable'];
@@ -267,6 +254,19 @@ class AssertTest extends TestCase
         $this->expectExceptionMessage('Expecting `string` to not end with');
         $this->expectExceptionMessage('More context about failure.');
         Assert::notEndsWith($value, $suffix, $caseSensitive, 'More context about failure.');
+    }
+
+    public function testNonEmptyArrayFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting array to be non-empty. More context about failure.');
+        Assert::nonEmptyArray([], 'More context about failure.'); // @phpstan-ignore-line
+    }
+
+    public function testNonEmptyArray(): void
+    {
+        $objects = [new stdClass()];
+        static::assertSame($objects, Assert::nonEmptyArray($objects));
     }
 
     public function testNonEmptyStringNoStringFailure(): void
