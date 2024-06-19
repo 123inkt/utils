@@ -263,7 +263,7 @@ class Assert
 
         if ($caseSensitive === false && stripos((string)$value, $prefix) !== 0) {
             throw new RuntimeException(
-                sprintf('Expecting `%s` to start with `%s` CaseInsensitive%s', $value, $prefix, $message === null ? '' : '. ' . $message)
+                sprintf('Expecting `%s` to start with `%s`. CaseInsensitive%s', $value, $prefix, $message === null ? '' : '. ' . $message)
             );
         }
 
@@ -292,7 +292,7 @@ class Assert
 
         if ($caseSensitive === false && stripos((string)$value, $prefix) === 0) {
             throw new RuntimeException(
-                sprintf('Expecting `%s` to not start with `%s` CaseInsensitive%s', $value, $prefix, $message === null ? '' : '. ' . $message)
+                sprintf('Expecting `%s` to not start with `%s`. CaseInsensitive%s', $value, $prefix, $message === null ? '' : '. ' . $message)
             );
         }
 
