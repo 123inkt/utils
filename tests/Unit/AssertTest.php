@@ -189,8 +189,9 @@ class AssertTest extends TestCase
     public function testStartsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting `string` to start with');
-        $this->expectExceptionMessage('More context about failure.');
+        $this->expectExceptionMessageMatches(
+            '/^Expecting `string` to start with `\w+`\. (?:CaseSensitive|CaseInsensitive). More context about failure.$/'
+        );
         Assert::startsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
@@ -209,8 +210,9 @@ class AssertTest extends TestCase
     public function testNotStartsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting `string` to not start with');
-        $this->expectExceptionMessage('More context about failure.');
+        $this->expectExceptionMessageMatches(
+            '/^Expecting `string` to not start with `\w+`\. (?:CaseSensitive|CaseInsensitive). More context about failure.$/'
+        );
         Assert::notStartsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
@@ -230,8 +232,9 @@ class AssertTest extends TestCase
     public function testEndsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting `string` to end with');
-        $this->expectExceptionMessage('More context about failure.');
+        $this->expectExceptionMessageMatches(
+            '/^Expecting `string` to end with `\w+`\. (?:CaseSensitive|CaseInsensitive). More context about failure.$/'
+        );
         Assert::endsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
@@ -251,8 +254,9 @@ class AssertTest extends TestCase
     public function testNotEndsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting `string` to not end with');
-        $this->expectExceptionMessage('More context about failure.');
+        $this->expectExceptionMessageMatches(
+            '/^Expecting `string` to not end with `\w+`\. (?:CaseSensitive|CaseInsensitive). More context about failure.$/'
+        );
         Assert::notEndsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
