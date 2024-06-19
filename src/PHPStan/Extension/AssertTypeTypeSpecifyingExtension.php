@@ -26,10 +26,16 @@ class AssertTypeTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExt
 {
     private TypeSpecifier $typeSpecifier;
 
+    /**
+     * @codeCoverageIgnore Will only be hit during initialisation
+     */
     public function __construct(private readonly AssertTypeMethodTypeNarrower $typeNarrower)
     {
     }
 
+    /**
+     * @codeCoverageIgnore Will only be hit during initialisation
+     */
     public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
