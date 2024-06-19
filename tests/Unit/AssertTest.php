@@ -181,7 +181,7 @@ class AssertTest extends TestCase
     #[TestWith([[], 'array'])]
     public function testType(mixed $value, string $type): void
     {
-        static::assertSame($value, Assert::type($value, [$type]));
+        static::assertSame($value, Assert::type($value, [$type])); // @phpstan-ignore-line
     }
 
     /**
@@ -193,7 +193,7 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be in type');
-        Assert::type($value, $types);
+        Assert::type($value, $types); // @phpstan-ignore-line
     }
 
     #[TestWith(['string', 'str', true])]

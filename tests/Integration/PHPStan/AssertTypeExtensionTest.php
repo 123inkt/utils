@@ -6,13 +6,13 @@ namespace DR\Utils\Tests\Integration\PHPStan;
 use DR\Utils\Assert;
 use DR\Utils\PHPStan\Extension\AssertTypeReturnExtension;
 use DR\Utils\PHPStan\Extension\AssertTypeTypeSpecifyingExtension;
-use DR\Utils\PHPStan\Lib\AssertTypeMethodTypeNarrower;
+use DR\Utils\PHPStan\Lib\TypeNarrower;
 use PHPStan\Testing\TypeInferenceTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AssertTypeReturnExtension::class)]
 #[CoversClass(AssertTypeTypeSpecifyingExtension::class)]
-#[CoversClass(AssertTypeMethodTypeNarrower::class)]
+#[CoversClass(TypeNarrower::class)]
 class AssertTypeExtensionTest extends TypeInferenceTestCase
 {
     public function testFileAsserts(): void

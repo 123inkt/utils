@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils\PHPStan\Extension;
 
 use DR\Utils\Arrays;
-use DR\Utils\PHPStan\Lib\AssertTypeMethodTypeNarrower;
+use DR\Utils\PHPStan\Lib\TypeNarrower;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
@@ -20,7 +20,7 @@ class ArraysRemoveTypesReturnExtension implements DynamicStaticMethodReturnTypeE
     /**
      * @codeCoverageIgnore Will only be hit during initialisation
      */
-    public function __construct(private readonly AssertTypeMethodTypeNarrower $typeNarrower)
+    public function __construct(private readonly TypeNarrower $typeNarrower)
     {
     }
 

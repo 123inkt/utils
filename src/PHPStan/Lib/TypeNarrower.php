@@ -16,7 +16,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\UnionType;
 
-class AssertTypeMethodTypeNarrower
+class TypeNarrower
 {
     public function __construct(private readonly TypeStringResolver $typeStringResolver)
     {
@@ -42,10 +42,9 @@ class AssertTypeMethodTypeNarrower
      */
     public function getTypesFromStringArray(Arg $arg): array
     {
+        /** @var Array_ $argValue */
         $argValue = $arg->value;
-        assert($argValue instanceof Array_);
-
-        $types = [];
+        $types    = [];
         foreach ($argValue->items as $item) {
             if ($item?->value instanceof String_) {
                 // type definition is string, convert to type object
