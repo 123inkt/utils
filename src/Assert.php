@@ -78,6 +78,27 @@ class Assert
     }
 
     /**
+     * Assert value is a non-empty array
+     * @template       T
+     * @phpstan-assert non-empty-array $value
+     *
+     * @param T              $value
+     *
+     * @return T&non-empty-array
+     */
+    public static function isNonEmptyArray(mixed $value, ?string $message = null): array
+    {
+        $array = static::isArray($value, $message);
+        if (count($array) === 0) {
+            throw new RuntimeException(
+                sprintf('Expecting array to be non-empty%s', $message === null ? '' : '. ' . $message)
+            );
+        }
+
+        return $array;
+    }
+
+    /**
      * Assert value is callable
      * @template       T
      * @phpstan-assert callable $value

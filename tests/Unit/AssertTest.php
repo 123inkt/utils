@@ -54,6 +54,19 @@ class AssertTest extends TestCase
         static::assertSame($objects, Assert::isArray($objects));
     }
 
+    public function testIsNonEmptyArrayFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting array to be non-empty. More context about failure.');
+        Assert::isNonEmptyArray([], 'More context about failure.'); // @phpstan-ignore-line
+    }
+
+    public function testIsNonEmptyArray(): void
+    {
+        $objects = [new stdClass()];
+        static::assertSame($objects, Assert::isNonEmptyArray($objects));
+    }
+
     public function testIsCallable(): void
     {
         $callable = [$this, 'testIsCallable'];
