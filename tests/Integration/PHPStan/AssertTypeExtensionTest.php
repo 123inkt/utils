@@ -7,7 +7,6 @@ use DR\Utils\Assert;
 use DR\Utils\PHPStan\Extension\AssertTypeReturnExtension;
 use DR\Utils\PHPStan\Extension\AssertTypeTypeSpecifyingExtension;
 use DR\Utils\PHPStan\Lib\AssertTypeMethodTypeNarrower;
-use DR\Utils\PHPStan\Lib\TypeUtil;
 use PHPStan\Testing\TypeInferenceTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

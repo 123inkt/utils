@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace DR\Utils\PHPStan;
+namespace DR\Utils\PHPStan\Extension;
 
 use DR\Utils\Arrays;
+use DR\Utils\PHPStan\Lib\AssertTypeMethodTypeNarrower;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Analyser\Scope;
-use PHPStan\PhpDoc\TypeStringResolver;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\ShouldNotHappenException;
 use PHPStan\Type\ArrayType;
@@ -15,9 +15,9 @@ use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 
-class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
+class ArraysRemoveTypesReturnExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    public function __construct(private readonly TypeStringResolver $typeStringResolver)
+    public function __construct(private readonly AssertTypeMethodTypeNarrower $typeNarrower)
     {
     }
 
@@ -45,7 +45,7 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         $types     = $this->getItemTypes($arrayType);
 
         // convert the disallowed types as string to phpstan types
-        $disallowedStanTypes = TypeUtil::getTypesFromStringArray($this->typeStringResolver, $disallowedTypes);
+        $disallowedStanTypes = $this->typeNarrower->getTypesFromStringArray($disallowedTypes);
 
         $allowedStanTypes = [];
         foreach ($types as $index => $type) {

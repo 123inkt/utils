@@ -26,14 +26,21 @@ class AssertTypeMethodTypeNarrower
     {
         // convert the disallowed types as string to phpstan types
         $allowedStanTypes = $this->getTypesFromStringArray($allowedTypes);
+        $type             = match (true) {
+            count($allowedStanTypes) === 0 => new NeverType(),
+            count($allowedStanTypes) === 1 => reset($allowedStanTypes),
+            default                        => new UnionType($allowedStanTypes),
+        };
 
-        return TypeCombinator::intersect($scope->getType($item->value), $allowedStanTypes);
+        return TypeCombinator::intersect($scope->getType($item->value), $type);
     }
 
     /**
      * @param Arg $arg arg of type Array
+     *
+     * @return Type[]
      */
-    public function getTypesFromStringArray(Arg $arg): Type
+    public function getTypesFromStringArray(Arg $arg): array
     {
         $argValue = $arg->value;
         assert($argValue instanceof Array_);
@@ -49,10 +56,6 @@ class AssertTypeMethodTypeNarrower
             }
         }
 
-        return match (true) {
-            count($types) === 0 => new NeverType(),
-            count($types) === 1 => reset($types),
-            default             => new UnionType($types),
-        };
+        return $types;
     }
 }
