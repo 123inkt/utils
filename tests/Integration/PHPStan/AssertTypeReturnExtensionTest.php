@@ -5,10 +5,13 @@ namespace DR\Utils\Tests\Integration\PHPStan;
 
 use DR\Utils\Assert;
 use DR\Utils\PHPStan\ArraysReturnExtension;
+use DR\Utils\PHPStan\AssertTypeExtension;
+use DR\Utils\PHPStan\TypeUtil;
 use PHPStan\Testing\TypeInferenceTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(ArraysReturnExtension::class)]
+#[CoversClass(AssertTypeExtension::class)]
+#[CoversClass(TypeUtil::class)]
 class AssertTypeReturnExtensionTest extends TypeInferenceTestCase
 {
     public function testFileAsserts(): void
