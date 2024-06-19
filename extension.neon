@@ -1,5 +1,9 @@
 services:
-	-
-		class: DR\Utils\PHPStan\ArraysReturnExtension
-		tags:
-			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+    -
+        class: DR\Utils\PHPStan\ArraysReturnExtension
+        tags:
+            - phpstan.broker.dynamicStaticMethodReturnTypeExtension
+    -
+        class: DR\Utils\PHPStan\AssertTypeExtension
+        tags:
+            - phpstan.broker.dynamicStaticMethodReturnTypeExtension
