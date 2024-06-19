@@ -8,6 +8,9 @@ use RuntimeException;
 use Stringable;
 
 use function file_exists;
+use function get_debug_type;
+use function implode;
+use function in_array;
 use function is_bool;
 use function is_callable;
 use function is_dir;
@@ -169,7 +172,6 @@ class Assert
 
     /**
      * Assert the value is a numeric value. See is_numeric
-     *
      * @template       T
      * @phpstan-assert numeric-string $value
      *
@@ -236,6 +238,23 @@ class Assert
     {
         if (is_string($value) === false && $value instanceof Stringable === false) {
             throw ExceptionFactory::createException('a string or Stringable', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is at least one of the given types
+     * @template T
+     * @param T        $value
+     * @param string[] $types
+     *
+     * @return T;
+     */
+    public static function type(mixed $value, array $types, ?string $message = null): mixed
+    {
+        if (in_array(get_debug_type($value), $types, true) === false) {
+            throw ExceptionFactory::createException('in type (' . implode(',', $types) . ')', $value, $message);
         }
 
         return $value;
