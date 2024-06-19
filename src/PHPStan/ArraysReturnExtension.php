@@ -4,12 +4,8 @@ declare(strict_types=1);
 namespace DR\Utils\PHPStan;
 
 use DR\Utils\Arrays;
-use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Name;
-use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\PhpDoc\TypeStringResolver;
 use PHPStan\Reflection\MethodReflection;
@@ -42,6 +38,7 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
      */
     public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): Type
     {
+        /** @var Array_ $disallowedTypes */
         [$items, $disallowedTypes] = $methodCall->getArgs();
 
         /** @var ArrayType $arrayType */
@@ -50,7 +47,7 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
         $types     = $this->getItemTypes($arrayType);
 
         // convert the disallowed types as string to phpstan types
-        $disallowedStanTypes = $this->getDisallowedTypes($disallowedTypes);
+        $disallowedStanTypes = TypeUtil::getTypesFromStringArray($this->typeStringResolver, $disallowedTypes);
 
         $allowedStanTypes = [];
         foreach ($types as $index => $type) {
@@ -76,27 +73,6 @@ class ArraysReturnExtension implements DynamicStaticMethodReturnTypeExtension
             $arrayType->getKeyType(),
             count($allowedStanTypes) > 1 ? new UnionType($allowedStanTypes) : $allowedStanTypes[0]
         );
-    }
-
-    /**
-     * @return Type[]
-     */
-    private function getDisallowedTypes(Arg $arrayArgument): array
-    {
-        /** @var Array_ $disallowedTypesValue */
-        $disallowedTypesValue = $arrayArgument->value;
-        $disallowedStanTypes  = [];
-        foreach ($disallowedTypesValue->items as $item) {
-            if ($item?->value instanceof String_) {
-                // type definition is string, convert to type object
-                $disallowedStanTypes[] = $this->typeStringResolver->resolve($item->value->value);
-            } elseif ($item?->value instanceof ClassConstFetch && $item->value->class instanceof Name) {
-                // type definition is class-string, convert to type object
-                $disallowedStanTypes[] = $this->typeStringResolver->resolve($item->value->class->toString());
-            }
-        }
-
-        return $disallowedStanTypes;
     }
 
     /**
