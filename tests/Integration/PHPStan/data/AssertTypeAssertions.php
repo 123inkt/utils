@@ -23,6 +23,11 @@ class AssertTypeAssertions
         $value = $this->getType();
         Assert::type($value, ['float']);
         assertType("float", $value);
+
+        // assert to invalid type
+        $value = $this->getType();
+        Assert::type($value, ['object']);
+        assertType("*NEVER*", $value);
     }
 
     private function getType(): bool|int|float|string|array|null

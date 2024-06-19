@@ -1,9 +1,15 @@
 services:
     -
-        class: DR\Utils\PHPStan\ArraysReturnExtension
+        class: DR\Utils\PHPStan\Extension\ArraysRemoveTypesReturnExtension
         tags:
             - phpstan.broker.dynamicStaticMethodReturnTypeExtension
     -
-        class: DR\Utils\PHPStan\AssertTypeExtension
+        class: DR\Utils\PHPStan\Extension\AssertTypeReturnExtension
         tags:
             - phpstan.broker.dynamicStaticMethodReturnTypeExtension
+    -
+        class: DR\Utils\PHPStan\Extension\AssertTypeTypeSpecifyingExtension
+        tags:
+            - phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension
+    -
+        class: DR\Utils\PHPStan\Lib\AssertTypeMethodTypeNarrower

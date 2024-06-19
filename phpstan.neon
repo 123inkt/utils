@@ -1,6 +1,6 @@
 services:
 	-
-		class: DR\Utils\PHPStan\ArraysReturnExtension
+		class: DR\Utils\PHPStan\ArraysRemoveTypesReturnExtension
 		tags:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
 
