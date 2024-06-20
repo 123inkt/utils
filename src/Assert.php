@@ -245,7 +245,7 @@ class Assert
      * Assert value is a class-string
      * @template       T
      *
-     * @phpstan-assert string $value
+     * @phpstan-assert class-string $value
      *
      * @param T               $value
      *
