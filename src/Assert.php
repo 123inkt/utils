@@ -242,6 +242,27 @@ class Assert
     }
 
     /**
+     * Assert value is a class-string
+     * @template       T
+     *
+     * @phpstan-assert string $value
+     *
+     * @param T               $value
+     *
+     * @return T&class-string
+     */
+    public static function classString(mixed $value, ?string $message = null): string
+    {
+        self::string($value, $message);
+
+        if (class_exists($value) === false) {
+            throw ExceptionFactory::createException('a class-string but class does not exist', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert string starts with the given prefix
      * @template T of string|Stringable
      *

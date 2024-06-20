@@ -173,6 +173,27 @@ class AssertTest extends TestCase
         static::assertSame($stringable, Assert::stringable($stringable));
     }
 
+    #[TestWith([Assert::class])]
+    #[TestWith(['DR\Utils\Assert'])]
+    public function testClassString(string $value): void
+    {
+        static::assertSame($value, Assert::classString($value));
+    }
+
+    public function testClassStringStringFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given');
+        Assert::classString(123);
+    }
+
+    public function testClassStringClassFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a class-string but class does not exist, `DR\Utils\FakeClass (string)` was given');
+        Assert::classString('DR\Utils\FakeClass');
+    }
+
     #[TestWith(['string', 'str', true])]
     #[TestWith(['string', 'str', false])]
     #[TestWith(['string', 'STR', false])]
