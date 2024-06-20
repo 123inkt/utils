@@ -184,7 +184,7 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given');
-        Assert::classString(123);
+        Assert::classString(123); // @phpstan-ignore-line
     }
 
     public function testClassStringClassFailure(): void
