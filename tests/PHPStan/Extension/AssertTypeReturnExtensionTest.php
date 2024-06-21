@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AssertTypeReturnExtension::class)]
 class AssertTypeReturnExtensionTest extends TestCase
 {
-
     public function testGetClass(): void
     {
         $extension = new AssertTypeReturnExtension($this->createMock(TypeNarrower::class));

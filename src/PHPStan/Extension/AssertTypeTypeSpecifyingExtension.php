@@ -54,6 +54,9 @@ class AssertTypeTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExt
         return $staticMethodReflection->getName() === 'type';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function specifyTypes(
         MethodReflection $staticMethodReflection,
         StaticCall $node,
