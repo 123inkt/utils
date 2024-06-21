@@ -13,16 +13,10 @@ use PHPStan\Type\Type;
 
 class AssertTypeReturnExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    /**
-     * @codeCoverageIgnore Will only be hit during initialisation
-     */
     public function __construct(private readonly TypeNarrower $typeNarrower)
     {
     }
 
-    /**
-     * @codeCoverageIgnore Will only be hit during initialisation
-     */
     public function getClass(): string
     {
         return Assert::class;

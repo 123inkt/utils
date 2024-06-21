@@ -17,9 +17,6 @@ use PHPStan\Type\UnionType;
 
 class ArraysRemoveTypesReturnExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    /**
-     * @codeCoverageIgnore Will only be hit during initialisation
-     */
     public function __construct(private readonly TypeNarrower $typeNarrower)
     {
     }
