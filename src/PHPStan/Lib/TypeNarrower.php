@@ -43,9 +43,11 @@ class TypeNarrower
     public function getTypesFromStringArray(Arg $arg): array
     {
         $argValue = $arg->value;
+        // @codeCoverageIgnoreStart
         if ($argValue instanceof Array_ === false) {
             return [];
         }
+        // @codeCoverageIgnoreEnd
 
         $types = [];
         foreach ($argValue->items as $item) {
