@@ -42,9 +42,12 @@ class TypeNarrower
      */
     public function getTypesFromStringArray(Arg $arg): array
     {
-        /** @var Array_ $argValue */
         $argValue = $arg->value;
-        $types    = [];
+        if ($argValue instanceof Array_ === false) {
+            return [];
+        }
+
+        $types = [];
         foreach ($argValue->items as $item) {
             if ($item?->value instanceof String_) {
                 // type definition is string, convert to type object
