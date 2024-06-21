@@ -8,4 +8,4 @@ parameters:
     - src
     - tests
   excludePaths:
-    - tests/Integration/PHPStan
+    - tests/Integration/PHPStan/data
