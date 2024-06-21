@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DR\Utils\Tests\PHPStan\Lib;
+namespace DR\Utils\Tests\Unit\PHPStan\Lib;
 
 use DR\Utils\PHPStan\Lib\TypeNarrower;
 use PhpParser\Node\Arg;

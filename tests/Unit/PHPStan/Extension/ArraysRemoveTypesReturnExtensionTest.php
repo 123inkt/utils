@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DR\Utils\Tests\PHPStan\Extension;
+namespace DR\Utils\Tests\Unit\PHPStan\Extension;
 
 use DR\Utils\Arrays;
 use DR\Utils\PHPStan\Extension\ArraysRemoveTypesReturnExtension;
