@@ -44,6 +44,7 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `numeric`
 - `float`
 - `string`
+- `classString`
 - `startsWith`
 - `notStartsWith`
 - `endsWith`
@@ -52,6 +53,7 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `true`
 - `false`
 - `notFalse`
+- `nonEmptyArray`
 - `nonEmptyString`
 - `isInstanceOf`
 - `fileExists`

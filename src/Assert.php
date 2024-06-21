@@ -261,6 +261,27 @@ class Assert
     }
 
     /**
+     * Assert value is a class-string
+     * @template       T
+     *
+     * @phpstan-assert class-string $value
+     *
+     * @param T               $value
+     *
+     * @return T&class-string
+     */
+    public static function classString(mixed $value, ?string $message = null): string
+    {
+        self::string($value, $message);
+
+        if (class_exists($value) === false) {
+            throw ExceptionFactory::createException('a class-string but class does not exist', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert string starts with the given prefix
      * @template T of string|Stringable
      *
@@ -282,7 +303,7 @@ class Assert
 
         if ($caseSensitive === false && stripos((string)$value, $prefix) !== 0) {
             throw new RuntimeException(
-                sprintf('Expecting `%s` to start with `%s` CaseInsensitive%s', $value, $prefix, $message === null ? '' : '. ' . $message)
+                sprintf('Expecting `%s` to start with `%s`. CaseInsensitive%s', $value, $prefix, $message === null ? '' : '. ' . $message)
             );
         }
 
@@ -311,7 +332,7 @@ class Assert
 
         if ($caseSensitive === false && stripos((string)$value, $prefix) === 0) {
             throw new RuntimeException(
-                sprintf('Expecting `%s` to not start with `%s` CaseInsensitive%s', $value, $prefix, $message === null ? '' : '. ' . $message)
+                sprintf('Expecting `%s` to not start with `%s`. CaseInsensitive%s', $value, $prefix, $message === null ? '' : '. ' . $message)
             );
         }
 
@@ -372,6 +393,27 @@ class Assert
         }
 
         return $value;
+    }
+
+    /**
+     * Assert value is a non-empty array
+     * @template       T
+     * @phpstan-assert non-empty-array $value
+     *
+     * @param T              $value
+     *
+     * @return T&non-empty-array
+     */
+    public static function nonEmptyArray(mixed $value, ?string $message = null): array
+    {
+        $array = static::isArray($value, $message);
+        if (count($array) === 0) {
+            throw new RuntimeException(
+                sprintf('Expecting array to be non-empty%s', $message === null ? '' : '. ' . $message)
+            );
+        }
+
+        return $array;
     }
 
     /**

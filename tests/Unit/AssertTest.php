@@ -173,6 +173,27 @@ class AssertTest extends TestCase
         static::assertSame($stringable, Assert::stringable($stringable));
     }
 
+    #[TestWith([Assert::class])]
+    #[TestWith(['DR\Utils\Assert'])]
+    public function testClassString(string $value): void
+    {
+        static::assertSame($value, Assert::classString($value));
+    }
+
+    public function testClassStringStringFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given');
+        Assert::classString(123); // @phpstan-ignore-line
+    }
+
+    public function testClassStringClassFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a class-string but class does not exist, `DR\Utils\FakeClass (string)` was given');
+        Assert::classString('DR\Utils\FakeClass');
+    }
+
     #[TestWith([null, 'null'])]
     #[TestWith([true, 'bool'])]
     #[TestWith([123, 'int'])]
@@ -212,8 +233,9 @@ class AssertTest extends TestCase
     public function testStartsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting `string` to start with');
-        $this->expectExceptionMessage('More context about failure.');
+        $this->expectExceptionMessageMatches(
+            '/^Expecting `string` to start with `\w+`\. (?:CaseSensitive|CaseInsensitive). More context about failure.$/'
+        );
         Assert::startsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
@@ -232,8 +254,9 @@ class AssertTest extends TestCase
     public function testNotStartsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting `string` to not start with');
-        $this->expectExceptionMessage('More context about failure.');
+        $this->expectExceptionMessageMatches(
+            '/^Expecting `string` to not start with `\w+`\. (?:CaseSensitive|CaseInsensitive). More context about failure.$/'
+        );
         Assert::notStartsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
@@ -253,8 +276,9 @@ class AssertTest extends TestCase
     public function testEndsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting `string` to end with');
-        $this->expectExceptionMessage('More context about failure.');
+        $this->expectExceptionMessageMatches(
+            '/^Expecting `string` to end with `\w+`\. (?:CaseSensitive|CaseInsensitive). More context about failure.$/'
+        );
         Assert::endsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
@@ -274,9 +298,23 @@ class AssertTest extends TestCase
     public function testNotEndsWithFailure(string|Stringable $value, string $suffix, bool $caseSensitive): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting `string` to not end with');
-        $this->expectExceptionMessage('More context about failure.');
+        $this->expectExceptionMessageMatches(
+            '/^Expecting `string` to not end with `\w+`\. (?:CaseSensitive|CaseInsensitive). More context about failure.$/'
+        );
         Assert::notEndsWith($value, $suffix, $caseSensitive, 'More context about failure.');
+    }
+
+    public function testNonEmptyArrayFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting array to be non-empty. More context about failure.');
+        Assert::nonEmptyArray([], 'More context about failure.'); // @phpstan-ignore-line
+    }
+
+    public function testNonEmptyArray(): void
+    {
+        $objects = [new stdClass()];
+        static::assertSame($objects, Assert::nonEmptyArray($objects));
     }
 
     public function testNonEmptyStringNoStringFailure(): void
