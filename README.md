@@ -56,6 +56,7 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `nonEmptyArray`
 - `nonEmptyString`
 - `isInstanceOf`
+- `type`
 - `fileExists`
 - `file`
 - `directory`
