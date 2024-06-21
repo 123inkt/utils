@@ -194,6 +194,29 @@ class AssertTest extends TestCase
         Assert::classString('DR\Utils\FakeClass');
     }
 
+    #[TestWith([null, 'null'])]
+    #[TestWith([true, 'bool'])]
+    #[TestWith([123, 'int'])]
+    #[TestWith([12.3, 'float'])]
+    #[TestWith(['string', 'string'])]
+    #[TestWith([[], 'array'])]
+    public function testType(mixed $value, string $type): void
+    {
+        static::assertSame($value, Assert::type($value, [$type])); // @phpstan-ignore-line
+    }
+
+    /**
+     * @param string[] $types
+     */
+    #[TestWith([null, ['int', 'bool', 'float', 'array']])]
+    #[TestWith([123, ['bool', 'null']])]
+    public function testTypeFailure(mixed $value, array $types): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be in type');
+        Assert::type($value, $types); // @phpstan-ignore-line
+    }
+
     #[TestWith(['string', 'str', true])]
     #[TestWith(['string', 'str', false])]
     #[TestWith(['string', 'STR', false])]

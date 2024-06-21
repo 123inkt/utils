@@ -1,8 +1,5 @@
-services:
-	-
-		class: DR\Utils\PHPStan\ArraysReturnExtension
-		tags:
-			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+includes:
+  - extension.neon
 
 parameters:
   level: max
@@ -10,3 +7,5 @@ parameters:
   paths:
     - src
     - tests
+  excludePaths:
+    - tests/Integration/PHPStan/data

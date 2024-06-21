@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Integration\PHPStan;
 
 use DR\Utils\Assert;
-use DR\Utils\PHPStan\ArraysReturnExtension;
+use DR\Utils\PHPStan\Extension\ArraysRemoveTypesReturnExtension;
+use DR\Utils\PHPStan\Lib\TypeNarrower;
 use PHPStan\Testing\TypeInferenceTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(ArraysReturnExtension::class)]
-class ArraysReturnExtensionTest extends TypeInferenceTestCase
+#[CoversClass(ArraysRemoveTypesReturnExtension::class)]
+#[CoversClass(TypeNarrower::class)]
+class ArraysRemoveTypeReturnExtensionTest extends TypeInferenceTestCase
 {
     public function testFileAsserts(): void
     {
