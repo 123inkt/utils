@@ -6,6 +6,8 @@
   <violation rule="PHPMD\Rule\Design\TooManyMethods" file="src/Assert.php"/>
   <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="src/Assert.php"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="src/Exception/ExceptionFactory.php" method="createException"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="src/Stringify.php" method="value"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="src/Stringify.php" method="value"/>
   <violation rule="PHPMD\Rule\ExcessivePublicCount" file="tests/Unit/AssertTest.php"/>
   <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="tests/Unit/AssertTest.php"/>
 </phpmd-baseline>

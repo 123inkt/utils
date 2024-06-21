@@ -67,6 +67,26 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 $value = Assert::notNull($this->repository->find(123));
 ```
 
+## Stringify
+
+### `::value(mixed $value): string`
+Easily convert any value to a string representation. 
+```php
+true > 'true'
+false > 'false'
+null > 'null'
+123 > '123'
+1.23 > '1.23'
+'abc' > 'abc'
+'' > 'empty-string',
+[] > 'empty-array'
+[1, 2, 3] > 'array-list(3)'
+['foo' => 'bar'] => 'keyed-array(1)'
+StringableObject => 'value (StringableObject)'
+stdClass => 'stdClass'
+resource => 'resource (stream)'
+``` 
+
 ## Installation
 
 ```shell
