@@ -97,7 +97,7 @@ class Arrays
      * @param iterable<T>      $items
      * @param callable(T):bool $callback
      *
-     * @return T|null
+     * @return T
      */
     public static function find(iterable $items, callable $callback, ?string $failureMessage = null): mixed
     {
