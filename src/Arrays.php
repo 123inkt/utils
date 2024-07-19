@@ -126,6 +126,28 @@ class Arrays
     }
 
     /**
+     * Similar to <code>array_map</code> but with support for <code>iterable</code> type, and the callback
+     * receives the key as the second argument.
+     * @template T
+     * @template K of array-key
+     * @template R
+     *
+     * @param iterable<K, T>      $items
+     * @param (callable(T, K): R) $callback
+     *
+     * @return array<K, R>
+     */
+    public static function map(iterable $items, callable $callback): array
+    {
+        $result = [];
+        foreach ($items as $key => $item) {
+            $result[$key] = $callback($item, $key);
+        }
+
+        return $result;
+    }
+
+    /**
      * Map an array to key-value pair by the given return values of the callback.
      * <code>
      *      $data = [1, 2, 3];
