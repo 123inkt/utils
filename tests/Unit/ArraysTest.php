@@ -352,9 +352,6 @@ class ArraysTest extends TestCase
         Arrays::fromJson('');
     }
 
-    /**
-     * Test fromJson with an invalid JSON string.
-     */
     public function testFromJsonWithInvalidJsonString()
     {
         $this->expectException(RuntimeException::class);
