@@ -344,7 +344,7 @@ class ArraysTest extends TestCase
         static::assertEquals($expectedArray, $result);
     }
 
-    public function testFromJsonWithEmptyJsonString()
+    public function testFromJsonWithEmptyJsonString(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('JSON string is empty');
@@ -352,7 +352,7 @@ class ArraysTest extends TestCase
         Arrays::fromJson('');
     }
 
-    public function testFromJsonWithInvalidJsonString()
+    public function testFromJsonWithInvalidJsonString(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unable to convert from JSON');
