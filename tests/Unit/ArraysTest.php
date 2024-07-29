@@ -312,4 +312,55 @@ class ArraysTest extends TestCase
     {
         static::assertSame(['null'], Arrays::removeNull(['null', null]));
     }
+
+    public function testToJson(): void
+    {
+        static::assertSame('{"name":"John doe","UT":{"foo":"bar"}}', Arrays::toJson(['name' => 'John doe', 'UT' => ['foo' => 'bar']]));
+    }
+
+    public function testToJsonWithEmptyArray(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Array is empty');
+
+        Arrays::toJson([]);
+    }
+
+    public function testToJsonWithUnencodableValue(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unable to convert to Json');
+
+        Arrays::toJson(['invalid' => fopen('php://memory', 'rb')]);
+    }
+
+    public function testFromJson()
+    {
+        $jsonString = '{"key": "value", "number": 123}';
+        $expectedArray = ["key" => "value", "number" => 123];
+
+        $result = Arrays::fromJson($jsonString);
+
+        static::assertEquals($expectedArray, $result);
+    }
+
+    public function testFromJsonWithEmptyJsonString()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('JSON string is empty');
+
+        Arrays::fromJson('');
+    }
+
+    /**
+     * Test fromJson with an invalid JSON string.
+     */
+    public function testFromJsonWithInvalidJsonString()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unable to convert from JSON');
+
+        $incompleteJsonString = '{"key": "value", "number": 123';
+        Arrays::fromJson($incompleteJsonString);
+    }
 }
