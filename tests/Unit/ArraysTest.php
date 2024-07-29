@@ -60,6 +60,14 @@ class ArraysTest extends TestCase
         static::assertNull(Arrays::lastOrNull([]));
     }
 
+    public function testMap(): void
+    {
+        $callback = static fn($value, $key) => $value * $key;
+
+        static::assertSame([], Arrays::map([], $callback));
+        static::assertSame([2 => 200, 3 => 300], Arrays::map([2 => 100, 3 => 100], $callback));
+    }
+
     public function testMapAssoc(): void
     {
         $callback = static fn($value) => [(string)$value[0], $value[1]];
