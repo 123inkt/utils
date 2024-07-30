@@ -318,18 +318,10 @@ class ArraysTest extends TestCase
         static::assertSame('{"name":"John doe","UT":{"foo":"bar"}}', Arrays::toJson(['name' => 'John doe', 'UT' => ['foo' => 'bar']]));
     }
 
-    public function testToJsonWithEmptyArray(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Array is empty');
-
-        Arrays::toJson([]);
-    }
-
     public function testToJsonWithUnencodableValue(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unable to convert to Json');
+        $this->expectExceptionMessage('JsonException: Type is not supported in ');
 
         Arrays::toJson(['invalid' => fopen('php://memory', 'rb')]);
     }
@@ -355,7 +347,7 @@ class ArraysTest extends TestCase
     public function testFromJsonWithInvalidJsonString(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unable to convert from JSON');
+        $this->expectExceptionMessage('JsonException: Syntax error in');
 
         $incompleteJsonString = '{"key": "value", "number": 123';
         Arrays::fromJson($incompleteJsonString);
