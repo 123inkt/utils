@@ -449,37 +449,20 @@ class Arrays
 
     /**
      * Converts an array to a JSON string.
-     *
-     * @param array       $items
-     * @param string|null $failureMessage
-     *
-     * @return string
      */
     public static function toJson(array $items, ?string $failureMessage = null): string
     {
-        if (count($items) === 0) {
-            throw new RuntimeException('Array is empty' . ($failureMessage === null ? '' : '. ' . $failureMessage));
-        }
-
         try {
             $json = json_encode($items, JSON_THROW_ON_ERROR);
-            if ($json === false) {
-                throw new RuntimeException('Unable to convert to Json' . ($failureMessage === null ? '' : '. ' . $failureMessage));
-            }
         } catch (JsonException $e) {
-            throw new RuntimeException('Unable to convert to Json' . ($failureMessage === null ? $e : '. ' . $failureMessage));
+            throw new RuntimeException($e . ' ' . $failureMessage);
         }
 
         return $json;
     }
 
     /**
-     * Converts a JSON string to an array.
-     *
-     * @param string      $jsonString
-     * @param string|null $failureMessage
-     *
-     * @return array
+     * Converts a JSON string to an array
      */
     public static function fromJson(string $jsonString, ?string $failureMessage = null): array
     {
@@ -488,14 +471,9 @@ class Arrays
         }
 
         try {
-            $array = json_decode($jsonString, true, 512, JSON_THROW_ON_ERROR);
-            if ($array === null && json_last_error() !== JSON_ERROR_NONE) {
-                throw new RuntimeException('Unable to convert from JSON' . ($failureMessage === null ? '' : '. ' . $failureMessage));
-            }
+            return Assert::isArray(json_decode($jsonString, true, 512, JSON_THROW_ON_ERROR));
         } catch (JsonException $e) {
-            throw new RuntimeException('Unable to convert from JSON' . ($failureMessage === null ? $e : '. ' . $failureMessage));
+            throw new RuntimeException($e . ' ' . $failureMessage);
         }
-
-        return $array;
     }
 }
