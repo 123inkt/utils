@@ -453,12 +453,10 @@ class Arrays
     public static function toJson(array $items, ?string $failureMessage = null): string
     {
         try {
-            $json = json_encode($items, JSON_THROW_ON_ERROR);
+            return json_encode($items, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             throw new RuntimeException($e . ' ' . $failureMessage);
         }
-
-        return $json;
     }
 
     /**
