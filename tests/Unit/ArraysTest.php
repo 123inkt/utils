@@ -321,7 +321,7 @@ class ArraysTest extends TestCase
     public function testToJsonWithUnencodableValue(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('JsonException: Type is not supported in ');
+        $this->expectExceptionMessage('Unable to convert to Json');
 
         Arrays::toJson(['invalid' => fopen('php://memory', 'rb')]);
     }
