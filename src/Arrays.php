@@ -455,12 +455,14 @@ class Arrays
         try {
             return json_encode($items, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new RuntimeException($e . ' ' . $failureMessage);
+            throw new RuntimeException('Unable to convert to Json' . ($failureMessage === null ? '' : '. ' . $failureMessage), previous: $e);
         }
     }
 
     /**
      * Converts a JSON string to an array
+     *
+     * @return mixed[]
      */
     public static function fromJson(string $jsonString, ?string $failureMessage = null): array
     {
@@ -471,7 +473,7 @@ class Arrays
         try {
             return Assert::isArray(json_decode($jsonString, true, 512, JSON_THROW_ON_ERROR));
         } catch (JsonException $e) {
-            throw new RuntimeException($e . ' ' . $failureMessage);
+            throw new RuntimeException('Unable to convert to Json' . ($failureMessage === null ? $e : '. ' . $failureMessage), previous: $e);
         }
     }
 }
