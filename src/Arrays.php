@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils;
 
 use InvalidArgumentException;
+use JsonException;
 use RuntimeException;
 
 use function array_diff_key;
@@ -444,5 +445,37 @@ class Arrays
         }
 
         return [$value];
+    }
+
+    /**
+     * Converts an array to a JSON string.
+     *
+     * @param mixed[] $items
+     */
+    public static function toJson(array $items, ?string $failureMessage = null): string
+    {
+        try {
+            return json_encode($items, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new RuntimeException('Unable to convert to Json' . ($failureMessage === null ? '' : '. ' . $failureMessage), previous: $e);
+        }
+    }
+
+    /**
+     * Converts a JSON string to an array
+     *
+     * @return mixed[]
+     */
+    public static function fromJson(string $jsonString, ?string $failureMessage = null): array
+    {
+        if (strlen($jsonString) === 0) {
+            throw new RuntimeException('JSON string is empty' . ($failureMessage === null ? '' : '. ' . $failureMessage));
+        }
+
+        try {
+            return Assert::isArray(json_decode($jsonString, true, 512, JSON_THROW_ON_ERROR));
+        } catch (JsonException $e) {
+            throw new RuntimeException('Unable to convert to Json' . ($failureMessage === null ? $e : '. ' . $failureMessage), previous: $e);
+        }
     }
 }

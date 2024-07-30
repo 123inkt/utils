@@ -312,4 +312,44 @@ class ArraysTest extends TestCase
     {
         static::assertSame(['null'], Arrays::removeNull(['null', null]));
     }
+
+    public function testToJson(): void
+    {
+        static::assertSame('{"name":"John doe","UT":{"foo":"bar"}}', Arrays::toJson(['name' => 'John doe', 'UT' => ['foo' => 'bar']]));
+    }
+
+    public function testToJsonWithUnencodableValue(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unable to convert to Json');
+
+        Arrays::toJson(['invalid' => fopen('php://memory', 'rb')]);
+    }
+
+    public function testFromJson(): void
+    {
+        $jsonString = '{"key": "value", "number": 123}';
+        $expectedArray = ["key" => "value", "number" => 123];
+
+        $result = Arrays::fromJson($jsonString);
+
+        static::assertEquals($expectedArray, $result);
+    }
+
+    public function testFromJsonWithEmptyJsonString(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('JSON string is empty');
+
+        Arrays::fromJson('');
+    }
+
+    public function testFromJsonWithInvalidJsonString(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('JsonException: Syntax error in');
+
+        $incompleteJsonString = '{"key": "value", "number": 123';
+        Arrays::fromJson($incompleteJsonString);
+    }
 }
