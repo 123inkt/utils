@@ -326,7 +326,7 @@ class ArraysTest extends TestCase
         Arrays::toJson(['invalid' => fopen('php://memory', 'rb')]);
     }
 
-    public function testFromJson()
+    public function testFromJson(): void
     {
         $jsonString = '{"key": "value", "number": 123}';
         $expectedArray = ["key" => "value", "number" => 123];

@@ -449,6 +449,8 @@ class Arrays
 
     /**
      * Converts an array to a JSON string.
+     *
+     * @param mixed[] $items
      */
     public static function toJson(array $items, ?string $failureMessage = null): string
     {
