@@ -480,6 +480,7 @@ class Arrays
     }
 
     /**
+     * @template T
      * @param array<T|array> $array
      *
      * @return mixed[]
