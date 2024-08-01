@@ -478,4 +478,24 @@ class Arrays
             throw new RuntimeException('Unable to convert to Json' . ($failureMessage === null ? $e : '. ' . $failureMessage), previous: $e);
         }
     }
+
+    /**
+     * @template T
+     * @param mixed[] $items
+     *
+     * @return mixed[]
+     */
+    public static function flatten(array $items): array
+    {
+        $result = [];
+        foreach ($items as $item) {
+            if (is_array($item) === false) {
+                $result[] = $item;
+                continue;
+            }
+            $result = array_merge($result, self::flatten($item));
+        }
+
+        return $result;
+    }
 }
