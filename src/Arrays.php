@@ -478,4 +478,22 @@ class Arrays
             throw new RuntimeException('Unable to convert to Json' . ($failureMessage === null ? $e : '. ' . $failureMessage), previous: $e);
         }
     }
+
+    /**
+     * @param array<T|array> $array
+     *
+     * @return mixed[]
+     */
+    public static function flatten(array $array): array
+    {
+        $result = [];
+        array_walk_recursive(
+            $array,
+            static function ($item) use (&$result) {
+                $result[] = $item;
+            }
+        );
+
+        return $result;
+    }
 }

@@ -352,4 +352,20 @@ class ArraysTest extends TestCase
         $incompleteJsonString = '{"key": "value", "number": 123';
         Arrays::fromJson($incompleteJsonString);
     }
+
+    public function testFlatten(): void
+    {
+        $input = [
+            'a',
+            ['b', 'c'],
+            'd',
+            [
+                'e',
+                ['f', 'g']
+            ],
+            'h'
+        ];
+
+        static::assertSame(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], Arrays::flatten($input));
+    }
 }
