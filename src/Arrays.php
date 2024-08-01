@@ -481,7 +481,8 @@ class Arrays
 
     /**
      * @template T
-     * @param array<T|array> $array
+     * @phpstan-type arrayT = array<T>|array<arrayT>
+     * @param arrayT $array
      *
      * @return mixed[]
      */
