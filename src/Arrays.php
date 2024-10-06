@@ -247,7 +247,8 @@ class Arrays
     }
 
     /**
-     * Rename the key to the given key. Order of the keys will be preserved. If the key does not exist the array will be returned as is.
+     * Rename the key to the given key. Order of the keys will be preserved if requested.
+     * If the key does not exist the array will be returned as is.
      * @template T of mixed
      * @template K of array-key
      *
@@ -255,18 +256,25 @@ class Arrays
      *
      * @return array<K, T>
      */
-    public static function renameKey(array $items, string $fromKey, string $toKey): array
+    public static function renameKey(array $items, string $fromKey, string $toKey, bool $preserveOrder = false): array
     {
         if (array_key_exists($toKey, $items) === false) {
             return $items;
         }
 
-        $result = [];
-        foreach ($items as $key => $value) {
-            $result[$key === $fromKey ? $toKey : $key] = $value;
+        if ($preserveOrder) {
+            $result = [];
+            foreach ($items as $key => $value) {
+                $result[$key === $fromKey ? $toKey : $key] = $value;
+            }
+
+            return $result;
         }
 
-        return $result;
+        $items[$toKey] = $items[$fromKey];
+        unset($items[$fromKey]);
+
+        return $items;
     }
 
     /**
