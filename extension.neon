@@ -1,5 +1,9 @@
 services:
     -
+        class: DR\Utils\PHPStan\Extension\ArraysRenameKeyReturnExtension
+        tags:
+            - phpstan.broker.dynamicStaticMethodReturnTypeExtension
+    -
         class: DR\Utils\PHPStan\Extension\ArraysRemoveTypesReturnExtension
         tags:
             - phpstan.broker.dynamicStaticMethodReturnTypeExtension

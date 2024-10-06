@@ -256,10 +256,14 @@ class Arrays
      *
      * @return array<K, T>
      */
-    public static function renameKey(array $items, string $fromKey, string $toKey, bool $preserveOrder = false): array
+    public static function renameKey(array $items, string $fromKey, string $toKey, bool $preserveOrder = false, bool $overwrite = false): array
     {
-        if (array_key_exists($toKey, $items) === false) {
+        if (array_key_exists($fromKey, $items) === false) {
             return $items;
+        }
+
+        if ($overwrite === false && array_key_exists($toKey, $items)) {
+            throw new InvalidArgumentException('The toKey "' . $toKey . '" already exists in the array');
         }
 
         if ($preserveOrder) {
