@@ -318,7 +318,7 @@ class ArraysTest extends TestCase
     public function testRemoveTypes(): void
     {
         $input = [false, 0, '0', 'false', true, 1, '1', 'true'];
-        static::assertEqualsCanonicalizing([0, '0', 'false', 1, '1', 'true'], Arrays::removeTypes($input, ['bool']));
+        static::assertSame([0, '0', 'false', 1, '1', 'true'], array_values(Arrays::removeTypes($input, ['bool'])));
         static::assertSame(['null'], Arrays::removeTypes(['null', null], ['null']));
         static::assertSame(['1', 2.00], Arrays::removeTypes(['1', 2.00, 3], ['int']));
         static::assertSame([1, '2.00'], Arrays::removeTypes([1, '2.00', 3.00], ['float']));
