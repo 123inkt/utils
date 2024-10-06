@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace DR\Utils\PHPStan\Extension;
 
 use DR\Utils\Arrays;
-use DR\Utils\PHPStan\Lib\TypeNarrower;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
@@ -16,10 +15,6 @@ use PHPStan\Type\Type;
 
 class ArraysRenameKeyReturnExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    public function __construct(private readonly TypeNarrower $typeNarrower)
-    {
-    }
-
     public function getClass(): string
     {
         return Arrays::class;
