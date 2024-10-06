@@ -19,6 +19,7 @@ class TypeNarrowerTest extends TestCase
         $arg = new Arg($this->createMock(Expr::class));
 
         $narrower = $this->getMockBuilder(TypeNarrower::class)
+            ->onlyMethods([])
             ->disableOriginalConstructor()
             ->getMock();
 
