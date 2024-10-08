@@ -18,7 +18,11 @@ class TypeNarrowerTest extends TestCase
     {
         $arg = new Arg($this->createMock(Expr::class));
 
-        $narrower = new TypeNarrower($this->createMock(TypeStringResolver::class));
+        $narrower = $this->getMockBuilder(TypeNarrower::class)
+            ->onlyMethods([])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         static::assertSame([], $narrower->getTypesFromStringArray($arg));
     }
 }

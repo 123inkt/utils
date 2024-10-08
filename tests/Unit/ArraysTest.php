@@ -147,6 +147,26 @@ class ArraysTest extends TestCase
         static::assertSame([$eqObjA, $eqObjB], Arrays::remove([$eqObjA, $eqObjB], 'foobar'));
     }
 
+    public function testRenameKey(): void
+    {
+        static::assertSame(['foo' => 'bar'], Arrays::renameKey(['foo' => 'bar'], 'bar', 'foo'));
+        static::assertSame(['bar' => 'bar'], Arrays::renameKey(['foo' => 'bar'], 'foo', 'bar'));
+
+        // preserve order yes/no
+        static::assertSame(['foz' => 'baz', 'bar' => 'bar'], Arrays::renameKey(['foo' => 'bar', 'foz' => 'baz'], 'foo', 'bar'));
+        static::assertSame(['bar' => 'bar', 'foz' => 'baz'], Arrays::renameKey(['foo' => 'bar', 'foz' => 'baz'], 'foo', 'bar', true));
+
+        // overwrite: yes
+        static::assertSame(['foz' => 'bar'], Arrays::renameKey(['foo' => 'bar', 'foz' => 'baz'], 'foo', 'foz', false, true));
+    }
+
+    public function testRenameKeyDisallowOverwrite(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The toKey "foz" already exists in the array');
+        Arrays::renameKey(['foo' => 'bar', 'foz' => 'baz'], 'foo', 'foz');
+    }
+
     public function testRemoveKey(): void
     {
         static::assertSame(['foo' => 'bar'], Arrays::removeKey(['foo' => 'bar'], 'bar'));
@@ -298,7 +318,7 @@ class ArraysTest extends TestCase
     public function testRemoveTypes(): void
     {
         $input = [false, 0, '0', 'false', true, 1, '1', 'true'];
-        static::assertEqualsCanonicalizing([0, '0', 'false', 1, '1', 'true'], Arrays::removeTypes($input, ['bool']));
+        static::assertSame([0, '0', 'false', 1, '1', 'true'], array_values(Arrays::removeTypes($input, ['bool'])));
         static::assertSame(['null'], Arrays::removeTypes(['null', null], ['null']));
         static::assertSame(['1', 2.00], Arrays::removeTypes(['1', 2.00, 3], ['int']));
         static::assertSame([1, '2.00'], Arrays::removeTypes([1, '2.00', 3.00], ['float']));

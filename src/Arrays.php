@@ -247,6 +247,41 @@ class Arrays
     }
 
     /**
+     * Rename the key to the given key. Order of the keys will be preserved if requested.
+     * If the key does not exist the array will be returned as is.
+     * @template T of mixed
+     * @template K of array-key
+     *
+     * @param array<K, T> $items
+     *
+     * @return array<K, T>
+     */
+    public static function renameKey(array $items, string $fromKey, string $toKey, bool $preserveOrder = false, bool $overwrite = false): array
+    {
+        if (array_key_exists($fromKey, $items) === false) {
+            return $items;
+        }
+
+        if ($overwrite === false && array_key_exists($toKey, $items)) {
+            throw new InvalidArgumentException('The toKey "' . $toKey . '" already exists in the array');
+        }
+
+        if ($preserveOrder) {
+            $result = [];
+            foreach ($items as $key => $value) {
+                $result[$key === $fromKey ? $toKey : $key] = $value;
+            }
+
+            return $result;
+        }
+
+        $items[$toKey] = $items[$fromKey];
+        unset($items[$fromKey]);
+
+        return $items;
+    }
+
+    /**
      * Remove an item from the given array by the given key.
      * @template T of array<int|string, mixed>
      *
@@ -463,7 +498,6 @@ class Arrays
 
     /**
      * Converts a JSON string to an array
-     *
      * @return mixed[]
      */
     public static function fromJson(string $jsonString, ?string $failureMessage = null): array

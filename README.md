@@ -21,6 +21,7 @@ A library with everyday use classes and methods:
 - `mapAssoc` - Map an array to a new array using a callback, preserving keys. 
 - `reindex` - Reindex an array with new keys based on the result of the callback.
 - `groupBy` - Group items by the given return value of the callback.
+- `renameKey` - Rename the `string` key of an array element.
 - `remove` - Remove an element from an array based on the callback. Supports `EquatableInterface`.
 - `removeKey` - Remove an element from an array based on the key.
 - `removeKeys` - Remove multiple elements from an array based on the keys.
