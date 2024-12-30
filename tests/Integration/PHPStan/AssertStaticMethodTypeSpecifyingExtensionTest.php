@@ -13,6 +13,8 @@ use PHPUnit\Framework\Attributes\TestWith;
 #[CoversClass(AssertStaticMethodTypeSpecifyingExtension::class)]
 class AssertStaticMethodTypeSpecifyingExtensionTest extends TypeInferenceTestCase
 {
+    #[TestWith(['/data/AssertFalseTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/AssertTrueTypeSpecifyingAssertions.php'])]
     #[TestWith(['/data/AssertStringTypeSpecifyingAssertions.php'])]
     #[TestWith(['/data/AssertNotNullTypeSpecifyingAssertions.php'])]
     public function testFileAsserts(string $path): void
