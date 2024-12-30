@@ -8,16 +8,16 @@ use DR\Utils\Assert;
 
 use function PHPStan\Testing\assertType;
 
-class AssertStaticMethodTypeSpecifyingAssertions
+class AssertStringTypeSpecifyingAssertions
 {
     public function assertions(): void
     {
         $value = "string";
-        Assert::notNull($value);
+        Assert::string($value);
         assertType("'string'", $value);
 
         $value = null;
-        Assert::notNull($value);
+        Assert::string($value);
         assertType("*NEVER*", $value);
     }
 }

@@ -8,13 +8,16 @@ use DR\Utils\Assert;
 use DR\Utils\PHPStan\Extension\AssertStaticMethodTypeSpecifyingExtension;
 use PHPStan\Testing\TypeInferenceTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestWith;
 
 #[CoversClass(AssertStaticMethodTypeSpecifyingExtension::class)]
 class AssertStaticMethodTypeSpecifyingExtensionTest extends TypeInferenceTestCase
 {
-    public function testFileAsserts(): void
+    #[TestWith(['/data/AssertStringTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/AssertNotNullTypeSpecifyingAssertions.php'])]
+    public function testFileAsserts(string $path): void
     {
-        $results = self::gatherAssertTypes(__DIR__ . '/data/AssertStaticMethodTypeSpecifyingAssertions.php');
+        $results = self::gatherAssertTypes(__DIR__ . $path);
         foreach ($results as $result) {
             $assertType = Assert::string(array_shift($result));
             $file       = Assert::string(array_shift($result));
