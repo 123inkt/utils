@@ -10,7 +10,6 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\BinaryOp\Identical;
 use PhpParser\Node\Expr\BooleanNot;
 use PhpParser\Node\Expr\ConstFetch;
-use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
@@ -23,7 +22,7 @@ use PHPStan\Type\StaticMethodTypeSpecifyingExtension;
 
 class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
-    private const METHODS = ['notNull', 'string'];
+    private const METHODS = ['notNull', 'true', 'false', 'notFalse'];
 
     private TypeSpecifier $typeSpecifier;
 
@@ -64,9 +63,11 @@ class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpeci
     private static function createExpression(string $name, array $args): ?Expr
     {
         return match ($name) {
-            'string'  => new FuncCall(new Name('is_string'), [$args[0]]),
-            'notNull' => new BooleanNot(new Identical($args[0]->value, new ConstFetch(new Name('null')))),
-            default   => null,
+            'true'     => new Identical($args[0]->value, new ConstFetch(new Name('true'))),
+            'false'    => new Identical($args[0]->value, new ConstFetch(new Name('false'))),
+            'notFalse' => new BooleanNot(new Identical($args[0]->value, new ConstFetch(new Name('false')))),
+            'notNull'  => new BooleanNot(new Identical($args[0]->value, new ConstFetch(new Name('null')))),
+            default    => null,
         };
     }
 }
