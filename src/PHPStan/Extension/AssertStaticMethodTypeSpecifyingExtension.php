@@ -8,6 +8,7 @@ use DR\Utils\Assert;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\BinaryOp\Identical;
+use PhpParser\Node\Expr\BooleanNot;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
@@ -50,11 +51,7 @@ class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpeci
         }
 
         return $this->typeSpecifier
-            ->specifyTypesInCondition(
-                $scope,
-                $expression,
-                TypeSpecifierContext::createTruthy(),
-            )
+            ->specifyTypesInCondition($scope, $expression, TypeSpecifierContext::createTruthy())
             ->setRootExpr($expression);
     }
 
@@ -64,7 +61,7 @@ class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpeci
     private static function createExpression(string $name, array $args): ?Expr
     {
         return match ($name) {
-            'notNull' => new Identical($args[0]->value, new ConstFetch(new Name('null'))),
+            'notNull' => new BooleanNot(new Identical($args[0]->value, new ConstFetch(new Name('null')))),
             default   => null,
         };
     }

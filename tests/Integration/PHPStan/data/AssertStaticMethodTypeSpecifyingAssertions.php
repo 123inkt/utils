@@ -12,11 +12,12 @@ class AssertStaticMethodTypeSpecifyingAssertions
 {
     public function assertions(): void
     {
-        assertType("string", Assert::notNull($this->getValue()));
-    }
+        $value = "string";
+        Assert::notNull($value);
+        assertType("'string'", $value);
 
-    private function getValue(): string
-    {
-        return 'value';
+        $value = null;
+        Assert::notNull($value);
+        assertType("*NEVER*", $value);
     }
 }
