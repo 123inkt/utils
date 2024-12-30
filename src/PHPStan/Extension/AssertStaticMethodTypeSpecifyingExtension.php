@@ -8,8 +8,7 @@ use DR\Utils\Assert;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\BinaryOp\Identical;
-use PhpParser\Node\Expr\BooleanNot;
-use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
@@ -45,7 +44,7 @@ class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpeci
         Scope $scope,
         TypeSpecifierContext $context
     ): SpecifiedTypes {
-        $expression = self::createExpression($scope, $node->getArgs());
+        $expression = self::createExpression($staticMethodReflection->getName(), $node->getArgs());
         if ($expression === null) {
             return new SpecifiedTypes([], []);
         }
@@ -62,21 +61,11 @@ class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpeci
     /**
      * @param Arg[] $args
      */
-    private static function createExpression(
-        Scope $scope,
-        array $args
-    ): ?Expr {
-        $resolver   = static fn(Scope $scope, Arg $expected, Arg $actual): Identical => new Identical(
-            $expected->value,
-            new FuncCall(new Name('is_null'), [$actual]),
-        );
-        $expression = $resolver($scope, $args[0], $args[1]);
-        if ($expression === null) {
-            return null;
-        }
-
-        $expression = new BooleanNot($expression);
-
-        return $expression;
+    private static function createExpression(string $name, array $args): ?Expr
+    {
+        return match ($name) {
+            'notNull' => new Identical($args[0]->value, new ConstFetch(new Name('null'))),
+            default   => null,
+        };
     }
 }
