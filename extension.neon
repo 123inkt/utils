@@ -16,4 +16,8 @@ services:
         tags:
             - phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension
     -
+        class: DR\Utils\PHPStan\Extension\AssertStaticMethodTypeSpecifyingExtension
+        tags:
+            - phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension
+    -
         class: DR\Utils\PHPStan\Lib\TypeNarrower
