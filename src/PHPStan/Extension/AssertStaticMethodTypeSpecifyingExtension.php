@@ -22,7 +22,7 @@ use PHPStan\Type\StaticMethodTypeSpecifyingExtension;
 
 class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
-    private const METHODS = ['notNull', 'true', 'false', 'notFalse'];
+    private const METHODS = ['notNull', 'null', 'true', 'false', 'notFalse'];
 
     private TypeSpecifier $typeSpecifier;
 
@@ -66,6 +66,7 @@ class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpeci
             'true'     => new Identical($args[0]->value, new ConstFetch(new Name('true'))),
             'false'    => new Identical($args[0]->value, new ConstFetch(new Name('false'))),
             'notFalse' => new BooleanNot(new Identical($args[0]->value, new ConstFetch(new Name('false')))),
+            'null'     => new Identical($args[0]->value, new ConstFetch(new Name('null'))),
             'notNull'  => new BooleanNot(new Identical($args[0]->value, new ConstFetch(new Name('null')))),
             default    => null,
         };

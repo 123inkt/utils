@@ -17,6 +17,7 @@ class AssertStaticMethodTypeSpecifyingExtensionTest extends TypeInferenceTestCas
     #[TestWith(['/data/AssertFalseTypeSpecifyingAssertions.php'])]
     #[TestWith(['/data/AssertTrueTypeSpecifyingAssertions.php'])]
     #[TestWith(['/data/AssertStringTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/AssertNullTypeSpecifyingAssertions.php'])]
     #[TestWith(['/data/AssertNotNullTypeSpecifyingAssertions.php'])]
     public function testFileAsserts(string $path): void
     {

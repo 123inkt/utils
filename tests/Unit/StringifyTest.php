@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DR\Utils\Tests\Unit;
 
+use DR\Utils\Assert;
 use DR\Utils\Stringify;
 use DR\Utils\Tests\Helper\TestEnum;
 use DR\Utils\Tests\Mock\MockStringable;
@@ -43,5 +44,56 @@ class StringifyTest extends TestCase
 
         $resource = fopen('php://memory', 'rb');
         yield 'resource' => [$resource, 'resource (stream)'];
+    }
+
+    public function test(): void
+    {
+        $value = $this->getIntOrString();
+        Assert::string($value);
+
+        $value = $this->getString();
+        Assert::string($value);
+
+        $value = $this->getInt();
+        Assert::string($value);
+
+        $value = $this->getStringOrNull();
+        Assert::notNull($value);
+
+        $value = $this->getIntOrString();
+        Assert::notNull($value);
+
+        $value = $this->getIntOrString();
+        Assert::notFalse($value);
+
+        $value = $this->getBool();
+        Assert::true($value);
+        Assert::false($value);
+        Assert::notFalse($value);
+    }
+
+    public function getBool(): bool
+    {
+        return true;
+    }
+
+    public function getIntOrString(): int|string
+    {
+        return random_int(0, 1) === 1 ? 1 : 'foo';
+    }
+
+    public function getString(): string
+    {
+        return 'foo';
+    }
+
+    public function getInt(): int
+    {
+        return 1;
+    }
+
+    public function getStringOrNull(): ?string
+    {
+        return random_int(0, 1) === 1 ? 'foo' : null;
     }
 }
