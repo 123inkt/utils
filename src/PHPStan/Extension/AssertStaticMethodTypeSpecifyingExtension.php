@@ -36,11 +36,17 @@ class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpeci
         return Assert::class;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function isStaticMethodSupported(MethodReflection $staticMethodReflection, StaticCall $node, TypeSpecifierContext $context): bool
     {
         return in_array($staticMethodReflection->getName(), self::METHODS, true);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function specifyTypes(
         MethodReflection $staticMethodReflection,
         StaticCall $node,
