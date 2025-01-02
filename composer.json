@@ -28,7 +28,7 @@
     "require-dev": {
         "digitalrevolution/phpunit-file-coverage-inspection": "^2.2",
         "mikey179/vfsstream": "^1.6.11",
-        "nikic/php-parser": "^4.19",
+        "nikic/php-parser": "^5.4",
         "phpmd/phpmd": "^2.15",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
