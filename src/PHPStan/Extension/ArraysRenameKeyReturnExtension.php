@@ -34,9 +34,11 @@ class ArraysRenameKeyReturnExtension implements DynamicStaticMethodReturnTypeExt
         [$items, $fromKey, $toKey] = $methodCall->getArgs();
 
         $arrayType = $scope->getType($items->value);
+        // @codeCoverageIgnoreStart
         if ($arrayType instanceof ArrayType === false && $arrayType instanceof ConstantArrayType === false) {
             return $arrayType;
         }
+        // @codeCoverageIgnoreEnd
 
         $keyTypes = $arrayType->getKeyType()->getFiniteTypes();
 

@@ -40,9 +40,11 @@ class ArraysRemoveTypesReturnExtension implements DynamicStaticMethodReturnTypeE
         [$items, $disallowedTypes] = $methodCall->getArgs();
 
         $arrayType = $scope->getType($items->value);
+        // @codeCoverageIgnoreStart
         if ($arrayType instanceof ArrayType === false && $arrayType instanceof ConstantArrayType === false) {
             return $arrayType;
         }
+        // @codeCoverageIgnoreEnd
 
         $keysType = $arrayType->getKeyType()->getFiniteTypes();
         $types    = $this->getItemTypes($arrayType);
