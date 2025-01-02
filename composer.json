@@ -44,6 +44,10 @@
             "@check:phpmd",
             "@check:phpcs"
         ],
+        "baseline": ["@baseline:phpcs", "@baseline:phpstan", "@baseline:phpmd", "@baseline:phpcqc"],
+        "baseline:phpcs": "@php vendor/bin/phpcs src tests --report=\\\\DR\\\\CodeSnifferBaseline\\\\Reports\\\\Baseline --report-file=phpcs.baseline.xml --basepath=.",
+        "baseline:phpstan": "phpstan --generate-baseline",
+        "baseline:phpmd": "phpmd src,tests xml phpmd.xml --generate-baseline",
         "check:phpstan": "phpstan analyse",
         "check:phpmd": "phpmd src,tests text phpmd.xml.dist --suffixes php",
         "check:phpcs": "phpcs src tests",

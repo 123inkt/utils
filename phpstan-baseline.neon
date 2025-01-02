@@ -1,0 +1,91 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot cast \(K of mixed\)\|T of mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: src/Arrays.php
+
+		-
+			message: '#^Method DR\\Utils\\Arrays\:\:removeKeys\(\) should return T of array\<mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 2
+			path: src/Arrays.php
+
+		-
+			message: '#^Doing instanceof PHPStan\\Type\\ArrayType is error\-prone and deprecated\. Use Type\:\:isArray\(\) or Type\:\:getArrays\(\) instead\.$#'
+			identifier: phpstanApi.instanceofType
+			count: 1
+			path: src/PHPStan/Extension/ArraysRemoveTypesReturnExtension.php
+
+		-
+			message: '#^Doing instanceof PHPStan\\Type\\Constant\\ConstantArrayType is error\-prone and deprecated\. Use Type\:\:getConstantArrays\(\) instead\.$#'
+			identifier: phpstanApi.instanceofType
+			count: 3
+			path: src/PHPStan/Extension/ArraysRemoveTypesReturnExtension.php
+
+		-
+			message: '#^Parameter \#1 \$keyTypes of class PHPStan\\Type\\Constant\\ConstantArrayType constructor expects array\<int, PHPStan\\Type\\Constant\\ConstantIntegerType\|PHPStan\\Type\\Constant\\ConstantStringType\>, list\<PHPStan\\Type\\Type\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/PHPStan/Extension/ArraysRemoveTypesReturnExtension.php
+
+		-
+			message: '#^Call to an undefined method PHPStan\\Type\\ArrayType\|PHPStan\\Type\\Constant\\ConstantArrayType\:\:getValueTypes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/PHPStan/Extension/ArraysRenameKeyReturnExtension.php
+
+		-
+			message: '#^Doing instanceof PHPStan\\Type\\ArrayType is error\-prone and deprecated\. Use Type\:\:isArray\(\) or Type\:\:getArrays\(\) instead\.$#'
+			identifier: phpstanApi.instanceofType
+			count: 1
+			path: src/PHPStan/Extension/ArraysRenameKeyReturnExtension.php
+
+		-
+			message: '#^Doing instanceof PHPStan\\Type\\Constant\\ConstantArrayType is error\-prone and deprecated\. Use Type\:\:getConstantArrays\(\) instead\.$#'
+			identifier: phpstanApi.instanceofType
+			count: 1
+			path: src/PHPStan/Extension/ArraysRenameKeyReturnExtension.php
+
+		-
+			message: '#^Parameter \#1 \$keyTypes of class PHPStan\\Type\\Constant\\ConstantArrayType constructor expects array\<int, PHPStan\\Type\\Constant\\ConstantIntegerType\|PHPStan\\Type\\Constant\\ConstantStringType\>, list\<PHPStan\\Type\\Type\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/PHPStan/Extension/ArraysRenameKeyReturnExtension.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: tests/Unit/ArraysTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:classString\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:inArray\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:isCallable\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:nonEmptyString\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:numeric\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertTest.php
