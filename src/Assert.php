@@ -65,11 +65,11 @@ class Assert
     /**
      * Assert value is array
      * @template       T
-     * @phpstan-assert array $value
+     * @phpstan-assert array<array-key, mixed> $value
      *
      * @param T              $value
      *
-     * @return T&array
+     * @return T&array<array-key, mixed>
      */
     public static function isArray(mixed $value, ?string $message = null): array
     {
