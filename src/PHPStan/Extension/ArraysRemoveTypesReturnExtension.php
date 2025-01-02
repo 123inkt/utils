@@ -39,10 +39,15 @@ class ArraysRemoveTypesReturnExtension implements DynamicStaticMethodReturnTypeE
     {
         [$items, $disallowedTypes] = $methodCall->getArgs();
 
-        /** @var ArrayType $arrayType */
         $arrayType = $scope->getType($items->value);
-        $keysType  = $arrayType instanceof ConstantArrayType ? $arrayType->getKeyTypes() : [];
-        $types     = $this->getItemTypes($arrayType);
+        // @codeCoverageIgnoreStart
+        if ($arrayType instanceof ArrayType === false && $arrayType instanceof ConstantArrayType === false) {
+            return $arrayType;
+        }
+        // @codeCoverageIgnoreEnd
+
+        $keysType = $arrayType->getKeyType()->getFiniteTypes();
+        $types    = $this->getItemTypes($arrayType);
 
         // convert the disallowed types as string to phpstan types
         $disallowedStanTypes = $this->typeNarrower->getTypesFromStringArray($disallowedTypes);
@@ -76,7 +81,7 @@ class ArraysRemoveTypesReturnExtension implements DynamicStaticMethodReturnTypeE
     /**
      * @return Type[]
      */
-    private function getItemTypes(ArrayType $arrayType): array
+    private function getItemTypes(ArrayType|ConstantArrayType $arrayType): array
     {
         if ($arrayType instanceof ConstantArrayType) {
             return $arrayType->getValueTypes();
