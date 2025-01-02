@@ -76,7 +76,7 @@ class ArraysRemoveTypesReturnExtension implements DynamicStaticMethodReturnTypeE
     /**
      * @return Type[]
      */
-    private function getItemTypes(ArrayType $arrayType): array
+    private function getItemTypes(ArrayType|ConstantArrayType $arrayType): array
     {
         if ($arrayType instanceof ConstantArrayType) {
             return $arrayType->getValueTypes();
