@@ -249,7 +249,7 @@ class Assert
      * @param T        $value
      * @param string[] $types
      *
-     * @return T;
+     * @return T
      */
     public static function type(mixed $value, array $types, ?string $message = null): mixed
     {
@@ -398,11 +398,11 @@ class Assert
     /**
      * Assert value is a non-empty array
      * @template       T
-     * @phpstan-assert non-empty-array $value
+     * @phpstan-assert non-empty-array<array-key, mixed> $value
      *
      * @param T              $value
      *
-     * @return T&non-empty-array
+     * @return T&non-empty-array<array-key, mixed>
      */
     public static function nonEmptyArray(mixed $value, ?string $message = null): array
     {

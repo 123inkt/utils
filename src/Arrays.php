@@ -302,22 +302,24 @@ class Arrays
 
     /**
      * Remove all items from the given array by the given keys.
-     * @template T of array<int|string, mixed>
+     * @template T of array<array-key, mixed>
      *
-     * @param T                 $items
-     * @param array<int|string> $keys
+     * @param T                $items
+     * @param array<array-key> $keys
      *
      * @return T
      */
     public static function removeKeys(array $items, array $keys, bool $caseSensitive = true): array
     {
         if ($caseSensitive) {
+            /** @var array<array-key, mixed> */
             return array_diff_key($items, array_flip($keys));
         }
 
         // force all keys to be lowercase string
         $keys = array_map(static fn($key) => strtolower((string)$key), $keys);
 
+        /** @var array<array-key, mixed> */
         return array_filter($items, static fn($itemKey) => in_array(strtolower((string)$itemKey), $keys, true) === false, ARRAY_FILTER_USE_KEY);
     }
 
