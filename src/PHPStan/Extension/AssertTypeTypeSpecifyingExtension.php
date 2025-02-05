@@ -66,6 +66,6 @@ class AssertTypeTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExt
         [$item, $allowedTypes] = $node->getArgs();
         $type = $this->typeNarrower->narrow($item, $allowedTypes, $scope);
 
-        return $this->typeSpecifier->create($item->value, $type, TypeSpecifierContext::createTruthy(), $scope);
+        return $this->typeSpecifier->create($item->value, $type, TypeSpecifierContext::createTruthy(), scope: $scope);
     }
 }
