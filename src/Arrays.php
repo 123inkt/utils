@@ -347,7 +347,7 @@ class Arrays
      */
     public static function removeNull(array $items): array
     {
-        return self::removeTypes($items, ['null']);
+        return array_filter($items, static fn($element) => $element !== null);
     }
 
     /**
