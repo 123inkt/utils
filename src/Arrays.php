@@ -229,12 +229,13 @@ class Arrays
     /**
      * Remove an item from the given array. This method supports the EquatableInterface to
      * determine if 2 different objects are equal.
+     * @template K of array-key
      * @template T of mixed|EquatableInterface
      *
-     * @param T[] $items
-     * @param T   $item
+     * @param array<K, T> $items
+     * @param T           $item
      *
-     * @return T[]
+     * @return array<K, T>
      */
     public static function remove(array $items, mixed $item): array
     {
@@ -447,7 +448,7 @@ class Arrays
 
     /**
      * Split a string by given separator, in case `value` is empty string or null, will return empty array.
-     * @return ($value is ''|null ? array{} : string[])
+     * @return ($value is ''|null ? array{} : non-empty-list<string>)
      */
     public static function explode(string $separator, ?string $value): array
     {
