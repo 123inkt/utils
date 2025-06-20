@@ -171,6 +171,25 @@ class Assert
     }
 
     /**
+     * Assert value is int and greater than limit
+     * @template       T
+     * @phpstan-assert int $value
+     *
+     * @param T            $value
+     * @param int          $limit
+     *
+     * @return T&int
+     */
+    public static function integerGreaterThan(mixed $value, int $limit, ?string $message = null): int
+    {
+        if (is_int($value) === false || $value <= $limit) {
+            throw ExceptionFactory::createException('greater than $limit', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert the value is a numeric value. See is_numeric
      * @template       T
      * @phpstan-assert numeric-string $value

@@ -116,6 +116,27 @@ class AssertTest extends TestCase
         Assert::integer('string'); // @phpstan-ignore-line
     }
 
+    public function testIntegerGreaterThan(): void
+    {
+        static::assertSame(5, Assert::integerGreaterThan(5, 0));
+    }
+
+    public function testIntegerGreaterThanFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be greater than $limit, `string (string)` was given');
+
+        Assert::integerGreaterThan('string', 0); // @phpstan-ignore-line
+    }
+
+    public function testIntegerGreaterThanLimitFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be greater than $limit, `5 (int)` was given');
+
+        Assert::integerGreaterThan(5, 5);
+    }
+
     #[TestWith([5])]
     #[TestWith(['5'])]
     #[TestWith(['-5'])]
