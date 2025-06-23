@@ -62,7 +62,7 @@ class ArraysTest extends TestCase
 
     public function testMap(): void
     {
-        $callback = static fn($value, $key) => $value * $key;
+        $callback = static fn(int $value, int $key): int => $value * $key;
 
         static::assertSame([], Arrays::map([], $callback));
         static::assertSame([2 => 200, 3 => 300], Arrays::map([2 => 100, 3 => 100], $callback));
@@ -70,7 +70,7 @@ class ArraysTest extends TestCase
 
     public function testMapAssoc(): void
     {
-        $callback = static fn($value) => [(string)$value[0], $value[1]];
+        $callback = static fn(array $value): array => [(string)$value[0], $value[1]];
 
         static::assertSame([], Arrays::mapAssoc([], $callback));
         static::assertSame(['foo' => 'bar'], Arrays::mapAssoc([['foo', 'bar']], $callback));
@@ -80,7 +80,7 @@ class ArraysTest extends TestCase
 
     public function testReindex(): void
     {
-        $callback = static fn($value) => strlen($value);
+        $callback = static fn(string $value) => strlen($value);
 
         static::assertSame([], Arrays::reindex([], $callback));
         static::assertSame([3 => 'foo', 6 => 'foobar'], Arrays::reindex(['foo', 'foobar'], $callback));
@@ -90,7 +90,7 @@ class ArraysTest extends TestCase
     public function testGroupBy(): void
     {
         $data     = ['aaa' => 1, 'bbb' => 2, 'ccc' => 3, 'ddd' => 4];
-        $callback = static fn($value) => $value % 2 === 0 ? 'even' : 'odd';
+        $callback = static fn(int $value): string => $value % 2 === 0 ? 'even' : 'odd';
         $expected = [
             'odd'  => [
                 'aaa' => 1,
