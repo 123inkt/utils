@@ -116,25 +116,84 @@ class AssertTest extends TestCase
         Assert::integer('string'); // @phpstan-ignore-line
     }
 
-    public function testIntegerGreaterThan(): void
+
+    #[TestWith([5, -1.2])]
+    #[TestWith(['5', '3'])]
+    #[TestWith(['-5', -10])]
+    #[TestWith([-5.5, '-10.5'])]
+    #[TestWith([-5.5, -10.5])]
+    #[TestWith(['-5.5e10', '-10.5e10'])]
+    public function testGreaterThan(mixed $value, mixed $limit): void
     {
-        static::assertSame(5, Assert::integerGreaterThan(5, 0));
+        static::assertSame($value, Assert::greaterThan($value, $limit));
     }
 
-    public function testIntegerGreaterThanFailure(): void
+    #[TestWith([5, 5])]
+    #[TestWith(['5', '6'])]
+    #[TestWith(['-5', -2])]
+    #[TestWith([-5.5, '1'])]
+    #[TestWith([-5.5, -1.5])]
+    #[TestWith(['-5.5e10', '0'])]
+    public function testGreaterThanFailure(mixed $value, mixed $limit): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Expecting value to be greater than $limit, `%s (%s)` was given',
+                $value,
+                get_debug_type($value)
+            )
+        );
+
+        Assert::greaterThan($value, $limit);
+    }
+
+
+    public function testGreaterThanLimitFailure(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be greater than $limit, `string (string)` was given');
 
-        Assert::integerGreaterThan('string', 0); // @phpstan-ignore-line
+        Assert::greaterThan('string', 'string');
     }
 
-    public function testIntegerGreaterThanLimitFailure(): void
+    #[TestWith([5, 10])]
+    #[TestWith(['5', 10])]
+    #[TestWith(['-5', '10'])]
+    #[TestWith(['-5.5', '-0.5'])]
+    #[TestWith([-5.5, '-0.5'])]
+    #[TestWith(['-5.5e10', '-0.5'])]
+    public function testLessThan(mixed $value, mixed $limit): void
+    {
+        static::assertSame($value, Assert::lessThan($value, $limit));
+    }
+
+    #[TestWith([5, -1])]
+    #[TestWith(['5', 0])]
+    #[TestWith(['-5', '-10'])]
+    #[TestWith(['-5.5', '-10.5'])]
+    #[TestWith([-5.5, '-10.5'])]
+    #[TestWith(['5.5e10', '-10.5'])]
+    public function testLessThanFailure(mixed $value, mixed $limit): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be greater than $limit, `5 (int)` was given');
+        $this->expectExceptionMessage(
+            sprintf(
+                'Expecting value to be less than $limit, `%s (%s)` was given',
+                $value,
+                get_debug_type($value)
+            )
+        );
 
-        Assert::integerGreaterThan(5, 5);
+        Assert::lessThan($value, $limit);
+    }
+
+    public function testLessThanLimitFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be less than $limit, `string (string)` was given');
+
+        Assert::lessThan('string', 'string');
     }
 
     #[TestWith([5])]

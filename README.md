@@ -46,7 +46,8 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `object`
 - `scalar`
 - `integer`
-- `integerGreaterThan`
+- `greaterThan`
+- `lessThan`
 - `numeric`
 - `float`
 - `string`
