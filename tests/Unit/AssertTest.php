@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Assert;
+use DR\Utils\Tests\Mock\MockComparable;
 use DR\Utils\Tests\Mock\MockStringable;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -114,86 +115,6 @@ class AssertTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be an int, `string (string)` was given');
         Assert::integer('string'); // @phpstan-ignore-line
-    }
-
-
-    #[TestWith([5, -1.2])]
-    #[TestWith(['5', '3'])]
-    #[TestWith(['-5', -10])]
-    #[TestWith([-5.5, '-10.5'])]
-    #[TestWith([-5.5, -10.5])]
-    #[TestWith(['-5.5e10', '-10.5e10'])]
-    public function testGreaterThan(mixed $value, mixed $limit): void
-    {
-        static::assertSame($value, Assert::greaterThan($value, $limit));
-    }
-
-    #[TestWith([5, 5])]
-    #[TestWith(['5', '6'])]
-    #[TestWith(['-5', -2])]
-    #[TestWith([-5.5, '1'])]
-    #[TestWith([-5.5, -1.5])]
-    #[TestWith(['-5.5e10', '0'])]
-    public function testGreaterThanFailure(mixed $value, mixed $limit): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(
-            sprintf(
-                'Expecting value to be greater than $limit, `%s (%s)` was given',
-                $value,
-                get_debug_type($value)
-            )
-        );
-
-        Assert::greaterThan($value, $limit);
-    }
-
-
-    public function testGreaterThanLimitFailure(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be greater than $limit, `string (string)` was given');
-
-        Assert::greaterThan('string', 'string');
-    }
-
-    #[TestWith([5, 10])]
-    #[TestWith(['5', 10])]
-    #[TestWith(['-5', '10'])]
-    #[TestWith(['-5.5', '-0.5'])]
-    #[TestWith([-5.5, '-0.5'])]
-    #[TestWith(['-5.5e10', '-0.5'])]
-    public function testLessThan(mixed $value, mixed $limit): void
-    {
-        static::assertSame($value, Assert::lessThan($value, $limit));
-    }
-
-    #[TestWith([5, -1])]
-    #[TestWith(['5', 0])]
-    #[TestWith(['-5', '-10'])]
-    #[TestWith(['-5.5', '-10.5'])]
-    #[TestWith([-5.5, '-10.5'])]
-    #[TestWith(['5.5e10', '-10.5'])]
-    public function testLessThanFailure(mixed $value, mixed $limit): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(
-            sprintf(
-                'Expecting value to be less than $limit, `%s (%s)` was given',
-                $value,
-                get_debug_type($value)
-            )
-        );
-
-        Assert::lessThan($value, $limit);
-    }
-
-    public function testLessThanLimitFailure(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be less than $limit, `string (string)` was given');
-
-        Assert::lessThan('string', 'string');
     }
 
     #[TestWith([5])]
@@ -498,6 +419,88 @@ class AssertTest extends TestCase
         static::assertSame('foobar', Assert::inArray('foobar', $values));
         static::assertTrue(Assert::inArray(true, $values));
         static::assertSame(2.3, Assert::inArray(2.3, $values));
+    }
+
+    #[TestWith([5, -1.2])]
+    #[TestWith(['5', '3'])]
+    #[TestWith(['-5', -10])]
+    #[TestWith([-5.5, '-10.5'])]
+    #[TestWith([-5.5, -10.5])]
+    #[TestWith(['-5.5e10', '-10.5e10'])]
+    #[TestWith([new MockComparable(10), new MockComparable(5)])]
+    public function testGreaterThan(mixed $left, mixed $right): void
+    {
+        static::assertSame($left, Assert::greaterThan($left, $right));
+    }
+
+    #[TestWith([5, 5])]
+    #[TestWith(['5', '6'])]
+    #[TestWith(['-5', -2])]
+    #[TestWith([-5.5, '1'])]
+    #[TestWith([-5.5, -1.5])]
+    #[TestWith(['-5.5e10', '0'])]
+    #[TestWith([new MockComparable(5), new MockComparable(10)])]
+    public function testGreaterThanFailure(mixed $left, mixed $right): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Expecting value to be greater than right, `%s (%s)` was given',
+                $left,
+                get_debug_type($left)
+            )
+        );
+
+        Assert::greaterThan($left, $right);
+    }
+
+    public function testGreaterThanLimitFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be greater than right, `string (string)` was given');
+
+        Assert::greaterThan('string', 'string');
+    }
+
+    #[TestWith([5, 10])]
+    #[TestWith(['5', 10])]
+    #[TestWith(['-5', '10'])]
+    #[TestWith(['-5.5', '-0.5'])]
+    #[TestWith([-5.5, '-0.5'])]
+    #[TestWith(['-5.5e10', '-0.5'])]
+    #[TestWith([new MockComparable(5), new MockComparable(10)])]
+    public function testLessThan(mixed $left, mixed $right): void
+    {
+        static::assertSame($left, Assert::lessThan($left, $right));
+    }
+
+    #[TestWith([5, -1])]
+    #[TestWith(['5', 0])]
+    #[TestWith(['-5', '-10'])]
+    #[TestWith(['-5.5', '-10.5'])]
+    #[TestWith([-5.5, '-10.5'])]
+    #[TestWith(['5.5e10', '-10.5'])]
+    #[TestWith([new MockComparable(10), new MockComparable(5)])]
+    public function testLessThanFailure(mixed $left, mixed $right): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Expecting value to be less than right, `%s (%s)` was given',
+                $left,
+                get_debug_type($left)
+            )
+        );
+
+        Assert::lessThan($left, $right);
+    }
+
+    public function testLessThanLimitFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be less than right, `string (string)` was given');
+
+        Assert::lessThan('string', 'string');
     }
 
     #[TestWith(['/directory'])]

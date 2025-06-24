@@ -46,8 +46,6 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `object`
 - `scalar`
 - `integer`
-- `greaterThan`
-- `lessThan`
 - `numeric`
 - `float`
 - `string`
@@ -63,6 +61,8 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `nonEmptyArray`
 - `nonEmptyString`
 - `isInstanceOf`
+- `greaterThan` - Supports `ComparableInterface`.
+- `lessThan` - Supports `ComparableInterface`.
 - `type`
 - `fileExists`
 - `file`

@@ -171,49 +171,6 @@ class Assert
     }
 
     /**
-     * Assert value is int and greater than limit
-     * @template       T
-     * @phpstan-assert numeric-string $value
-     * @phpstan-assert numeric-string $limit
-     *
-     * @param T                       $value
-     * @param T                       $limit
-     *
-     * @return T&numeric-string
-     */
-    public static function greaterThan(mixed $value, mixed $limit, ?string $message = null): mixed
-    {
-        if ($value <= $limit) {
-            throw ExceptionFactory::createException('greater than $limit', $value, $message);
-        }
-
-        /** @phpstan-var T&numeric-string */
-        return $value;
-    }
-
-
-    /**
-     * Assert value is int and less than limit
-     * @template       T
-     * @phpstan-assert numeric-string $value
-     * @phpstan-assert numeric-string $limit
-     *
-     * @param T                       $value
-     * @param T                       $limit
-     *
-     * @return T&numeric-string
-     */
-    public static function lessThan(mixed $value, mixed $limit, ?string $message = null): mixed
-    {
-        if ($value >= $limit) {
-            throw ExceptionFactory::createException('less than $limit', $value, $message);
-        }
-
-        /** @phpstan-var T&numeric-string */
-        return $value;
-    }
-
-    /**
      * Assert the value is a numeric value. See is_numeric
      * @template       T
      * @phpstan-assert numeric-string $value
@@ -587,6 +544,52 @@ class Assert
         }
 
         return $value;
+    }
+
+    /**
+     * Assert left is greater than the right.
+     * @template L
+     *
+     * @param L $left
+     *
+     * @return L
+     */
+    public static function greaterThan(mixed $left, mixed $right, ?string $message = null): mixed
+    {
+        if ($left instanceof ComparableInterface) {
+            $comparison = $left->compareTo($right) > 0;
+        } else {
+            $comparison = $left > $right;
+        }
+
+        if ($comparison === false) {
+            throw ExceptionFactory::createException('greater than right', $left, $message);
+        }
+
+        return $left;
+    }
+
+    /**
+     * Assert left is less than the right.
+     * @template L
+     *
+     * @param L $left
+     *
+     * @return L
+     */
+    public static function lessThan(mixed $left, mixed $right, ?string $message = null): mixed
+    {
+        if ($left instanceof ComparableInterface) {
+            $comparison = $left->compareTo($right) < 0;
+        } else {
+            $comparison = $left < $right;
+        }
+
+        if ($comparison === false) {
+            throw ExceptionFactory::createException('less than right', $left, $message);
+        }
+
+        return $left;
     }
 
     /**

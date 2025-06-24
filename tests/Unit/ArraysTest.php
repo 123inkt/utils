@@ -241,9 +241,9 @@ class ArraysTest extends TestCase
     {
         $objA    = new stdClass();
         $objB    = new stdClass();
-        $cmpObjA = new MockComparable();
-        $cmpObjB = new MockComparable();
-        $cmpObjC = new MockComparable();
+        $cmpObjA = new MockComparable(1);
+        $cmpObjB = new MockComparable(2);
+        $cmpObjC = new MockComparable(3);
 
         // scalars
         static::assertSame(['foo'], Arrays::diff(['foo'], ['bar']));
@@ -269,9 +269,9 @@ class ArraysTest extends TestCase
     {
         $objA    = new stdClass();
         $objB    = new stdClass();
-        $cmpObjA = new MockComparable();
-        $cmpObjB = new MockComparable();
-        $cmpObjC = new MockComparable();
+        $cmpObjA = new MockComparable(1);
+        $cmpObjB = new MockComparable(2);
+        $cmpObjC = new MockComparable(3);
 
         // scalars
         static::assertFalse(Arrays::equals(['foo'], ['bar']));
