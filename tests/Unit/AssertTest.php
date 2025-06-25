@@ -445,7 +445,7 @@ class AssertTest extends TestCase
     #[TestWith([true, false])]
     #[TestWith([new DateTime('2026-06-25'), new DateTime('2026-06-15')])]
     #[TestWith([new MockComparable(10), new MockComparable(5)])]
-    public function testGreaterThanStdClass($left, $right): void
+    public function testGreaterThanStdClass(mixed $left, mixed $right): void
     {
         $leftObj      = new stdClass();
         $leftObj->foo = $left;
@@ -490,7 +490,7 @@ class AssertTest extends TestCase
     #[TestWith([true, true])]
     #[TestWith([new DateTime('2025-06-24'), new DateTime('2025-06-25')])]
     #[TestWith([new MockComparable(5), new MockComparable(10)])]
-    public function testGreaterThanStdClassFailure($left, $right): void
+    public function testGreaterThanStdClassFailure(mixed $left, mixed $right): void
     {
         $leftObj      = new stdClass();
         $leftObj->foo = $left;

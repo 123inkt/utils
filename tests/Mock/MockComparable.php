@@ -16,7 +16,7 @@ class MockComparable implements ComparableInterface
         assert(is_object($other));
         assert($other instanceof ComparableInterface);
 
-        return $this->value <=> $other->value;
+        return $this->value <=> $other->value; // @phpstan-ignore-line
     }
 
     public function __toString(): string
