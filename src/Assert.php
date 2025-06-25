@@ -547,6 +547,52 @@ class Assert
     }
 
     /**
+     * Assert left is greater than the right.
+     * @template L
+     *
+     * @param L $left
+     *
+     * @return L
+     */
+    public static function greaterThan(mixed $left, mixed $right, ?string $message = null): mixed
+    {
+        if ($left instanceof ComparableInterface) {
+            $comparison = $left->compareTo($right) > 0;
+        } else {
+            $comparison = $left > $right;
+        }
+
+        if ($comparison === false) {
+            throw ExceptionFactory::createException('greater than right', $left, $message);
+        }
+
+        return $left;
+    }
+
+    /**
+     * Assert left is less than the right.
+     * @template L
+     *
+     * @param L $left
+     *
+     * @return L
+     */
+    public static function lessThan(mixed $left, mixed $right, ?string $message = null): mixed
+    {
+        if ($left instanceof ComparableInterface) {
+            $comparison = $left->compareTo($right) < 0;
+        } else {
+            $comparison = $left < $right;
+        }
+
+        if ($comparison === false) {
+            throw ExceptionFactory::createException('less than right', $left, $message);
+        }
+
+        return $left;
+    }
+
+    /**
      * Assert if $value is an existing file or directory. Use Assert::file() instead if you need to be sure it is a file.
      * @phpstan-assert string|Stringable $value
      */

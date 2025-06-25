@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace DR\Utils\Tests\Unit;
 
+use DateTime;
 use DR\Utils\Assert;
+use DR\Utils\Tests\Mock\MockComparable;
 use DR\Utils\Tests\Mock\MockStringable;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -418,6 +420,186 @@ class AssertTest extends TestCase
         static::assertSame('foobar', Assert::inArray('foobar', $values));
         static::assertTrue(Assert::inArray(true, $values));
         static::assertSame(2.3, Assert::inArray(2.3, $values));
+    }
+
+    #[TestWith([5, -1.2])]
+    #[TestWith(['5', '3'])]
+    #[TestWith(['-5', -10])]
+    #[TestWith([-5.5, '-10.5'])]
+    #[TestWith([-5.5, -10.5])]
+    #[TestWith(['-5.5e10', '-10.5e10'])]
+    #[TestWith([true, false])]
+    #[TestWith([new DateTime('2026-06-25'), new DateTime('2026-06-15')])]
+    #[TestWith([new MockComparable(10), new MockComparable(5)])]
+    public function testGreaterThan(mixed $left, mixed $right): void
+    {
+        static::assertSame($left, Assert::greaterThan($left, $right));
+    }
+
+    #[TestWith([5, -1.2])]
+    #[TestWith(['5', '3'])]
+    #[TestWith(['-5', -10])]
+    #[TestWith([-5.5, '-10.5'])]
+    #[TestWith([-5.5, -10.5])]
+    #[TestWith(['-5.5e10', '-10.5e10'])]
+    #[TestWith([true, false])]
+    #[TestWith([new DateTime('2026-06-25'), new DateTime('2026-06-15')])]
+    #[TestWith([new MockComparable(10), new MockComparable(5)])]
+    public function testGreaterThanStdClass(mixed $left, mixed $right): void
+    {
+        $leftObj      = new stdClass();
+        $leftObj->foo = $left;
+
+        $rightObj      = new stdClass();
+        $rightObj->foo = $right;
+
+        static::assertSame($leftObj, Assert::greaterThan($leftObj, $rightObj));
+    }
+
+    #[TestWith([5, 5, 'Expecting value to be greater than right, `5 (int)` was given'])]
+    #[TestWith(['5', '6', 'Expecting value to be greater than right, `5 (string)` was given'])]
+    #[TestWith(['-5', -2, 'Expecting value to be greater than right, `-5 (string)` was given'])]
+    #[TestWith([-5.5, '1', 'Expecting value to be greater than right, `-5.5 (float)` was given'])]
+    #[TestWith([-5.5, -1.5, 'Expecting value to be greater than right, `-5.5 (float)` was given'])]
+    #[TestWith(['-5.5e10', '0', 'Expecting value to be greater than right, `-5.5e10 (string)` was given'])]
+    #[TestWith([false, false, 'Expecting value to be greater than right, `false (bool)` was given'])]
+    #[TestWith([false, true, 'Expecting value to be greater than right, `false (bool)` was given'])]
+    #[TestWith([true, true, 'Expecting value to be greater than right, `true (bool)` was given'])]
+    #[TestWith([new DateTime('2024-04-02'), new DateTime('2025-06-25'), 'Expecting value to be greater than right, `DateTime` was given'])]
+    #[TestWith([
+        new MockComparable(5),
+        new MockComparable(10),
+        'Expecting value to be greater than right, `5 (DR\Utils\Tests\Mock\MockComparable)` was given'
+    ])]
+    public function testGreaterThanFailure(mixed $left, mixed $right, string $expectedExceptionMessage): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+
+        Assert::greaterThan($left, $right);
+    }
+
+    #[TestWith([5, 5])]
+    #[TestWith(['5', '6',])]
+    #[TestWith(['-5', -2])]
+    #[TestWith([-5.5, '1'])]
+    #[TestWith([-5.5, -1.5])]
+    #[TestWith(['-5.5e10', '0'])]
+    #[TestWith([false, false])]
+    #[TestWith([false, true])]
+    #[TestWith([true, true])]
+    #[TestWith([new DateTime('2025-06-24'), new DateTime('2025-06-25')])]
+    #[TestWith([new MockComparable(5), new MockComparable(10)])]
+    public function testGreaterThanStdClassFailure(mixed $left, mixed $right): void
+    {
+        $leftObj      = new stdClass();
+        $leftObj->foo = $left;
+
+        $rightObj      = new stdClass();
+        $rightObj->foo = $right;
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be greater than right, `stdClass` was given');
+
+        static::assertSame($leftObj, Assert::greaterThan($leftObj, $rightObj));
+    }
+
+    public function testGreaterThanLimitFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be greater than right, `string (string)` was given');
+
+        Assert::greaterThan('string', 'string');
+    }
+
+    #[TestWith([5, 10])]
+    #[TestWith(['5', 10])]
+    #[TestWith(['-5', '10'])]
+    #[TestWith(['-5.5', '-0.5'])]
+    #[TestWith([-5.5, '-0.5'])]
+    #[TestWith(['-5.5e10', '-0.5'])]
+    #[TestWith([false, true])]
+    #[TestWith([new DateTime('2025-02-24'), new DateTime('2025-06-25')])]
+    #[TestWith([new MockComparable(5), new MockComparable(10)])]
+    public function testLessThan(mixed $left, mixed $right): void
+    {
+        static::assertSame($left, Assert::lessThan($left, $right));
+    }
+
+    #[TestWith([5, 10])]
+    #[TestWith(['5', 10])]
+    #[TestWith(['-5', '10'])]
+    #[TestWith(['-5.5', '-0.5'])]
+    #[TestWith([-5.5, '-0.5'])]
+    #[TestWith(['-5.5e10', '-0.5'])]
+    #[TestWith([false, true])]
+    #[TestWith([new DateTime('2024-12-07'), new DateTime('2025-03-25')])]
+    #[TestWith([new MockComparable(5), new MockComparable(10)])]
+    public function testLessThanStdClass(mixed $left, mixed $right): void
+    {
+        $leftObj      = new stdClass();
+        $leftObj->foo = $left;
+
+        $rightObj      = new stdClass();
+        $rightObj->foo = $right;
+
+        static::assertSame($leftObj, Assert::lessThan($leftObj, $rightObj));
+    }
+
+    #[TestWith([5, -1, 'Expecting value to be less than right, `5 (int)` was given'])]
+    #[TestWith(['5', 0, 'Expecting value to be less than right, `5 (string)` was given'])]
+    #[TestWith(['-5', '-10', 'Expecting value to be less than right, `-5 (string)` was given'])]
+    #[TestWith(['-5.5', '-10.5', 'Expecting value to be less than right, `-5.5 (string)` was given'])]
+    #[TestWith([-5.5, '-10.5', 'Expecting value to be less than right, `-5.5 (float)` was given'])]
+    #[TestWith(['5.5e10', '-10.5', 'Expecting value to be less than right, `5.5e10 (string)` was given'])]
+    #[TestWith([false, false, 'Expecting value to be less than right, `false (bool)` was given'])]
+    #[TestWith([true, false, 'Expecting value to be less than right, `true (bool)` was given'])]
+    #[TestWith([true, true, 'Expecting value to be less than right, `true (bool)` was given'])]
+    #[TestWith([new DateTime('2024-02-29'), new DateTime('2024-01-27'), 'Expecting value to be less than right, `DateTime` was given'])]
+    #[TestWith([
+        new MockComparable(10),
+        new MockComparable(5),
+        'Expecting value to be less than right, `10 (DR\Utils\Tests\Mock\MockComparable)` was given'
+    ])]
+    public function testLessThanFailure(mixed $left, mixed $right, string $message): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage($message);
+
+        Assert::lessThan($left, $right);
+    }
+
+    #[TestWith([5, -1])]
+    #[TestWith(['5', 0])]
+    #[TestWith(['-5', '-10'])]
+    #[TestWith(['-5.5', '-10.5'])]
+    #[TestWith([-5.5, '-10.5'])]
+    #[TestWith(['5.5e10', '-10.5'])]
+    #[TestWith([false, false])]
+    #[TestWith([true, false])]
+    #[TestWith([true, true])]
+    #[TestWith([new DateTime('2025-06-25'), new DateTime('2025-06-24')])]
+    #[TestWith([new MockComparable(10), new MockComparable(5)])]
+    public function testLessThanStdClassFailure(mixed $left, mixed $right): void
+    {
+        $leftObj      = new stdClass();
+        $leftObj->foo = $left;
+
+        $rightObj      = new stdClass();
+        $rightObj->foo = $right;
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be less than right, `stdClass` was given');
+
+        static::assertSame($leftObj, Assert::lessThan($leftObj, $rightObj));
+    }
+
+    public function testLessThanLimitFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be less than right, `string (string)` was given');
+
+        Assert::lessThan('string', 'string');
     }
 
     #[TestWith(['/directory'])]

@@ -7,9 +7,20 @@ use DR\Utils\ComparableInterface;
 
 class MockComparable implements ComparableInterface
 {
+    public function __construct(public readonly int $value)
+    {
+    }
+
     public function compareTo(mixed $other): int
     {
         assert(is_object($other));
-        return strcmp(spl_object_hash($this), spl_object_hash($other));
+        assert($other instanceof ComparableInterface);
+
+        return $this->value <=> $other->value; // @phpstan-ignore-line
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->value;
     }
 }
