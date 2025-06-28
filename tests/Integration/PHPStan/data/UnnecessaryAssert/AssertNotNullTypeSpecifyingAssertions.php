@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DR\Utils\Tests\Integration\PHPStan\data;
+namespace DR\Utils\Tests\Integration\PHPStan\data\UnnecessaryAssert;
 
 use DR\Utils\Assert;
 

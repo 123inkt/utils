@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace DR\Utils\Tests\Integration\PHPStan\data;
+namespace DR\Utils\Tests\Integration\PHPStan\data\UnnecessaryAssert;
 
 use DR\Utils\Assert;
 
 use function PHPStan\Testing\assertType;
 
-class AssertNotFalseTypeSpecifyingAssertions
+class AssertTrueTypeSpecifyingAssertions
 {
     public function assertions(): void
     {
         $value = true;
-        Assert::notFalse($value);
+        Assert::true($value);
         assertType("true", $value);
 
         $value = false;
-        Assert::notFalse($value);
+        Assert::true($value);
         assertType("*NEVER*", $value);
     }
 }

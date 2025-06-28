@@ -20,7 +20,7 @@ use PHPStan\Analyser\TypeSpecifierContext;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\StaticMethodTypeSpecifyingExtension;
 
-class AssertStaticMethodTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
+class UnnecessaryAssertTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private const METHODS = ['notNull', 'null', 'true', 'false', 'notFalse'];
 

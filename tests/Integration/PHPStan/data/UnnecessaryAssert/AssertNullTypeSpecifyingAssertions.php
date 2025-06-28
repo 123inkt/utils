@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DR\Utils\Tests\Integration\PHPStan\data;
+namespace DR\Utils\Tests\Integration\PHPStan\data\UnnecessaryAssert;
 
 use DR\Utils\Assert;
 
+use function DR\Utils\Tests\Integration\PHPStan\data\assertTynpe;
 use function PHPStan\Testing\assertType;
 
 class AssertNullTypeSpecifyingAssertions

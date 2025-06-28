@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace DR\Utils\Tests\Integration\PHPStan;
 
 use DR\Utils\Assert;
-use DR\Utils\PHPStan\Extension\AssertStaticMethodTypeSpecifyingExtension;
+use DR\Utils\PHPStan\Extension\UnnecessaryAssertTypeSpecifyingExtension;
 use PHPStan\Testing\TypeInferenceTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestWith;
 
-#[CoversClass(AssertStaticMethodTypeSpecifyingExtension::class)]
-class AssertStaticMethodTypeSpecifyingExtensionTest extends TypeInferenceTestCase
+#[CoversClass(UnnecessaryAssertTypeSpecifyingExtension::class)]
+class UnnecessaryAssertTypeSpecifyingExtensionTest extends TypeInferenceTestCase
 {
-    #[TestWith(['/data/AssertNotFalseTypeSpecifyingAssertions.php'])]
-    #[TestWith(['/data/AssertFalseTypeSpecifyingAssertions.php'])]
-    #[TestWith(['/data/AssertTrueTypeSpecifyingAssertions.php'])]
-    #[TestWith(['/data/AssertStringTypeSpecifyingAssertions.php'])]
-    #[TestWith(['/data/AssertNullTypeSpecifyingAssertions.php'])]
-    #[TestWith(['/data/AssertNotNullTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/UnnecessaryAssert/AssertNotFalseTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/UnnecessaryAssert/AssertFalseTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/UnnecessaryAssert/AssertTrueTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/UnnecessaryAssert/AssertStringTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/UnnecessaryAssert/AssertNullTypeSpecifyingAssertions.php'])]
+    #[TestWith(['/data/UnnecessaryAssert/AssertNotNullTypeSpecifyingAssertions.php'])]
     public function testFileAsserts(string $path): void
     {
         $results = self::gatherAssertTypes(__DIR__ . $path);
