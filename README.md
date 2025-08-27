@@ -46,6 +46,10 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `object`
 - `scalar`
 - `integer`
+- `positiveInt`
+- `negativeInt`
+- `nonNegativeInt`
+- `nonPositiveInt`
 - `numeric`
 - `float`
 - `string`

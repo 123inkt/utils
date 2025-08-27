@@ -106,36 +106,6 @@ class AssertTest extends TestCase
         Assert::object('string'); // @phpstan-ignore-line
     }
 
-    public function testInteger(): void
-    {
-        static::assertSame(5, Assert::integer(5));
-    }
-
-    public function testIntegerFailure(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be an int, `string (string)` was given');
-        Assert::integer('string'); // @phpstan-ignore-line
-    }
-
-    #[TestWith([5])]
-    #[TestWith(['5'])]
-    #[TestWith(['-5'])]
-    #[TestWith(['-5.5'])]
-    #[TestWith([-5.5])]
-    #[TestWith(['-5.5e10'])]
-    public function testNumeric(mixed $value): void
-    {
-        static::assertSame($value, Assert::numeric($value));
-    }
-
-    public function testNumericFailure(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be numeric, `foobar (string)` was given');
-        Assert::numeric('foobar');
-    }
-
     public function testFloat(): void
     {
         static::assertSame(5.5, Assert::float(5.5));

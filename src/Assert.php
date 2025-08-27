@@ -67,7 +67,7 @@ class Assert
      * @template       T
      * @phpstan-assert array<array-key, mixed> $value
      *
-     * @param T              $value
+     * @param T                                $value
      *
      * @return T&array<array-key, mixed>
      */
@@ -171,6 +171,78 @@ class Assert
     }
 
     /**
+     * Assert value is positive-int. Value > 0
+     * @template       T
+     * @phpstan-assert positive-int $value
+     *
+     * @param T                     $value
+     *
+     * @return T&positive-int
+     */
+    public static function positiveInt(mixed $value, ?string $message = null): int
+    {
+        if (is_int($value) === false || $value <= 0) {
+            throw ExceptionFactory::createException('a positive int', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is negative-int. Value < 0
+     * @template       T
+     * @phpstan-assert negative-int $value
+     *
+     * @param T                     $value
+     *
+     * @return T&negative-int
+     */
+    public static function negativeInt(mixed $value, ?string $message = null): int
+    {
+        if (is_int($value) === false || $value >= 0) {
+            throw ExceptionFactory::createException('a negative int', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is non-positive-int. Value <= 0
+     * @template       T
+     * @phpstan-assert non-positive-int $value
+     *
+     * @param T                         $value
+     *
+     * @return T&non-positive-int
+     */
+    public static function nonPositiveInt(mixed $value, ?string $message = null): int
+    {
+        if (is_int($value) === false || $value > 0) {
+            throw ExceptionFactory::createException('a non-positive int', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is non-negative-int. Value >= 0
+     * @template       T
+     * @phpstan-assert non-negative-int $value
+     *
+     * @param T                         $value
+     *
+     * @return T&non-negative-int
+     */
+    public static function nonNegativeInt(mixed $value, ?string $message = null): int
+    {
+        if (is_int($value) === false || $value < 0) {
+            throw ExceptionFactory::createException('a non-negative int', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert the value is a numeric value. See is_numeric
      * @template       T
      * @phpstan-assert numeric-string $value
@@ -262,11 +334,11 @@ class Assert
 
     /**
      * Assert value is a class-string
-     * @template       T
      *
+     * @template       T
      * @phpstan-assert class-string $value
      *
-     * @param T               $value
+     * @param T                     $value
      *
      * @return T&class-string
      */
@@ -400,7 +472,7 @@ class Assert
      * @template       T
      * @phpstan-assert non-empty-array<array-key, mixed> $value
      *
-     * @param T              $value
+     * @param T                                          $value
      *
      * @return T&non-empty-array<array-key, mixed>
      */
