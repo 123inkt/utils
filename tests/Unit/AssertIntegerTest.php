@@ -21,7 +21,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be an int, `string (string)` was given');
-        Assert::integer('string'); // @phpstan-ignore-line
+        Assert::integer('string');
     }
 
     public function testPositiveInt(): void
@@ -33,7 +33,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a positive int');
-        Assert::positiveInt(0); // @phpstan-ignore-line
+        Assert::positiveInt(0);
     }
 
     public function testNegativeInt(): void
@@ -45,7 +45,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a negative int');
-        Assert::negativeInt(0); // @phpstan-ignore-line
+        Assert::negativeInt(0);
     }
 
     public function testNonPositiveInt(): void
@@ -58,7 +58,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a non-positive int');
-        Assert::nonPositiveInt(5); // @phpstan-ignore-line
+        Assert::nonPositiveInt(5);
     }
 
     public function testNonNegativeInt(): void
@@ -71,7 +71,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a non-negative int');
-        Assert::nonNegativeInt(-5); // @phpstan-ignore-line
+        Assert::nonNegativeInt(-5);
     }
 
     #[TestWith([5])]
@@ -89,6 +89,6 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be numeric, `foobar (string)` was given');
-        Assert::numeric('foobar'); // @phpstan-ignore-line
+        Assert::numeric('foobar');
     }
 }

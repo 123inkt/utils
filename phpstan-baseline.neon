@@ -67,6 +67,42 @@ parameters:
 			path: tests/Unit/ArraysTest.php
 
 		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:integer\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertIntegerTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:negativeInt\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertIntegerTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:nonNegativeInt\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertIntegerTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:nonPositiveInt\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertIntegerTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:numeric\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertIntegerTest.php
+
+		-
+			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:positiveInt\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: tests/Unit/AssertIntegerTest.php
+
+		-
 			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:classString\(\) contains unresolvable type\.$#'
 			identifier: staticMethod.unresolvableReturnType
 			count: 1
