@@ -67,7 +67,7 @@ class Assert
      * @template       T
      * @phpstan-assert array<array-key, mixed> $value
      *
-     * @param T              $value
+     * @param T                                $value
      *
      * @return T&array<array-key, mixed>
      */
@@ -199,7 +199,7 @@ class Assert
      */
     public static function negativeInt(mixed $value, ?string $message = null): int
     {
-        if (is_int($value) === false || $value <= 0) {
+        if (is_int($value) === false || $value >= 0) {
             throw ExceptionFactory::createException('a negative int', $value, $message);
         }
 
@@ -318,6 +318,7 @@ class Assert
     /**
      * Assert value is at least one of the given types
      * @template T
+     *
      * @param T        $value
      * @param string[] $types
      *
@@ -335,10 +336,9 @@ class Assert
     /**
      * Assert value is a class-string
      * @template       T
-     *
      * @phpstan-assert class-string $value
      *
-     * @param T               $value
+     * @param T                     $value
      *
      * @return T&class-string
      */
@@ -472,7 +472,7 @@ class Assert
      * @template       T
      * @phpstan-assert non-empty-array<array-key, mixed> $value
      *
-     * @param T              $value
+     * @param T                                          $value
      *
      * @return T&non-empty-array<array-key, mixed>
      */

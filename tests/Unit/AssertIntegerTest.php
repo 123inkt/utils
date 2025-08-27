@@ -24,6 +24,56 @@ class AssertIntegerTest extends TestCase
         Assert::integer('string'); // @phpstan-ignore-line
     }
 
+    public function testPositiveInt(): void
+    {
+        static::assertSame(5, Assert::positiveInt(5));
+    }
+
+    public function testPositiveIntFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a positive int');
+        Assert::positiveInt(0);
+    }
+
+    public function testNegativeInt(): void
+    {
+        static::assertSame(-5, Assert::negativeInt(-5));
+    }
+
+    public function testNegativeIntFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a negative int');
+        Assert::negativeInt(0);
+    }
+
+    public function testNonPositiveInt(): void
+    {
+        static::assertSame(-5, Assert::nonPositiveInt(-5));
+        static::assertSame(0, Assert::nonPositiveInt(0));
+    }
+
+    public function testNonPositiveIntFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a non-positive int');
+        Assert::nonPositiveInt(5);
+    }
+
+    public function testNonNegativeInt(): void
+    {
+        static::assertSame(5, Assert::nonNegativeInt(5));
+        static::assertSame(0, Assert::nonNegativeInt(0));
+    }
+
+    public function testNonNegativeIntFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a non-negative int');
+        Assert::nonNegativeInt(-5);
+    }
+
     #[TestWith([5])]
     #[TestWith(['5'])]
     #[TestWith(['-5'])]
