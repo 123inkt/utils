@@ -318,7 +318,6 @@ class Assert
     /**
      * Assert value is at least one of the given types
      * @template T
-     *
      * @param T        $value
      * @param string[] $types
      *
