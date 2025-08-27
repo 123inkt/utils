@@ -33,7 +33,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a positive int');
-        Assert::positiveInt(0);
+        Assert::positiveInt(0); // @phpstan-ignore-line
     }
 
     public function testNegativeInt(): void
@@ -45,7 +45,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a negative int');
-        Assert::negativeInt(0);
+        Assert::negativeInt(0); // @phpstan-ignore-line
     }
 
     public function testNonPositiveInt(): void
@@ -58,7 +58,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a non-positive int');
-        Assert::nonPositiveInt(5);
+        Assert::nonPositiveInt(5); // @phpstan-ignore-line
     }
 
     public function testNonNegativeInt(): void
@@ -71,7 +71,7 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a non-negative int');
-        Assert::nonNegativeInt(-5);
+        Assert::nonNegativeInt(-5); // @phpstan-ignore-line
     }
 
     #[TestWith([5])]
@@ -89,6 +89,6 @@ class AssertIntegerTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be numeric, `foobar (string)` was given');
-        Assert::numeric('foobar');
+        Assert::numeric('foobar'); // @phpstan-ignore-line
     }
 }

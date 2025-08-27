@@ -89,9 +89,3 @@ parameters:
 			identifier: staticMethod.unresolvableReturnType
 			count: 1
 			path: tests/Unit/AssertTest.php
-
-		-
-			message: '#^Return type of call to static method DR\\Utils\\Assert\:\:numeric\(\) contains unresolvable type\.$#'
-			identifier: staticMethod.unresolvableReturnType
-			count: 1
-			path: tests/Unit/AssertTest.php
