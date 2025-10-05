@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 class ArraysPathAccessorTest extends TestCase
 {
     /**
-     * @param non-empty-list<string> $path
+     * @param non-empty-list<array-key> $path
      */
     #[TestWith([["user", "address", "city"], 'NY'])]
     #[TestWith([["user", "name"], 'John'])]
