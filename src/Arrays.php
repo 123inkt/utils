@@ -533,4 +533,71 @@ class Arrays
 
         return $result;
     }
+
+    /**
+     * Find a value in a multi-dimensional array by the given path.
+     * Example:
+     * <code>
+     *    $data = [
+     *       'user' => [
+     *          'address' => [
+     *            'city' => 'New York'
+     *       ]
+     *    ];
+     *    $city = Arrays::fetchByPath($data, ['user', 'address', 'city']); // returns 'New York'
+     * </code>
+     *
+     * @param mixed[]                   $array
+     * @param non-empty-list<array-key> $path
+     * @param bool                      $strict If true, will throw `InvalidArgumentException` if path not found, otherwise returns <code>null</code>
+     */
+    public static function fetchByPath(array $array, array $path, bool $strict = true): mixed
+    {
+        $current = $array;
+        foreach ($path as $key) {
+            if (is_array($current) === false || array_key_exists($key, $current) === false) {
+                if ($strict) {
+                    throw new InvalidArgumentException('Path "' . implode(' -> ', $path) . '" not found in array');
+                }
+
+                return null;
+            }
+            $current = $current[$key];
+        }
+
+        return $current;
+    }
+
+    /**
+     * Assign a value to a multi-dimensional array by the given path. Will throw `InvalidArgumentException` if path contains non-array value.
+     * Example:
+     * <code>
+     *    $data = Arrays::assignByPath([], ['user', 'address', 'city'], 'foo');
+     *    // $data contains ['user' => ['address' => ['city' => 'foo']]]
+     * </code>
+     *
+     * @param mixed[]                   $array
+     * @param non-empty-list<array-key> $path
+     *
+     * @return mixed[]
+     */
+    public static function assignByPath(array $array, array $path, mixed $value): array
+    {
+        $current = &$array;
+        foreach ($path as $key) {
+            if (is_array($current) === false) {
+                throw new InvalidArgumentException(
+                    'Unable to create path for "' . implode(' -> ', $path) . '" as it contains non-array value: ' . get_debug_type($current)
+                );
+            }
+            if (array_key_exists($key, $current) === false) {
+                $current[$key] = [];
+            }
+
+            $current = &$current[$key];
+        }
+        $current = $value;
+
+        return $array;
+    }
 }

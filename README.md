@@ -32,6 +32,8 @@ A library with everyday use classes and methods:
 - `wrap` - Wrap a value in an array, unless it is already an array.
 - `toJson` - Converts an array into a json string.
 - `fromJson` - Converts a json string into an array.
+- `fetchByPath` - Fetch a value from a multi-dimensional array by the given path.
+- `assignByPath` - Assign a value to a multi-dimensional array by the given path.
 
 ## Assert
 
