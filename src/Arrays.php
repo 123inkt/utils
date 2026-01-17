@@ -154,7 +154,7 @@ class Arrays
      * Example:
      * <code>
      *    $data = ['FOO' => true, 'BAR' => false];
-     *    $data = Arrays::mapKey($data, static fn(string $key): string => strtolower($key));
+     *    $data = Arrays::mapKeys($data, static fn(string $key): string => strtolower($key));
      *    // output: ['foo' => true, 'bar' => false]
      * </code>
      * @template T
