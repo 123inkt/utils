@@ -78,6 +78,14 @@ class ArraysTest extends TestCase
         static::assertSame([2 => false, 4 => true, 6 => false], Arrays::mapAssoc([1, 2, 3], static fn(int $val) => [$val * 2, $val % 2 === 0]));
     }
 
+    public function testMapKeys(): void
+    {
+        $callback = static fn(string $key): string => strtolower($key);
+        static::assertSame([], Arrays::mapKeys([], $callback));
+        static::assertSame(['foo' => 'bar'], Arrays::mapKeys(['FOO' => 'bar'], $callback));
+        static::assertSame(['foo' => 'bar', 'bar' => 123], Arrays::mapKeys(new ArrayIterator(['FOO' => 'bar', 'BAR' => 123]), $callback));
+    }
+
     public function testReindex(): void
     {
         $callback = static fn(string $value) => strlen($value);
@@ -348,7 +356,7 @@ class ArraysTest extends TestCase
 
     public function testFromJson(): void
     {
-        $jsonString = '{"key": "value", "number": 123}';
+        $jsonString    = '{"key": "value", "number": 123}';
         $expectedArray = ["key" => "value", "number" => 123];
 
         $result = Arrays::fromJson($jsonString);
