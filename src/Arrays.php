@@ -150,7 +150,7 @@ class Arrays
 
     /**
      * Similar to <code>array_map</code> but instead of converting the value of the array, the key will be converted. The original value of the
-     * key will be assigned to the new key. The callback receives the key as the first argument and the value as the second argument.
+     * key will be assigned to the new key.
      * Example:
      * <code>
      *    $data = ['FOO' => true, 'BAR' => false];
@@ -166,7 +166,7 @@ class Arrays
      *
      * @return array<K2, T>
      */
-    public static function mapKey(iterable $items, callable $callback): array
+    public static function mapKeys(iterable $items, callable $callback): array
     {
         $result = [];
         foreach ($items as $key => $value) {
