@@ -280,7 +280,7 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting array to be empty. More context about failure.');
-        Assert::emptyArray(['foo'], 'More context about failure.'); // @phpstan-ignore-line
+        Assert::emptyArray(['foo'], 'More context about failure.');
     }
 
     public function testEmptyArray(): void
