@@ -149,6 +149,34 @@ class Arrays
     }
 
     /**
+     * Similar to <code>array_map</code> but instead of converting the value of the array, the key will be converted. The original value of the
+     * key will be assigned to the new key.
+     * Example:
+     * <code>
+     *    $data = ['FOO' => true, 'BAR' => false];
+     *    $data = Arrays::mapKeys($data, static fn(string $key): string => strtolower($key));
+     *    // output: ['foo' => true, 'bar' => false]
+     * </code>
+     * @template T
+     * @template K1 of array-key
+     * @template K2 of array-key
+     *
+     * @param iterable<K1, T>       $items
+     * @param (callable(K1): K2) $callback
+     *
+     * @return array<K2, T>
+     */
+    public static function mapKeys(iterable $items, callable $callback): array
+    {
+        $result = [];
+        foreach ($items as $key => $value) {
+            $result[$callback($key)] = $value;
+        }
+
+        return $result;
+    }
+
+    /**
      * Map an array to key-value pair by the given return values of the callback.
      * <code>
      *      $data = [1, 2, 3];

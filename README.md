@@ -18,7 +18,8 @@ A library with everyday use classes and methods:
 - `equals` - Tests if two arrays have equal contents, ignoring order. Supports `ComparableInterface`.
 - `explode` - Explode a string or null into an array, with exploding empty string to empty array.
 - `map` - Similar to `array_map` but with support for `iterable`, and receive key as second argument in the callback.
-- `mapAssoc` - Map an array to a new array using a callback, preserving keys. 
+- `mapAssoc` - Map an array to a new array using a callback, preserving keys.
+- `mapKeys` - Map an array to a new keyed array using a callback,
 - `reindex` - Reindex an array with new keys based on the result of the callback.
 - `groupBy` - Group items by the given return value of the callback.
 - `renameKey` - Rename the `string` key of an array element.
