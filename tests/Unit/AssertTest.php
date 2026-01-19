@@ -276,6 +276,25 @@ class AssertTest extends TestCase
         Assert::notEndsWith($value, $suffix, $caseSensitive, 'More context about failure.');
     }
 
+    public function testEmptyArrayFailureWithFilledArray(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting array to be empty. More context about failure.');
+        Assert::emptyArray(['foo'], 'More context about failure.');
+    }
+
+    public function testEmptyArrayFailureWithNonArray(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be an array');
+        Assert::emptyArray('string', 'More context about failure.');
+    }
+
+    public function testEmptyArray(): void
+    {
+        static::assertSame([], Assert::emptyArray([]));
+    }
+
     public function testNonEmptyArrayFailure(): void
     {
         $this->expectException(RuntimeException::class);
