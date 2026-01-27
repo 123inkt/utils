@@ -6,6 +6,7 @@ namespace DR\Utils\Tests\Unit;
 
 use DR\Utils\Stringify;
 use DR\Utils\Tests\Helper\TestEnum;
+use DR\Utils\Tests\Mock\MockJsonSerializable;
 use DR\Utils\Tests\Mock\MockStringable;
 use Generator;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -40,6 +41,7 @@ class StringifyTest extends TestCase
         yield 'keyed-array' => [['foo' => 'bar'], 'keyed-array(1)'];
         yield 'object' => [new stdClass(), 'stdClass'];
         yield 'null' => [null, 'null'];
+        yield 'json' => [new MockJsonSerializable(['foo' => 'bar']), MockJsonSerializable::class . '({"foo":"bar"})'];
 
         $resource = fopen('php://memory', 'rb');
         yield 'resource' => [$resource, 'resource (stream)'];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DR\Utils;
 
 use BackedEnum;
+use JsonSerializable;
 use Stringable;
 
 class Stringify
@@ -48,6 +49,10 @@ class Stringify
                 array_is_list($value) => 'array-list(' . $size . ')',
                 default               => 'keyed-array(' . $size . ')',
             };
+        }
+
+        if ($value instanceof JsonSerializable) {
+            return get_debug_type($value) . '(' . json_encode($value->jsonSerialize(), JSON_THROW_ON_ERROR) . ')';
         }
 
         return get_debug_type($value);
