@@ -25,7 +25,7 @@ parameters:
 			path: src/PHPStan/Extension/ArraysRemoveTypesReturnExtension.php
 
 		-
-			message: '#^Parameter \#1 \$keyTypes of class PHPStan\\Type\\Constant\\ConstantArrayType constructor expects array\<int, PHPStan\\Type\\Constant\\ConstantIntegerType\|PHPStan\\Type\\Constant\\ConstantStringType\>, list\<PHPStan\\Type\\Type\> given\.$#'
+			message: '#^Parameter \#1 \$keyTypes of class PHPStan\\Type\\Constant\\ConstantArrayType constructor expects list\<PHPStan\\Type\\Constant\\ConstantIntegerType\|PHPStan\\Type\\Constant\\ConstantStringType\>, list\<PHPStan\\Type\\Type\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/PHPStan/Extension/ArraysRemoveTypesReturnExtension.php
@@ -49,7 +49,7 @@ parameters:
 			path: src/PHPStan/Extension/ArraysRenameKeyReturnExtension.php
 
 		-
-			message: '#^Parameter \#1 \$keyTypes of class PHPStan\\Type\\Constant\\ConstantArrayType constructor expects array\<int, PHPStan\\Type\\Constant\\ConstantIntegerType\|PHPStan\\Type\\Constant\\ConstantStringType\>, list\<PHPStan\\Type\\Type\> given\.$#'
+			message: '#^Parameter \#1 \$keyTypes of class PHPStan\\Type\\Constant\\ConstantArrayType constructor expects list\<PHPStan\\Type\\Constant\\ConstantIntegerType\|PHPStan\\Type\\Constant\\ConstantStringType\>, non\-empty\-list\<PHPStan\\Type\\Type\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/PHPStan/Extension/ArraysRenameKeyReturnExtension.php
