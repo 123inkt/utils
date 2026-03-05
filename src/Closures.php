@@ -11,19 +11,19 @@ class Closures
     /**
      * Calls the Closure and assigns its return value to the variable passed in to this function
      *
-     * @template T of object
+     * @template T
      * @param T $closure Is overwritten by its return value
      * @phpstan-param T|Closure(): T $closure
      * @param-out T $closure
      *
      * @phpstan-return T
      */
-    public static function unfold(object &$closure): object
+    public static function unfold(mixed &$closure): mixed
     {
         if ($closure instanceof Closure) {
-            /** @phpstan-var T $object */
-            $object = ($closure)();
-            $closure = $object;
+            /** @phpstan-var T $value */
+            $value = ($closure)();
+            $closure = $value;
         }
 
         /** @phpstan-var T $closure */
