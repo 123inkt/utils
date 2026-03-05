@@ -9,6 +9,8 @@ use Closure;
 class Closures
 {
     /**
+     * Calls the Closure and assigns its return value to the variable passed in to this function
+     *
      * @template T of object
      * @phpstan-param T|Closure(): T $closure
      * @param-out T $closure
