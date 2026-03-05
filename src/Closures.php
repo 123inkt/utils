@@ -12,6 +12,7 @@ class Closures
      * Calls the Closure and assigns its return value to the variable passed in to this function
      *
      * @template T of object
+     * @param T $closure Is overwritten by its return value
      * @phpstan-param T|Closure(): T $closure
      * @param-out T $closure
      *
