@@ -7,26 +7,21 @@ namespace DR\Utils\Tests\Unit;
 use DR\Utils\Closures;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 #[CoversClass(Closures::class)]
 class ClosuresTest extends TestCase
 {
     public function testUnfold(): void
     {
-        $class = new class() {
-            public int $counter = 0;
-
-            public function __construct()
-            {
-                $this->counter++;
-            }
+        $counter = 0;
+        $closure = static function () use (&$counter): stdClass {
+            $counter++;
+            return new stdClass();
         };
-        $closure = static fn() => $class;
-
-        $unfolded = Closures::unfold($closure);
-        static::assertSame($class, $unfolded);
-        static::assertSame(1, $class->counter);
-        static::assertSame($unfolded, Closures::unfold($closure));
-        static::assertSame(1, $class->counter);
+        $unfolded1 = Closures::unfold($closure);
+        $unfolded2 = Closures::unfold($closure);
+        static::assertSame($unfolded1, $unfolded2);
+        static::assertSame(1, $counter);
     }
 }
