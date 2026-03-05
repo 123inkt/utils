@@ -103,6 +103,18 @@ stdClass => 'stdClass'
 resource => 'resource (stream)'
 ``` 
 
+## Closures
+
+- `unfold`
+
+Turns a variable with a closure into the return type of that closure.  
+Can be called multiple times on the same variable, but will only execute the closure once.  
+```php
+    $service = fn() => new Service();
+    Closures::unfold($service);
+    $service instanceof Service // true
+```
+
 ## Installation
 
 ```shell
