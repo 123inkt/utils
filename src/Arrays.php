@@ -570,6 +570,9 @@ class Arrays
      */
     public static function implode(iterable $items, string $separator = ','): string
     {
+        if ($separator === '') {
+            throw new InvalidArgumentException('Separator cannot be empty');
+        }
         $result = [];
         foreach ($items as $item) {
             if ($item instanceof BackedEnum) {
