@@ -406,6 +406,7 @@ class ArraysTest extends TestCase
         static::assertSame('1:', Arrays::implode([true, false], ':'));
         static::assertSame('1.2:3.4', Arrays::implode([1.2, 3.4], ':'));
         static::assertSame('foo:bar', Arrays::implode(['foo', 'bar'], ':'));
+        static::assertSame('foo:bar', Arrays::implode(new ArrayIterator(['foo', 'bar']), ':'));
         static::assertSame('foo:bar', Arrays::implode([new MockStringable('foo'), new MockStringable('bar')], ':'));
         static::assertSame('foo:bar', Arrays::implode(MockStringBackedEnum::cases(), ':'));
     }
