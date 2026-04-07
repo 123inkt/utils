@@ -565,8 +565,8 @@ class Arrays
     }
 
     /**
-     * @param array<null|bool|int|string|float|Stringable|BackedEnum> $items
-     * @param non-empty-string                                        $separator
+     * @param iterable<null|bool|int|string|float|Stringable|BackedEnum> $items
+     * @param non-empty-string                                            $separator
      */
     public static function implode(iterable $items, string $separator = ','): string
     {
