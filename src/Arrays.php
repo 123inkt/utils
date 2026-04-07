@@ -649,6 +649,7 @@ class Arrays
         }
         $current = $value;
 
+        /** @phpstan-var mixed[] */
         return $array;
     }
 }

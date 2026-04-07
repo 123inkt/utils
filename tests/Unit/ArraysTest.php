@@ -410,4 +410,11 @@ class ArraysTest extends TestCase
         static::assertSame('foo:bar', Arrays::implode([new MockStringable('foo'), new MockStringable('bar')], ':'));
         static::assertSame('foo:bar', Arrays::implode(MockStringBackedEnum::cases(), ':'));
     }
+
+    public function testImplodeWithEmptySeparator(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Separator cannot be empty');
+        Arrays::implode(['foo', 'bar'], ''); // @phpstan-ignore-line
+    }
 }
