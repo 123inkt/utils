@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace DR\Utils;
 
+use BackedEnum;
 use InvalidArgumentException;
 use JsonException;
 use RuntimeException;
+use Stringable;
 
 use function array_diff_key;
 use function array_filter;
@@ -161,7 +163,7 @@ class Arrays
      * @template K1 of array-key
      * @template K2 of array-key
      *
-     * @param iterable<K1, T>       $items
+     * @param iterable<K1, T>    $items
      * @param (callable(K1): K2) $callback
      *
      * @return array<K2, T>
@@ -563,6 +565,27 @@ class Arrays
     }
 
     /**
+     * @param iterable<null|bool|int|string|float|Stringable|BackedEnum> $items
+     * @param non-empty-string                                            $separator
+     */
+    public static function implode(iterable $items, string $separator = ','): string
+    {
+        if ($separator === '') {
+            throw new InvalidArgumentException('Separator cannot be empty');
+        }
+        $result = [];
+        foreach ($items as $item) {
+            if ($item instanceof BackedEnum) {
+                $result[] = $item->value;
+            } else {
+                $result[] = (string)$item;
+            }
+        }
+
+        return implode($separator, $result);
+    }
+
+    /**
      * Find a value in a multi-dimensional array by the given path.
      * Example:
      * <code>
@@ -626,6 +649,7 @@ class Arrays
         }
         $current = $value;
 
+        /** @phpstan-var mixed[] */
         return $array;
     }
 }

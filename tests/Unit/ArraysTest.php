@@ -7,6 +7,8 @@ use ArrayIterator;
 use DR\Utils\Arrays;
 use DR\Utils\Tests\Mock\MockComparable;
 use DR\Utils\Tests\Mock\MockEquatable;
+use DR\Utils\Tests\Mock\MockStringable;
+use DR\Utils\Tests\Mock\MockStringBackedEnum;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -395,5 +397,24 @@ class ArraysTest extends TestCase
         ];
 
         static::assertSame(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], Arrays::flatten($input));
+    }
+
+    public function testImplode(): void
+    {
+        static::assertSame('', Arrays::implode([], ':'));
+        static::assertSame('1:2', Arrays::implode([1, 2], ':'));
+        static::assertSame('1:', Arrays::implode([true, false], ':'));
+        static::assertSame('1.2:3.4', Arrays::implode([1.2, 3.4], ':'));
+        static::assertSame('foo:bar', Arrays::implode(['foo', 'bar'], ':'));
+        static::assertSame('foo:bar', Arrays::implode(new ArrayIterator(['foo', 'bar']), ':'));
+        static::assertSame('foo:bar', Arrays::implode([new MockStringable('foo'), new MockStringable('bar')], ':'));
+        static::assertSame('foo:bar', Arrays::implode(MockStringBackedEnum::cases(), ':'));
+    }
+
+    public function testImplodeWithEmptySeparator(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Separator cannot be empty');
+        Arrays::implode(['foo', 'bar'], ''); // @phpstan-ignore-line
     }
 }

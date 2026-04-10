@@ -13,6 +13,7 @@ A library with everyday use classes and methods:
 - `find` - Find the first element in an array that matches a predicate, exception otherwise.
 - `findOrNull` - Find the first element in an array that matches a predicate, null otherwise.
 - `flatten` - Recursively flattens an array returning an array with all the elements.
+- `implode` - Implode an iterable into a string. Supports iterable of boolean, int, float, string, null, Stringable and BackedEnum.
 - `contains` - Test if the given value is contained within items. Supports `EquatableInterface`.
 - `diff` - Get the difference between two arrays. Supports `ComparableInterface`.
 - `equals` - Tests if two arrays have equal contents, ignoring order. Supports `ComparableInterface`.
