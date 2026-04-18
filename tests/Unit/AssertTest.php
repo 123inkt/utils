@@ -65,14 +65,14 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a list, `foobar (string)` was given');
-        Assert::isList('foobar');
+        Assert::isList('foobar'); // @phpstan-ignore-line
     }
 
     public function testIsListFailureOnNonListArray(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a list, `array` was given');
-        Assert::isList(['key' => 'value']);
+        Assert::isList(['key' => 'value']); // @phpstan-ignore-line
     }
 
     public function testIsCallable(): void
