@@ -32,6 +32,7 @@ class AssertIsListReturnExtension implements DynamicStaticMethodReturnTypeExtens
     }
 
     /**
+     * @codeCoverageIgnore
      * @inheritDoc
      */
     public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): Type
