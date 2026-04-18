@@ -17,7 +17,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 
 /**
- * Extension to ensure the array is narrowed to list<V> while preserving value type information
+ * Extension to ensure Arrays::isList the array is narrowed to list<V> while preserving value type information
  */
 class AssertIsListReturnExtension implements DynamicStaticMethodReturnTypeExtension
 {
