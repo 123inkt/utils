@@ -56,6 +56,25 @@ class AssertTest extends TestCase
         static::assertSame($objects, Assert::isArray($objects));
     }
 
+    public function testIsList(): void
+    {
+        static::assertSame([1, 'b', 'c'], Assert::isList([1, 'b', 'c']));
+    }
+
+    public function testIsListFailureOnNonArray(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a list, `foobar (string)` was given');
+        Assert::isList('foobar');
+    }
+
+    public function testIsListFailureOnNonListArray(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a list, `array` was given');
+        Assert::isList(['key' => 'value']);
+    }
+
     public function testIsCallable(): void
     {
         $callable = [$this, 'testIsCallable'];

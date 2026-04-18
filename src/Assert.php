@@ -81,6 +81,19 @@ class Assert
     }
 
     /**
+     * Assert value is array list
+     * @return list<mixed>
+     */
+    public static function isList(mixed $value, ?string $message = null): array
+    {
+        if (is_array($value) === false || array_is_list($value) === false) {
+            throw ExceptionFactory::createException('a list', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert value is callable
      * @template       T
      * @phpstan-assert callable $value
@@ -318,6 +331,7 @@ class Assert
     /**
      * Assert value is at least one of the given types
      * @template T
+     *
      * @param T        $value
      * @param string[] $types
      *
@@ -334,7 +348,6 @@ class Assert
 
     /**
      * Assert value is a class-string
-     *
      * @template       T
      * @phpstan-assert class-string $value
      *

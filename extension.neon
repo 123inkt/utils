@@ -12,6 +12,10 @@ services:
         tags:
             - phpstan.broker.dynamicStaticMethodReturnTypeExtension
     -
+        class: DR\Utils\PHPStan\Extension\AssertIsListReturnExtension
+        tags:
+            - phpstan.broker.dynamicStaticMethodReturnTypeExtension
+    -
         class: DR\Utils\PHPStan\Extension\AssertTypeTypeSpecifyingExtension
         tags:
             - phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension
