@@ -18,9 +18,6 @@ use PHPStan\Type\TypeCombinator;
 
 /**
  * Extension to ensure the array is narrowed to list<V> while preserving value type information
- * <code>
- *     Assert::isList();
- * </code>
  */
 class AssertIsListReturnExtension implements DynamicStaticMethodReturnTypeExtension
 {
