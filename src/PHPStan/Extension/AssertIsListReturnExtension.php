@@ -26,9 +26,6 @@ class AssertIsListReturnExtension implements DynamicStaticMethodReturnTypeExtens
         return Assert::class;
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'isList';
