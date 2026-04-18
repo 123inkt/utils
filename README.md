@@ -44,6 +44,7 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `null`
 - `notNull`
 - `isArray`
+- `isList`
 - `inArray`
 - `isCallable`
 - `resource`
