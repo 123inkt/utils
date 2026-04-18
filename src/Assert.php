@@ -82,8 +82,12 @@ class Assert
 
     /**
      * Assert value is array list
-     * @phpstan-assert list<mixed> $value
-     * @return list<mixed>
+     * @template T
+     * @phpstan-assert T&list<value-of<T>> $value
+     *
+     * @param T                            $value
+     *
+     * @return T&list<value-of<T>>
      */
     public static function isList(mixed $value, ?string $message = null): array
     {
