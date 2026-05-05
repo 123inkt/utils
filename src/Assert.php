@@ -536,7 +536,7 @@ class Assert
      */
     public static function nonEmptyString(mixed $value, ?string $message = null): string
     {
-        Assert::string($value);
+        Assert::string($value, $message);
 
         if (strlen($value) === 0) {
             throw ExceptionFactory::createException('a non empty string', $value, $message);
@@ -707,7 +707,7 @@ class Assert
      */
     public static function fileExists(mixed $value, ?string $message = null): string|Stringable
     {
-        static::stringable($value);
+        static::stringable($value, $message);
         if (file_exists((string)$value) === false) {
             throw ExceptionFactory::createException('a file or directory that exists', $value, $message);
         }
@@ -721,7 +721,7 @@ class Assert
      */
     public static function file(mixed $value, ?string $message = null): string|Stringable
     {
-        static::fileExists($value);
+        static::fileExists($value, $message);
         if (is_file((string)$value) === false) {
             throw ExceptionFactory::createException('a file', $value, $message);
         }
@@ -735,7 +735,7 @@ class Assert
      */
     public static function directory(mixed $value, ?string $message = null): string|Stringable
     {
-        static::fileExists($value);
+        static::fileExists($value, $message);
         if (is_dir((string)$value) === false) {
             throw ExceptionFactory::createException('a directory', $value, $message);
         }
@@ -749,7 +749,7 @@ class Assert
      */
     public static function readable(mixed $value, ?string $message = null): string|Stringable
     {
-        static::stringable($value);
+        static::stringable($value, $message);
         if (is_readable((string)$value) === false) {
             throw ExceptionFactory::createException('readable', $value, $message);
         }
@@ -763,7 +763,7 @@ class Assert
      */
     public static function writable(mixed $value, ?string $message = null): string|Stringable
     {
-        static::stringable($value);
+        static::stringable($value, $message);
         if (is_writable((string)$value) === false) {
             throw ExceptionFactory::createException('writable', $value, $message);
         }
