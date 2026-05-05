@@ -21,8 +21,8 @@ class AssertTest extends TestCase
     public function testNullFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be null, `foobar (string)` was given. More context about error.');
-        Assert::null('foobar', 'More context about error.');
+        $this->expectExceptionMessage('Expecting value to be null, `foobar (string)` was given. More context about failure.');
+        Assert::null('foobar', 'More context about failure.');
     }
 
     public function testNullSuccess(): void
@@ -33,8 +33,8 @@ class AssertTest extends TestCase
     public function testNotNullFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be not null, `null` was given');
-        Assert::notNull(null);
+        $this->expectExceptionMessage('Expecting value to be not null, `null` was given. More context about failure.');
+        Assert::notNull(null, 'More context about failure.');
     }
 
     public function testNotNullSuccess(): void
@@ -46,8 +46,8 @@ class AssertTest extends TestCase
     public function testIsArrayFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be an array, `foobar (string)` was given');
-        Assert::isArray('foobar'); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be an array, `foobar (string)` was given. More context about failure.');
+        Assert::isArray('foobar', 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testIsArray(): void
@@ -64,15 +64,15 @@ class AssertTest extends TestCase
     public function testIsListFailureOnNonArray(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a list, `foobar (string)` was given');
-        Assert::isList('foobar'); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a list, `foobar (string)` was given. More context about failure.');
+        Assert::isList('foobar', 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testIsListFailureOnNonListArray(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a list, `array` was given');
-        Assert::isList(['key' => 'value']); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a list, `array` was given. More context about failure.');
+        Assert::isList(['key' => 'value'], 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testIsCallable(): void
@@ -84,8 +84,8 @@ class AssertTest extends TestCase
     public function testIsCallableFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a callable, `string (string)` was given');
-        Assert::isCallable('string');
+        $this->expectExceptionMessage('Expecting value to be a callable, `string (string)` was given. More context about failure.');
+        Assert::isCallable('string', 'More context about failure.');
     }
 
     public function testScalarSuccess(): void
@@ -96,8 +96,8 @@ class AssertTest extends TestCase
     public function testScalarFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a scalar, `stdClass` was given');
-        Assert::scalar(new stdClass()); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a scalar, `stdClass` was given. More context about failure.');
+        Assert::scalar(new stdClass(), 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testResourceSuccess(): void
@@ -108,8 +108,8 @@ class AssertTest extends TestCase
     public function testResourceFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a resource, `string (string)` was given');
-        Assert::resource('string'); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a resource, `string (string)` was given. More context about failure.');
+        Assert::resource('string', 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testObjectSuccess(): void
@@ -121,8 +121,8 @@ class AssertTest extends TestCase
     public function testObjectFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be an object, `string (string)` was given');
-        Assert::object('string'); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be an object, `string (string)` was given. More context about failure.');
+        Assert::object('string', 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testFloat(): void
@@ -133,15 +133,15 @@ class AssertTest extends TestCase
     public function testFloatFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a float, `string (string)` was given');
-        Assert::float('string'); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a float, `string (string)` was given. More context about failure.');
+        Assert::float('string', 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given');
-        Assert::string(123); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given. More context about failure.');
+        Assert::string(123, 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testString(): void
@@ -152,8 +152,8 @@ class AssertTest extends TestCase
     public function testStringableFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a string or Stringable, `123 (int)` was given');
-        Assert::stringable(123); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a string or Stringable, `123 (int)` was given. More context about failure.');
+        Assert::stringable(123, 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testStringable(): void
@@ -174,15 +174,17 @@ class AssertTest extends TestCase
     public function testClassStringStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given');
-        Assert::classString(123); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given. More context about failure.');
+        Assert::classString(123, 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testClassStringClassFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a class-string but class does not exist, `DR\Utils\FakeClass (string)` was given');
-        Assert::classString('DR\Utils\FakeClass');
+        $this->expectExceptionMessage(
+            'Expecting value to be a class-string but class does not exist, `DR\Utils\FakeClass (string)` was given. More context about failure.'
+        );
+        Assert::classString('DR\Utils\FakeClass', 'More context about failure.');
     }
 
     #[TestWith([null, 'null'])]
@@ -199,13 +201,17 @@ class AssertTest extends TestCase
     /**
      * @param string[] $types
      */
-    #[TestWith([null, ['int', 'bool', 'float', 'array']])]
-    #[TestWith([123, ['bool', 'null']])]
-    public function testTypeFailure(mixed $value, array $types): void
+    #[TestWith([
+        null,
+        ['int', 'bool', 'float', 'array'],
+        'Expecting value to be in type (int,bool,float,array), `null` was given. More context about failure.'
+    ])]
+    #[TestWith([123, ['bool', 'null'], 'Expecting value to be in type (bool,null), `123 (int)` was given. More context about failure.'])]
+    public function testTypeFailure(mixed $value, array $types, string $expectedMessage): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be in type');
-        Assert::type($value, $types); // @phpstan-ignore-line
+        $this->expectExceptionMessage($expectedMessage);
+        Assert::type($value, $types, 'More context about failure.'); // @phpstan-ignore-line
     }
 
     #[TestWith(['string', 'str', true])]
@@ -305,7 +311,7 @@ class AssertTest extends TestCase
     public function testEmptyArrayFailureWithNonArray(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be an array');
+        $this->expectExceptionMessage('Expecting value to be an array, `string (string)` was given. More context about failure.');
         Assert::emptyArray('string', 'More context about failure.');
     }
 
@@ -330,15 +336,15 @@ class AssertTest extends TestCase
     public function testNonEmptyStringNoStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given');
-        Assert::nonEmptyString(123); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a string, `123 (int)` was given. More context about failure.');
+        Assert::nonEmptyString(123, 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testNonEmptyStringFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a non empty string, `empty-string` was given');
-        Assert::nonEmptyString('');
+        $this->expectExceptionMessage('Expecting value to be a non empty string, `empty-string` was given. More context about failure.');
+        Assert::nonEmptyString('', 'More context about failure.');
     }
 
     public function testNonEmptyString(): void
@@ -355,15 +361,15 @@ class AssertTest extends TestCase
     public function testBooleanFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a boolean, `string (string)` was given');
-        Assert::boolean('string'); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be a boolean, `string (string)` was given. More context about failure.');
+        Assert::boolean('string', 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testTrueFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be true, `false (bool)` was given');
-        Assert::true(false);
+        $this->expectExceptionMessage('Expecting value to be true, `false (bool)` was given. More context about failure.');
+        Assert::true(false, 'More context about failure.');
     }
 
     public function testTrueSuccess(): void
@@ -374,8 +380,8 @@ class AssertTest extends TestCase
     public function testFalseFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be false, `true (bool)` was given');
-        Assert::false(true);
+        $this->expectExceptionMessage('Expecting value to be false, `true (bool)` was given. More context about failure.');
+        Assert::false(true, 'More context about failure.');
     }
 
     public function testFalseSuccess(): void
@@ -386,8 +392,8 @@ class AssertTest extends TestCase
     public function testNotFalseFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be not false, `false (bool)` was given');
-        Assert::notFalse(false);
+        $this->expectExceptionMessage('Expecting value to be not false, `false (bool)` was given. More context about failure.');
+        Assert::notFalse(false, 'More context about failure.');
     }
 
     public function testNotFalseSuccess(): void
@@ -400,8 +406,8 @@ class AssertTest extends TestCase
     {
         $object = new stdClass();
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be instance of RuntimeException, `stdClass` was given');
-        Assert::isInstanceOf($object, RuntimeException::class); // @phpstan-ignore-line
+        $this->expectExceptionMessage('Expecting value to be instance of RuntimeException, `stdClass` was given. More context about failure.');
+        Assert::isInstanceOf($object, RuntimeException::class, 'More context about failure.'); // @phpstan-ignore-line
     }
 
     public function testIsInstanceOfSuccess(): void
@@ -412,12 +418,12 @@ class AssertTest extends TestCase
 
     public function testInArrayFailure(): void
     {
-        $value    = 5;
+        $value = 5;
         $haystack = [1, '5', false];
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be in array $values, `5 (int)` was given');
-        Assert::inArray($value, $haystack);
+        $this->expectExceptionMessage('Expecting value to be in array $values, `5 (int)` was given. More context about failure.');
+        Assert::inArray($value, $haystack, 'More context about failure.');
     }
 
     public function testInArraySuccess(): void
@@ -455,25 +461,29 @@ class AssertTest extends TestCase
     #[TestWith([new MockComparable(10), new MockComparable(5)])]
     public function testGreaterThanStdClass(mixed $left, mixed $right): void
     {
-        $leftObj      = new stdClass();
+        $leftObj = new stdClass();
         $leftObj->foo = $left;
 
-        $rightObj      = new stdClass();
+        $rightObj = new stdClass();
         $rightObj->foo = $right;
 
         static::assertSame($leftObj, Assert::greaterThan($leftObj, $rightObj));
     }
 
-    #[TestWith([5, 5, 'Expecting value to be greater than right, `5 (int)` was given'])]
-    #[TestWith(['5', '6', 'Expecting value to be greater than right, `5 (string)` was given'])]
-    #[TestWith(['-5', -2, 'Expecting value to be greater than right, `-5 (string)` was given'])]
-    #[TestWith([-5.5, '1', 'Expecting value to be greater than right, `-5.5 (float)` was given'])]
-    #[TestWith([-5.5, -1.5, 'Expecting value to be greater than right, `-5.5 (float)` was given'])]
-    #[TestWith(['-5.5e10', '0', 'Expecting value to be greater than right, `-5.5e10 (string)` was given'])]
-    #[TestWith([false, false, 'Expecting value to be greater than right, `false (bool)` was given'])]
-    #[TestWith([false, true, 'Expecting value to be greater than right, `false (bool)` was given'])]
-    #[TestWith([true, true, 'Expecting value to be greater than right, `true (bool)` was given'])]
-    #[TestWith([new DateTime('2024-04-02'), new DateTime('2025-06-25'), 'Expecting value to be greater than right, `DateTime` was given'])]
+    #[TestWith([5, 5, 'Expecting value to be greater than right, `5 (int)` was given. More context about failure.'])]
+    #[TestWith(['5', '6', 'Expecting value to be greater than right, `5 (string)` was given. More context about failure.'])]
+    #[TestWith(['-5', -2, 'Expecting value to be greater than right, `-5 (string)` was given. More context about failure.'])]
+    #[TestWith([-5.5, '1', 'Expecting value to be greater than right, `-5.5 (float)` was given. More context about failure.'])]
+    #[TestWith([-5.5, -1.5, 'Expecting value to be greater than right, `-5.5 (float)` was given. More context about failure.'])]
+    #[TestWith(['-5.5e10', '0', 'Expecting value to be greater than right, `-5.5e10 (string)` was given. More context about failure.'])]
+    #[TestWith([false, false, 'Expecting value to be greater than right, `false (bool)` was given. More context about failure.'])]
+    #[TestWith([false, true, 'Expecting value to be greater than right, `false (bool)` was given. More context about failure.'])]
+    #[TestWith([true, true, 'Expecting value to be greater than right, `true (bool)` was given. More context about failure.'])]
+    #[TestWith([
+        new DateTime('2024-04-02'),
+        new DateTime('2025-06-25'),
+        'Expecting value to be greater than right, `DateTime` was given. More context about failure.'
+    ])]
     #[TestWith([
         new MockComparable(5),
         new MockComparable(10),
@@ -484,7 +494,7 @@ class AssertTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage($expectedExceptionMessage);
 
-        Assert::greaterThan($left, $right);
+        Assert::greaterThan($left, $right, 'More context about failure.');
     }
 
     #[TestWith([5, 5])]
@@ -500,24 +510,24 @@ class AssertTest extends TestCase
     #[TestWith([new MockComparable(5), new MockComparable(10)])]
     public function testGreaterThanStdClassFailure(mixed $left, mixed $right): void
     {
-        $leftObj      = new stdClass();
+        $leftObj = new stdClass();
         $leftObj->foo = $left;
 
-        $rightObj      = new stdClass();
+        $rightObj = new stdClass();
         $rightObj->foo = $right;
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be greater than right, `stdClass` was given');
+        $this->expectExceptionMessage('Expecting value to be greater than right, `stdClass` was given. More context about failure.');
 
-        static::assertSame($leftObj, Assert::greaterThan($leftObj, $rightObj));
+        static::assertSame($leftObj, Assert::greaterThan($leftObj, $rightObj, 'More context about failure.'));
     }
 
     public function testGreaterThanLimitFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be greater than right, `string (string)` was given');
+        $this->expectExceptionMessage('Expecting value to be greater than right, `string (string)` was given. More context about failure.');
 
-        Assert::greaterThan('string', 'string');
+        Assert::greaterThan('string', 'string', 'More context about failure.');
     }
 
     #[TestWith([5, 10])]
@@ -545,25 +555,29 @@ class AssertTest extends TestCase
     #[TestWith([new MockComparable(5), new MockComparable(10)])]
     public function testLessThanStdClass(mixed $left, mixed $right): void
     {
-        $leftObj      = new stdClass();
+        $leftObj = new stdClass();
         $leftObj->foo = $left;
 
-        $rightObj      = new stdClass();
+        $rightObj = new stdClass();
         $rightObj->foo = $right;
 
         static::assertSame($leftObj, Assert::lessThan($leftObj, $rightObj));
     }
 
-    #[TestWith([5, -1, 'Expecting value to be less than right, `5 (int)` was given'])]
-    #[TestWith(['5', 0, 'Expecting value to be less than right, `5 (string)` was given'])]
-    #[TestWith(['-5', '-10', 'Expecting value to be less than right, `-5 (string)` was given'])]
-    #[TestWith(['-5.5', '-10.5', 'Expecting value to be less than right, `-5.5 (string)` was given'])]
-    #[TestWith([-5.5, '-10.5', 'Expecting value to be less than right, `-5.5 (float)` was given'])]
-    #[TestWith(['5.5e10', '-10.5', 'Expecting value to be less than right, `5.5e10 (string)` was given'])]
-    #[TestWith([false, false, 'Expecting value to be less than right, `false (bool)` was given'])]
-    #[TestWith([true, false, 'Expecting value to be less than right, `true (bool)` was given'])]
-    #[TestWith([true, true, 'Expecting value to be less than right, `true (bool)` was given'])]
-    #[TestWith([new DateTime('2024-02-29'), new DateTime('2024-01-27'), 'Expecting value to be less than right, `DateTime` was given'])]
+    #[TestWith([5, -1, 'Expecting value to be less than right, `5 (int)` was given. More context about failure.'])]
+    #[TestWith(['5', 0, 'Expecting value to be less than right, `5 (string)` was given. More context about failure.'])]
+    #[TestWith(['-5', '-10', 'Expecting value to be less than right, `-5 (string)` was given. More context about failure.'])]
+    #[TestWith(['-5.5', '-10.5', 'Expecting value to be less than right, `-5.5 (string)` was given. More context about failure.'])]
+    #[TestWith([-5.5, '-10.5', 'Expecting value to be less than right, `-5.5 (float)` was given. More context about failure.'])]
+    #[TestWith(['5.5e10', '-10.5', 'Expecting value to be less than right, `5.5e10 (string)` was given. More context about failure.'])]
+    #[TestWith([false, false, 'Expecting value to be less than right, `false (bool)` was given. More context about failure.'])]
+    #[TestWith([true, false, 'Expecting value to be less than right, `true (bool)` was given. More context about failure.'])]
+    #[TestWith([true, true, 'Expecting value to be less than right, `true (bool)` was given. More context about failure.'])]
+    #[TestWith([
+        new DateTime('2024-02-29'),
+        new DateTime('2024-01-27'),
+        'Expecting value to be less than right, `DateTime` was given. More context about failure.'
+    ])]
     #[TestWith([
         new MockComparable(10),
         new MockComparable(5),
@@ -574,7 +588,7 @@ class AssertTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage($message);
 
-        Assert::lessThan($left, $right);
+        Assert::lessThan($left, $right, 'More context about failure.');
     }
 
     #[TestWith([5, -1])]
@@ -590,24 +604,24 @@ class AssertTest extends TestCase
     #[TestWith([new MockComparable(10), new MockComparable(5)])]
     public function testLessThanStdClassFailure(mixed $left, mixed $right): void
     {
-        $leftObj      = new stdClass();
+        $leftObj = new stdClass();
         $leftObj->foo = $left;
 
-        $rightObj      = new stdClass();
+        $rightObj = new stdClass();
         $rightObj->foo = $right;
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be less than right, `stdClass` was given');
+        $this->expectExceptionMessage('Expecting value to be less than right, `stdClass` was given. More context about failure.');
 
-        static::assertSame($leftObj, Assert::lessThan($leftObj, $rightObj));
+        static::assertSame($leftObj, Assert::lessThan($leftObj, $rightObj, 'More context about failure.'));
     }
 
     public function testLessThanLimitFailure(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be less than right, `string (string)` was given');
+        $this->expectExceptionMessage('Expecting value to be less than right, `string (string)` was given. More context about failure.');
 
-        Assert::lessThan('string', 'string');
+        Assert::lessThan('string', 'string', 'More context about failure.');
     }
 
     #[TestWith(['/directory'])]
@@ -623,8 +637,10 @@ class AssertTest extends TestCase
         $baseDir = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url();
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be a file or directory that exists');
-        Assert::fileExists($baseDir . '/foobar');
+        $this->expectExceptionMessage(
+            'Expecting value to be a file or directory that exists, `vfs://root/foobar (string)` was given. More context about failure.'
+        );
+        Assert::fileExists($baseDir . '/foobar', 'More context about failure.');
     }
 
     public function testFileSuccess(): void
@@ -633,15 +649,18 @@ class AssertTest extends TestCase
         static::assertSame($path, Assert::file($path));
     }
 
-    #[TestWith(['/directory', 'Expecting value to be a file'])]
-    #[TestWith(['/foobar', 'Expecting value to be a file or directory that exists'])]
+    #[TestWith(['/directory', 'Expecting value to be a file, `vfs://root/directory (string)` was given. More context about failure.'])]
+    #[TestWith([
+        '/foobar',
+        'Expecting value to be a file or directory that exists, `vfs://root/foobar (string)` was given. More context about failure.'
+    ])]
     public function testFileFailure(string $path, string $expectedMessage): void
     {
         $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . $path;
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage($expectedMessage);
-        Assert::file($path);
+        Assert::file($path, 'More context about failure.');
     }
 
     public function testDirectorySuccess(): void
@@ -650,15 +669,21 @@ class AssertTest extends TestCase
         static::assertSame($path, Assert::directory($path));
     }
 
-    #[TestWith(['/directory/file.txt', 'Expecting value to be a directory'])]
-    #[TestWith(['/foobar', 'Expecting value to be a file or directory that exists'])]
+    #[TestWith([
+        '/directory/file.txt',
+        'Expecting value to be a directory, `vfs://root/directory/file.txt (string)` was given. More context about failure.'
+    ])]
+    #[TestWith([
+        '/foobar',
+        'Expecting value to be a file or directory that exists, `vfs://root/foobar (string)` was given. More context about failure.'
+    ])]
     public function testDirectoryFailure(string $path, string $expectedMessage): void
     {
         $path = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url() . $path;
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage($expectedMessage);
-        Assert::directory($path);
+        Assert::directory($path, 'More context about failure.');
     }
 
     #[TestWith(['/directory'])]
@@ -669,18 +694,21 @@ class AssertTest extends TestCase
         static::assertSame($path, Assert::readable($path));
     }
 
-    #[TestWith(['/directory'])]
-    #[TestWith(['/directory/file.txt'])]
-    #[TestWith(['/foobar'])]
-    public function testReadableFailure(string $path): void
+    #[TestWith(['/directory', 'Expecting value to be readable, `vfs://root/directory (string)` was given. More context about failure.'])]
+    #[TestWith([
+        '/directory/file.txt',
+        'Expecting value to be readable, `vfs://root/directory/file.txt (string)` was given. More context about failure.'
+    ])]
+    #[TestWith(['/foobar', 'Expecting value to be readable, `vfs://root/foobar (string)` was given. More context about failure.'])]
+    public function testReadableFailure(string $path, string $expectedMessage): void
     {
         $baseDir = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url();
         chmod($baseDir . '/directory/file.txt', 0000);
         chmod($baseDir . '/directory', 0000);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be readable');
-        Assert::readable($baseDir . $path);
+        $this->expectExceptionMessage($expectedMessage);
+        Assert::readable($baseDir . $path, 'More context about failure.');
     }
 
     #[TestWith(['/directory'])]
@@ -691,17 +719,20 @@ class AssertTest extends TestCase
         static::assertSame($path, Assert::writable($path));
     }
 
-    #[TestWith(['/directory'])]
-    #[TestWith(['/directory/file.txt'])]
-    #[TestWith(['/foobar'])]
-    public function testWritableFailure(string $path): void
+    #[TestWith(['/directory', 'Expecting value to be writable, `vfs://root/directory (string)` was given. More context about failure.'])]
+    #[TestWith([
+        '/directory/file.txt',
+        'Expecting value to be writable, `vfs://root/directory/file.txt (string)` was given. More context about failure.'
+    ])]
+    #[TestWith(['/foobar', 'Expecting value to be writable, `vfs://root/foobar (string)` was given. More context about failure.'])]
+    public function testWritableFailure(string $path, string $expectedMessage): void
     {
         $baseDir = vfsStream::setup('root', null, ['/directory' => ['file.txt' => 'content']])->url();
         chmod($baseDir . '/directory/file.txt', 0000);
         chmod($baseDir . '/directory', 0000);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Expecting value to be writable');
-        Assert::writable($baseDir . $path);
+        $this->expectExceptionMessage($expectedMessage);
+        Assert::writable($baseDir . $path, 'More context about failure.');
     }
 }
