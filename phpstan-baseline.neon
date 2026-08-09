@@ -55,9 +55,9 @@ parameters:
 			path: src/PHPStan/Extension/ArraysRenameKeyReturnExtension.php
 
 		-
-			message: '#^Using nullsafe property access on non\-nullable type PhpParser\\Node\\ArrayItem\. Use \-\> instead\.$#'
+			message: '#^Using nullsafe property access on non\-nullable type mixed\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
-			count: 2
+			count: 1
 			path: src/PHPStan/Lib/TypeNarrower.php
 
 		-
