@@ -164,6 +164,34 @@ class AssertTest extends TestCase
         static::assertSame($stringable, Assert::stringable($stringable));
     }
 
+    public function testRegex(): void
+    {
+        static::assertSame('string123', Assert::regex('string123', '/^string\d+$/'));
+    }
+
+    public function testRegexFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            'Expecting value to be a regex match for `/^string\\d+$/`, `string (string)` was given. More context about failure.'
+        );
+        Assert::regex('string', '/^string\d+$/', 'More context about failure.');
+    }
+
+    public function testNotRegex(): void
+    {
+        static::assertSame('string', Assert::notRegex('string', '/^string\d+$/'));
+    }
+
+    public function testNotRegexFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            'Expecting value not to be a regex match for `/^string\\d+$/`, `string123` was given. More context about failure.'
+        );
+        Assert::notRegex('string123', '/^string\d+$/', 'More context about failure.');
+    }
+
     #[TestWith([Assert::class])]
     #[TestWith(['DR\Utils\Assert'])]
     public function testClassString(string $value): void
