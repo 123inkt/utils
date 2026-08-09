@@ -345,7 +345,8 @@ class Assert
     public static function regex(mixed $value, string $pattern, ?string $message = null): string
     {
         self::string($value, $message);
-        if (preg_match($pattern, $value) !== 1) {
+        $match = self::notFalse(preg_match($pattern, $value), $pattern . ' is not valid regex pattern');
+        if ($match !== 1) {
             throw ExceptionFactory::createException('a regex match for `' . $pattern . '`', $value, $message);
         }
 
@@ -353,7 +354,7 @@ class Assert
     }
 
     /**
-     * Assert value is a string AND matches regex pattern
+     * Assert value is a string AND not matches regex pattern
      * @template       T
      * @phpstan-assert string $value
      *
@@ -364,7 +365,8 @@ class Assert
     public static function notRegex(mixed $value, string $pattern, ?string $message = null): string
     {
         self::string($value, $message);
-        if (preg_match($pattern, $value) === 1) {
+        $match = self::notFalse(preg_match($pattern, $value), $pattern . ' is not valid regex pattern');
+        if ($match === 1) {
             throw new RuntimeException(
                 sprintf(
                     'Expecting value not to be a regex match for `%s`, `%s` was given%s',
