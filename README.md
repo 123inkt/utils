@@ -63,6 +63,8 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `notStartsWith`
 - `endsWith`
 - `notEndsWith`
+- `regex`
+- `notRegex`
 - `boolean`
 - `true`
 - `false`

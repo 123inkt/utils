@@ -85,7 +85,7 @@ class Assert
      * @template T
      * @phpstan-assert T&list<mixed> $value
      *
-     * @param T                            $value
+     * @param T                      $value
      *
      * @return T&list<mixed>
      */
@@ -328,6 +328,51 @@ class Assert
     {
         if (is_string($value) === false && $value instanceof Stringable === false) {
             throw ExceptionFactory::createException('a string or Stringable', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is a string AND matches regex pattern
+     * @template       T
+     * @phpstan-assert string $value
+     *
+     * @param T               $value
+     *
+     * @return T&string
+     */
+    public static function regex(mixed $value, string $pattern, ?string $message = null): string
+    {
+        self::string($value, $message);
+        if (preg_match($pattern, $value) !== 1) {
+            throw ExceptionFactory::createException('a regex match for `' . $pattern . '`', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Assert value is a string AND matches regex pattern
+     * @template       T
+     * @phpstan-assert string $value
+     *
+     * @param T               $value
+     *
+     * @return T&string
+     */
+    public static function notRegex(mixed $value, string $pattern, ?string $message = null): string
+    {
+        self::string($value, $message);
+        if (preg_match($pattern, $value) === 1) {
+            throw new RuntimeException(
+                sprintf(
+                    'Expecting value not to be a regex match for `%s`, `%s` was given%s',
+                    $pattern,
+                    $value,
+                    $message === null ? '' : '. ' . $message
+                )
+            );
         }
 
         return $value;
