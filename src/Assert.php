@@ -342,7 +342,7 @@ class Assert
      *
      * @return T&string
      */
-    public static function regex(mixed $value, string $pattern, ?string $message = null): string
+    public static function regexMatch(mixed $value, string $pattern, ?string $message = null): string
     {
         self::string($value, $message);
         $match = self::notFalse(preg_match($pattern, $value), $pattern . ' is not valid regex pattern');
@@ -362,7 +362,7 @@ class Assert
      *
      * @return T&string
      */
-    public static function notRegex(mixed $value, string $pattern, ?string $message = null): string
+    public static function notRegexMatch(mixed $value, string $pattern, ?string $message = null): string
     {
         self::string($value, $message);
         $match = self::notFalse(preg_match($pattern, $value), $pattern . ' is not valid regex pattern');

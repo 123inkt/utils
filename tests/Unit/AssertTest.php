@@ -166,7 +166,7 @@ class AssertTest extends TestCase
 
     public function testRegex(): void
     {
-        static::assertSame('string123', Assert::regex('string123', '/^string\d+$/'));
+        static::assertSame('string123', Assert::regexMatch('string123', '/^string\d+$/'));
     }
 
     public function testRegexFailure(): void
@@ -175,12 +175,12 @@ class AssertTest extends TestCase
         $this->expectExceptionMessage(
             'Expecting value to be a regex match for `/^string\\d+$/`, `string (string)` was given. More context about failure.'
         );
-        Assert::regex('string', '/^string\d+$/', 'More context about failure.');
+        Assert::regexMatch('string', '/^string\d+$/', 'More context about failure.');
     }
 
     public function testNotRegex(): void
     {
-        static::assertSame('string', Assert::notRegex('string', '/^string\d+$/'));
+        static::assertSame('string', Assert::notRegexMatch('string', '/^string\d+$/'));
     }
 
     public function testNotRegexFailure(): void
@@ -189,7 +189,7 @@ class AssertTest extends TestCase
         $this->expectExceptionMessage(
             'Expecting value not to be a regex match for `/^string\\d+$/`, `string123` was given. More context about failure.'
         );
-        Assert::notRegex('string123', '/^string\d+$/', 'More context about failure.');
+        Assert::notRegexMatch('string123', '/^string\d+$/', 'More context about failure.');
     }
 
     #[TestWith([Assert::class])]
