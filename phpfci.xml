@@ -3,4 +3,7 @@
         xsi:noNamespaceSchemaLocation="vendor/digitalrevolution/phpunit-file-coverage-inspection/resources/phpfci.xsd"
         min-coverage="100"
 >
+    <custom-coverage>
+        <file path="src/PHPStan/Lib/TypeNarrower.php" min="93"/>
+    </custom-coverage>
 </phpfci>

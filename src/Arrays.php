@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DR\Utils;
 
 use BackedEnum;
+use DR\Utils\PHPStan\Extension\ArraysFlattenReturnExtension;
 use InvalidArgumentException;
 use JsonException;
 use RuntimeException;
@@ -547,9 +548,11 @@ class Arrays
     }
 
     /**
-     * @param mixed[] $array
+     * @template T
      *
-     * @return mixed[]
+     * @param array<array-key, T> $array Array to flatten, values may themselves be nested arrays.
+     *
+     * @return list<T> The precise item type is resolved by {@see ArraysFlattenReturnExtension}.
      */
     public static function flatten(array $array): array
     {

@@ -7,7 +7,6 @@ namespace DR\Utils\Tests\Unit\PHPStan\Lib;
 use DR\Utils\PHPStan\Lib\TypeNarrower;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
-use PHPStan\PhpDoc\TypeStringResolver;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
