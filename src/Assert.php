@@ -189,6 +189,24 @@ class Assert
     }
 
     /**
+     * Assert value is int or null
+     * @template       T
+     * @phpstan-assert int|null $value
+     *
+     * @param T|null        $value
+     *
+     * @return T&(int|null)
+     */
+    public static function integerOrNull(mixed $value, ?string $message = null): ?int
+    {
+        if ($value !== null && is_int($value) === false) {
+            throw ExceptionFactory::createException('an int or null', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert value is positive-int. Value > 0
      * @template       T
      * @phpstan-assert positive-int $value

@@ -24,6 +24,19 @@ class AssertIntegerTest extends TestCase
         Assert::integer('string');
     }
 
+    public function testIntegerOrNull(): void
+    {
+        static::assertSame(5, Assert::integerOrNull(5));
+        static::assertNull(Assert::integerOrNull(null));
+    }
+
+    public function testIntegerOrNullFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be an int or null, `string (string)` was given');
+        Assert::integerOrNull('string');
+    }
+
     public function testPositiveInt(): void
     {
         static::assertSame(5, Assert::positiveInt(5));
