@@ -29,7 +29,7 @@
         "digitalrevolution/phpunit-file-coverage-inspection": "^3.0",
         "mikey179/vfsstream": "^1.6.11",
         "nikic/php-parser": "^4.19 || ^5.4",
-        "phpmd/phpmd": "^2.15",
+        "phpmd/phpmd": "^3.0",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-phpunit": "^2.0",
