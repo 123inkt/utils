@@ -195,7 +195,7 @@ class Assert
      *
      * @param T|null        $value
      *
-     * @return T&(int|null)
+     * @return (T&int)|null
      */
     public static function integerOrNull(mixed $value, ?string $message = null): ?int
     {
