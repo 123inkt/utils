@@ -13,7 +13,7 @@ class ArraysFlattenReturnExtensionTest extends TypeInferenceTestCase
 {
     public function testFileAsserts(): void
     {
-        $results = self::gatherAssertTypes(__DIR__ . '/data/ArraysFlattenAssertions.php');
+        $results = self::gatherAssertTypes(__DIR__ . '/Data/ArraysFlattenAssertions.php');
         foreach ($results as $result) {
             $assertType = Assert::string(array_shift($result));
             $file       = Assert::string(array_shift($result));

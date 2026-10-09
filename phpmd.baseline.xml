@@ -9,11 +9,6 @@
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="src/Exception/ExceptionFactory.php" method="createException"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="src/Stringify.php" method="value"/>
   <violation rule="PHPMD\Rule\Design\NPathComplexity" file="src/Stringify.php" method="value"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseNamespace" file="tests/Integration/PHPStan/data/ArraysFlattenAssertions.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseNamespace" file="tests/Integration/PHPStan/data/ArraysRenameKeyReturnAssertions.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseNamespace" file="tests/Integration/PHPStan/data/ArraysReturnAssertions.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseNamespace" file="tests/Integration/PHPStan/data/AssertIsListAssertions.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseNamespace" file="tests/Integration/PHPStan/data/AssertTypeAssertions.php"/>
   <violation rule="PHPMD\Rule\Naming\LongMethodName" file="tests/Unit/ArraysPathAccessorTest.php" method="testAssignByPathThrowsExceptionOnNonArraySegment"/>
   <violation rule="PHPMD\Rule\ExcessivePublicCount" file="tests/Unit/AssertTest.php"/>
   <violation rule="PHPMD\Rule\Design\ExcessiveClassComplexity" file="tests/Unit/AssertTest.php"/>
