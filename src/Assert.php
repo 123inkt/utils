@@ -322,7 +322,7 @@ class Assert
      *
      * @param T|null        $value
      *
-     * @return T&string|null
+     * @return (T&string)|null
      */
     public static function stringOrNull(mixed $value, ?string $message = null): ?string
     {

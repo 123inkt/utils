@@ -153,7 +153,7 @@ class AssertTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Expecting value to be a string or null, `123 (int)` was given. More context about failure.');
-        Assert::stringOrNull(123, 'More context about failure.'); // @phpstan-ignore-line
+        Assert::stringOrNull(123, 'More context about failure.');
     }
 
     public function testStringOrNull(): void
