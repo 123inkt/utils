@@ -13,7 +13,7 @@ class AssertIsListExtensionTest extends TypeInferenceTestCase
 {
     public function testFileAsserts(): void
     {
-        $results = self::gatherAssertTypes(__DIR__ . '/data/AssertIsListAssertions.php');
+        $results = self::gatherAssertTypes(__DIR__ . '/Data/AssertIsListAssertions.php');
         foreach ($results as $result) {
             $assertType = Assert::string(array_shift($result));
             $file       = Assert::string(array_shift($result));
