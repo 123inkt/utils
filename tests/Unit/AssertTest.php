@@ -149,6 +149,19 @@ class AssertTest extends TestCase
         static::assertSame('string', Assert::string('string'));
     }
 
+    public function testStringOrNullFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be a string or null, `123 (int)` was given. More context about failure.');
+        Assert::stringOrNull(123, 'More context about failure.');
+    }
+
+    public function testStringOrNull(): void
+    {
+        static::assertSame('string', Assert::stringOrNull('string'));
+        static::assertNull(Assert::stringOrNull(null));
+    }
+
     public function testStringableFailure(): void
     {
         $this->expectException(RuntimeException::class);

@@ -334,6 +334,24 @@ class Assert
     }
 
     /**
+     * Assert value is a string or null
+     * @template       T
+     * @phpstan-assert string|null $value
+     *
+     * @param T|null        $value
+     *
+     * @return (T&string)|null
+     */
+    public static function stringOrNull(mixed $value, ?string $message = null): ?string
+    {
+        if ($value !== null && is_string($value) === false) {
+            throw ExceptionFactory::createException('a string or null', $value, $message);
+        }
+
+        return $value;
+    }
+
+    /**
      * Assert value is a string or implements __toString
      * @template       T
      * @phpstan-assert string|Stringable $value

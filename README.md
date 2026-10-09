@@ -59,6 +59,7 @@ Fluent assertion methods, inspired by `webmozart/assert`:
 - `numeric`
 - `float`
 - `string`
+- `stringOrNull`
 - `classString`
 - `startsWith`
 - `notStartsWith`
