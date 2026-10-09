@@ -304,12 +304,14 @@ class Arrays
                 $result[$key === $fromKey ? $toKey : $key] = $value;
             }
 
+            /** @phpstan-var array<K, T> */
             return $result;
         }
 
         $items[$toKey] = $items[$fromKey];
         unset($items[$fromKey]);
 
+        /** @phpstan-var array<K, T> */
         return $items;
     }
 
