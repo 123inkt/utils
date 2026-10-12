@@ -343,6 +343,19 @@ class ArraysTest extends TestCase
         static::assertSame(['null'], Arrays::removeNull(['null', null]));
     }
 
+    public function testToIntList(): void
+    {
+        static::assertSame([1, 2, 3, -4], Arrays::toIntList(['foo' => '1', 2 => 2, 3 => 3.9, 4 => -4.2]));
+    }
+
+    public function testToIntListFailure(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expecting value to be numeric, `foo (string)` was given');
+
+        Arrays::toIntList(['foo']);
+    }
+
     public function testToJson(): void
     {
         static::assertSame('{"name":"John doe","UT":{"foo":"bar"}}', Arrays::toJson(['name' => 'John doe', 'UT' => ['foo' => 'bar']]));

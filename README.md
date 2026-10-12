@@ -29,6 +29,7 @@ A library with everyday use classes and methods:
 - `removeKeys` - Remove multiple elements from an array based on the keys.
 - `removeTypes` - Filters an array by removing all values that match the provided types.
 - `removeNull` - Filters an array by removing all null values.
+- `toIntList` - Converts an array of numeric values to a list of integers.
 - `search` - Find the key of an element in an array or false otherwise. Supports `EquatableInterface`.
 - `unique` - Remove duplicate values from an array. Supports `EquatableInterface`.
 - `wrap` - Wrap a value in an array, unless it is already an array.
