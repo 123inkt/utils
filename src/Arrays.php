@@ -385,6 +385,18 @@ class Arrays
     }
 
     /**
+     * Convert an array of numeric values to a list of integers.
+     *
+     * @param array<array-key, mixed> $values
+     *
+     * @return list<int>
+     */
+    public static function toIntList(array $values): array
+    {
+        return array_values(array_map(static fn(mixed $value): int => (int)Assert::numeric($value), $values));
+    }
+
+    /**
      * Strict test if `value` is contained within `items`. Method supports `EquatableInterface`.
      *
      * @param iterable<int|string, mixed|EquatableInterface> $items
